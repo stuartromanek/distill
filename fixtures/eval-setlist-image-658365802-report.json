@@ -1,0 +1,1707 @@
+{
+  "generatedAt": "2026-06-14T19:03:25.529Z",
+  "image": "fixtures/parsed-setlist-image-658365802.json",
+  "parseModel": "gemini-2.5-flash",
+  "parseDurationMs": 8008,
+  "summary": {
+    "parsedCount": 30,
+    "groundTruthCount": 30,
+    "parseRecall": 30,
+    "matched": 30,
+    "ambiguous": 0,
+    "notFound": 0,
+    "matchRate": "30/30"
+  },
+  "planTriggers": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "D": [],
+    "E": [],
+    "F": [],
+    "G": [],
+    "I": []
+  },
+  "songs": [
+    {
+      "groundTruth": {
+        "id": "avalon-emerson-jupiter",
+        "artist": "Avalon Emerson",
+        "title": "Jupiter and Mars"
+      },
+      "parsed": {
+        "title": "Jupiter and Mars",
+        "artist": "AVALON EMERSON",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-title",
+      "searchQuery": "AVALON EMERSON Jupiter and Mars",
+      "bestMatch": {
+        "id": "482445937",
+        "artist": "Avalon Emerson",
+        "title": "Jupiter and Mars",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "482445937",
+          "artist": "Avalon Emerson",
+          "title": "Jupiter and Mars",
+          "score": 1
+        },
+        {
+          "id": "184775824",
+          "artist": "Avalon Emerson",
+          "title": "Wastelands and Oases",
+          "score": 0.52
+        },
+        {
+          "id": "184842192",
+          "artist": "Avalon Emerson",
+          "title": "Wastelands and Oases",
+          "score": 0.52
+        },
+        {
+          "id": "101917395",
+          "artist": "A Hero For The World",
+          "title": "Jupiter and Mars",
+          "score": 0.6
+        },
+        {
+          "id": "138511863",
+          "artist": "Violet Beach Cocktail Lounge",
+          "title": "Mars and Jupiter",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "antonio-williams-changes",
+        "artist": "Antonio Williams, Kerry McCoy",
+        "title": "Changes"
+      },
+      "parsed": {
+        "title": "Changes",
+        "artist": "ANTONIO WILLIAMS, KERRY MCCOY",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "ANTONIO WILLIAMS KERRY MCCOY Changes",
+      "bestMatch": {
+        "id": "237958396",
+        "artist": "antonio williams",
+        "title": "Changes (feat. Kerry McCoy)",
+        "score": 0.94
+      },
+      "topCandidates": [
+        {
+          "id": "237958396",
+          "artist": "antonio williams",
+          "title": "Changes (feat. Kerry McCoy)",
+          "score": 0.94
+        },
+        {
+          "id": "36379360",
+          "artist": "Christopher Williams",
+          "title": "Changes",
+          "score": 0.6799999999999999
+        },
+        {
+          "id": "95906448",
+          "artist": "LaToiya Williams",
+          "title": "Change",
+          "score": 0.5900000000000001
+        },
+        {
+          "id": "34110299",
+          "artist": "G-Unit",
+          "title": "Changes",
+          "score": 0.6
+        },
+        {
+          "id": "384497950",
+          "artist": "Kim McCoy",
+          "title": "Too Long (King George Version)",
+          "score": 0.08000000000000002
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "horse-vision-you-could",
+        "artist": "Horse Vision",
+        "title": "You Could Have It"
+      },
+      "parsed": {
+        "title": "You Could Have It",
+        "artist": "HORSE VISION",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-title",
+      "searchQuery": "HORSE VISION You Could Have It",
+      "bestMatch": {
+        "id": "487626790",
+        "artist": "Horse Vision",
+        "title": "You Could Have It",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "487626790",
+          "artist": "Horse Vision",
+          "title": "You Could Have It",
+          "score": 1
+        },
+        {
+          "id": "125111680",
+          "artist": "Miss Li",
+          "title": "You Could Have It (So Much Better Without Me)",
+          "score": 0.6
+        },
+        {
+          "id": "18445110",
+          "artist": "Pugh Rogefeldt",
+          "title": "You Could Have It (So Much Better Without Me)",
+          "score": 0.6
+        },
+        {
+          "id": "381478637",
+          "artist": "Hank Wood and the Hammerheads",
+          "title": "You Could Have It",
+          "score": 0.6
+        },
+        {
+          "id": "135256185",
+          "artist": "Chris Simmons",
+          "title": "You Could Have It All",
+          "score": 0.51
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "apple-blossom-springtime",
+        "artist": "Touch Girl Apple Blossom",
+        "title": "The Springtime Reminds Me Of..."
+      },
+      "parsed": {
+        "title": "The Springtime Reminds Me Of...",
+        "artist": "TOUCH GIRL APPLE BLOSSOM",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-truncated",
+      "searchQuery": "TOUCH GIRL APPLE BLOSSOM The Springtime Reminds Me Of",
+      "bestMatch": {
+        "id": "493038768",
+        "artist": "Touch Girl Apple Blossom",
+        "title": "The Springtime Reminds Me Of...",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "493038768",
+          "artist": "Touch Girl Apple Blossom",
+          "title": "The Springtime Reminds Me Of...",
+          "score": 1
+        },
+        {
+          "id": "3330935",
+          "artist": "Deee-Lite",
+          "title": "Call Me",
+          "score": 0.09999999999999999
+        },
+        {
+          "id": "14306290",
+          "artist": "Xscape",
+          "title": "All About Me",
+          "score": 0.0857142857142857
+        },
+        {
+          "id": "352924789",
+          "artist": "Paradise Blossom",
+          "title": "forever, with you",
+          "score": 0.08000000000000002
+        },
+        {
+          "id": "4076319",
+          "artist": "Color Me Badd",
+          "title": "The Earth, the Sun, the Rain",
+          "score": 0.075
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "wallflowers-hand-me-down",
+        "artist": "The Wallflowers",
+        "title": "Hand Me Down"
+      },
+      "parsed": {
+        "title": "Hand Me Down",
+        "artist": "THE WALLFLOWERS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-title",
+      "searchQuery": "THE WALLFLOWERS Hand Me Down",
+      "bestMatch": {
+        "id": "619487",
+        "artist": "The Wallflowers",
+        "title": "Hand Me Down",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "619487",
+          "artist": "The Wallflowers",
+          "title": "Hand Me Down",
+          "score": 1
+        },
+        {
+          "id": "2995145",
+          "artist": "The Guess Who",
+          "title": "Hand Me Down World",
+          "score": 0.61
+        },
+        {
+          "id": "268229",
+          "artist": "Matchbox Twenty",
+          "title": "Hand Me Down",
+          "score": 0.6
+        },
+        {
+          "id": "127872914",
+          "artist": "Mac Miller",
+          "title": "Hand Me Downs",
+          "score": 0.51
+        },
+        {
+          "id": "249876364",
+          "artist": "The Happy Fits",
+          "title": "Hold Me Down",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "cut-worms-long-weekend",
+        "artist": "Cut Worms",
+        "title": "Long Weekend"
+      },
+      "parsed": {
+        "title": "Long Weekend",
+        "artist": "CUT WORMS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "CUT WORMS Long Weekend",
+      "bestMatch": {
+        "id": "481056072",
+        "artist": "Cut Worms",
+        "title": "Long Weekend",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "481056072",
+          "artist": "Cut Worms",
+          "title": "Long Weekend",
+          "score": 1
+        },
+        {
+          "id": "86638355",
+          "artist": "Cut Worms",
+          "title": "It Won't Be Too Long",
+          "score": 0.4857142857142857
+        },
+        {
+          "id": "148226204",
+          "artist": "Cut Worms",
+          "title": "The Heat Is On",
+          "score": 0.4
+        },
+        {
+          "id": "148226206",
+          "artist": "Cut Worms",
+          "title": "Last Words To A Refugee",
+          "score": 0.4
+        },
+        {
+          "id": "148226208",
+          "artist": "Cut Worms",
+          "title": "Every Once In A While",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "perfume-genius-queen",
+        "artist": "Perfume Genius",
+        "title": "Queen"
+      },
+      "parsed": {
+        "title": "Queen",
+        "artist": "PERFUME GENIUS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "PERFUME GENIUS Queen",
+      "bestMatch": {
+        "id": "34316362",
+        "artist": "Perfume Genius",
+        "title": "Queen",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "34316362",
+          "artist": "Perfume Genius",
+          "title": "Queen",
+          "score": 1
+        },
+        {
+          "id": "13163869",
+          "artist": "Perfume Genius",
+          "title": "Hood",
+          "score": 0.4
+        },
+        {
+          "id": "140644930",
+          "artist": "Perfume Genius",
+          "title": "Describe",
+          "score": 0.4
+        },
+        {
+          "id": "140644931",
+          "artist": "Perfume Genius",
+          "title": "Without You",
+          "score": 0.4
+        },
+        {
+          "id": "140644932",
+          "artist": "Perfume Genius",
+          "title": "Jason",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "new-order-turn-my-way",
+        "artist": "New Order",
+        "title": "Turn My Way"
+      },
+      "parsed": {
+        "title": "Turn My Way",
+        "artist": "NEW ORDER",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "NEW ORDER Turn My Way",
+      "bestMatch": {
+        "id": "1845093",
+        "artist": "New Order",
+        "title": "Turn My Way",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "1845093",
+          "artist": "New Order",
+          "title": "Turn My Way",
+          "score": 1
+        },
+        {
+          "id": "2022554",
+          "artist": "New Order",
+          "title": "Way of Life",
+          "score": 0.52
+        },
+        {
+          "id": "155199789",
+          "artist": "New Order",
+          "title": "Turn the Heater On (Peel Session)",
+          "score": 0.5
+        },
+        {
+          "id": "2022556",
+          "artist": "New Order",
+          "title": "All Day Long",
+          "score": 0.4
+        },
+        {
+          "id": "2022563",
+          "artist": "New Order",
+          "title": "Touched by the Hand of God (12\" Version)",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "sonic-youth-incinerate",
+        "artist": "Sonic Youth",
+        "title": "Incinerate"
+      },
+      "parsed": {
+        "title": "Incinerate",
+        "artist": "SONIC YOUTH",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "SONIC YOUTH Incinerate",
+      "bestMatch": {
+        "id": "77650889",
+        "artist": "Sonic Youth",
+        "title": "Incinerate",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "77650889",
+          "artist": "Sonic Youth",
+          "title": "Incinerate",
+          "score": 1
+        },
+        {
+          "id": "145433522",
+          "artist": "Sonic Youth",
+          "title": "Superstar",
+          "score": 0.4
+        },
+        {
+          "id": "2570111",
+          "artist": "Sonic Youth",
+          "title": "Bull In The Heather",
+          "score": 0.4
+        },
+        {
+          "id": "49258715",
+          "artist": "Sonic Youth",
+          "title": "Shadow of a Doubt",
+          "score": 0.4
+        },
+        {
+          "id": "49258725",
+          "artist": "Sonic Youth",
+          "title": "Schizophrenia",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "king-tuff-invisible-ink",
+        "artist": "King Tuff",
+        "title": "Invisible Ink"
+      },
+      "parsed": {
+        "title": "Invisible Ink",
+        "artist": "KING TUFF",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "KING TUFF Invisible Ink",
+      "bestMatch": {
+        "id": "481874245",
+        "artist": "King Tuff",
+        "title": "Invisible Ink",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "481874245",
+          "artist": "King Tuff",
+          "title": "Invisible Ink",
+          "score": 1
+        },
+        {
+          "id": "465467660",
+          "artist": "King Like Mom",
+          "title": "Invisible Ink",
+          "score": 0.7
+        },
+        {
+          "id": "469972379",
+          "artist": "King Atlas-Crusoe",
+          "title": "Invisible Ink ( On My Tongue )",
+          "score": 0.7
+        },
+        {
+          "id": "15419077",
+          "artist": "King Tuff",
+          "title": "Alone & Stoned",
+          "score": 0.4
+        },
+        {
+          "id": "15419080",
+          "artist": "King Tuff",
+          "title": "Bad Thing",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "glands-livin-was-easy",
+        "artist": "The Glands",
+        "title": "livin' was easy"
+      },
+      "parsed": {
+        "title": "livin' was easy",
+        "artist": "THE GLANDS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE GLANDS livin was easy",
+      "bestMatch": {
+        "id": "111683240",
+        "artist": "The Glands",
+        "title": "livin' was easy",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "111683240",
+          "artist": "The Glands",
+          "title": "livin' was easy",
+          "score": 1
+        },
+        {
+          "id": "121046930",
+          "artist": "The Menzingers",
+          "title": "Livin' Ain't Easy",
+          "score": 0.3733333333333333
+        },
+        {
+          "id": "299568",
+          "artist": "The Streets",
+          "title": "It Was Supposed to Be so Easy",
+          "score": 0.2833333333333333
+        },
+        {
+          "id": "3339181",
+          "artist": "The Miles Davis Quintet",
+          "title": "Easy Living",
+          "score": 0.23
+        },
+        {
+          "id": "4087847",
+          "artist": "The Streets",
+          "title": "The Hardest Way to Make an Easy Living",
+          "score": 0.19333333333333333
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "pete-yorn-closet",
+        "artist": "Pete Yorn",
+        "title": "Closet"
+      },
+      "parsed": {
+        "title": "Closet",
+        "artist": "PETE YORN",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "PETE YORN Closet",
+      "bestMatch": {
+        "id": "121714532",
+        "artist": "Pete Yorn",
+        "title": "Closet",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "121714532",
+          "artist": "Pete Yorn",
+          "title": "Closet",
+          "score": 1
+        },
+        {
+          "id": "134128365",
+          "artist": "Pete Yorn",
+          "title": "Closet",
+          "score": 1
+        },
+        {
+          "id": "2319471",
+          "artist": "Pete Yorn",
+          "title": "Closet",
+          "score": 1
+        },
+        {
+          "id": "329522122",
+          "artist": "Pete Yorn",
+          "title": "Closet",
+          "score": 1
+        },
+        {
+          "id": "97902359",
+          "artist": "Pete Yorn",
+          "title": "Closet",
+          "score": 1
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "brmc-whatever-happened",
+        "artist": "Black Rebel Motorcycle Club",
+        "title": "Whatever Happened To My Rock..."
+      },
+      "parsed": {
+        "title": "Whatever Happened To My Rock...",
+        "artist": "BLACK REBEL MOTORCYCLE CLUB",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "BLACK REBEL MOTORCYCLE CLUB Whatever Happened To My Rock",
+      "bestMatch": {
+        "id": "267683899",
+        "artist": "Black Rebel Motorcycle Club",
+        "title": "Whatever Happened To My Rock 'N' Roll (Punk Song)",
+        "score": 0.97
+      },
+      "topCandidates": [
+        {
+          "id": "267683899",
+          "artist": "Black Rebel Motorcycle Club",
+          "title": "Whatever Happened To My Rock 'N' Roll (Punk Song)",
+          "score": 0.97
+        },
+        {
+          "id": "320960590",
+          "artist": "Black Rebel Motorcycle Club",
+          "title": "Whatever Happened To My Rock and Roll",
+          "score": 0.97
+        },
+        {
+          "id": "246959583",
+          "artist": "Black Rebel Motorcycle Club",
+          "title": "Shuffle Your Feet",
+          "score": 0.4
+        },
+        {
+          "id": "246959586",
+          "artist": "Black Rebel Motorcycle Club",
+          "title": "Ain't No Easy Way",
+          "score": 0.4
+        },
+        {
+          "id": "246959588",
+          "artist": "Black Rebel Motorcycle Club",
+          "title": "Fault Line",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "dinosaur-jr-start-choppin",
+        "artist": "Dinosaur Jr.",
+        "title": "Start Choppin'"
+      },
+      "parsed": {
+        "title": "Start Choppin'",
+        "artist": "DINOSAUR JR.",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "DINOSAUR JR. Start Choppin",
+      "bestMatch": {
+        "id": "195862710",
+        "artist": "Dinosaur Jr.",
+        "title": "Start Choppin",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "195862710",
+          "artist": "Dinosaur Jr.",
+          "title": "Start Choppin",
+          "score": 1
+        },
+        {
+          "id": "384162824",
+          "artist": "Dinosaur Jr.",
+          "title": "Start Choppin'",
+          "score": 1
+        },
+        {
+          "id": "384189366",
+          "artist": "Dinosaur Jr.",
+          "title": "Start Choppin (Live, St Paul Civic Center, MN, 29 June 1993)",
+          "score": 0.85
+        },
+        {
+          "id": "119068597",
+          "artist": "Dinosaur Jr.",
+          "title": "Almost Ready",
+          "score": 0.4
+        },
+        {
+          "id": "119068598",
+          "artist": "Dinosaur Jr.",
+          "title": "Crumble",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "thermals-no-culture",
+        "artist": "The Thermals",
+        "title": "No Culture Icons"
+      },
+      "parsed": {
+        "title": "No Culture Icons",
+        "artist": "THE THERMALS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE THERMALS No Culture Icons",
+      "bestMatch": {
+        "id": "1300846",
+        "artist": "The Thermals",
+        "title": "No Culture Icons",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "1300846",
+          "artist": "The Thermals",
+          "title": "No Culture Icons",
+          "score": 1
+        },
+        {
+          "id": "19133567",
+          "artist": "The Thermals",
+          "title": "Not Like Any Other Feeling",
+          "score": 0.4
+        },
+        {
+          "id": "19153610",
+          "artist": "The Thermals",
+          "title": "Now We Can See",
+          "score": 0.4
+        },
+        {
+          "id": "287373514",
+          "artist": "The Thermals",
+          "title": "Now We Can See",
+          "score": 0.4
+        },
+        {
+          "id": "189754971",
+          "artist": "The Skinner Brothers",
+          "title": "Culture Non-Stop",
+          "score": 0.22
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "babies-mess-me-around",
+        "artist": "The Babies",
+        "title": "Mess Me Around"
+      },
+      "parsed": {
+        "title": "Mess Me Around",
+        "artist": "THE BABIES",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE BABIES Mess Me Around",
+      "bestMatch": {
+        "id": "381584362",
+        "artist": "The Babies",
+        "title": "Mess Me Around",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "381584362",
+          "artist": "The Babies",
+          "title": "Mess Me Around",
+          "score": 1
+        },
+        {
+          "id": "187907314",
+          "artist": "The Marías",
+          "title": "Spin Me Around",
+          "score": 0.4
+        },
+        {
+          "id": "160323179",
+          "artist": "The Zeros",
+          "title": "Don't Push Me Around",
+          "score": 0.3333333333333333
+        },
+        {
+          "id": "215949",
+          "artist": "The Vogues",
+          "title": "Turn Around, Look at Me",
+          "score": 0.3333333333333333
+        },
+        {
+          "id": "246046744",
+          "artist": "The Knife",
+          "title": "Wrap Your Arms Around Me",
+          "score": 0.3333333333333333
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "some-soviet-pistol",
+        "artist": "Some Soviet Station",
+        "title": "Pistol Whipped"
+      },
+      "parsed": {
+        "title": "Pistol Whipped",
+        "artist": "SOME SOVIET STATION",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "SOME SOVIET STATION Pistol Whipped",
+      "bestMatch": {
+        "id": "427287777",
+        "artist": "Some Soviet Station",
+        "title": "Pistol Whipped",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "427287777",
+          "artist": "Some Soviet Station",
+          "title": "Pistol Whipped",
+          "score": 1
+        },
+        {
+          "id": "427287770",
+          "artist": "Some Soviet Station",
+          "title": "Sonic Titan",
+          "score": 0.4
+        },
+        {
+          "id": "427287771",
+          "artist": "Some Soviet Station",
+          "title": "Hello Dial Tone",
+          "score": 0.4
+        },
+        {
+          "id": "427287772",
+          "artist": "Some Soviet Station",
+          "title": "Passing",
+          "score": 0.4
+        },
+        {
+          "id": "427287773",
+          "artist": "Some Soviet Station",
+          "title": "The Process",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "mission-burma-revol",
+        "artist": "Mission of Burma",
+        "title": "That's When I Reach for My Revol..."
+      },
+      "parsed": {
+        "title": "That's When I Reach for My Revol...",
+        "artist": "MISSION OF BURMA",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "MISSION OF BURMA Thats When I Reach for My Revol",
+      "bestMatch": {
+        "id": "2275694",
+        "artist": "Mission Of Burma",
+        "title": "That's When I Reach for My Revolver",
+        "score": 0.97
+      },
+      "topCandidates": [
+        {
+          "id": "2275694",
+          "artist": "Mission Of Burma",
+          "title": "That's When I Reach for My Revolver",
+          "score": 0.97
+        },
+        {
+          "id": "2275708",
+          "artist": "Mission Of Burma",
+          "title": "That's When I Reach for My Revolver",
+          "score": 0.97
+        },
+        {
+          "id": "2274234",
+          "artist": "Mission Of Burma",
+          "title": "That's How I Escaped My Certain Fate",
+          "score": 0.6
+        },
+        {
+          "id": "159837737",
+          "artist": "Sons of Itto",
+          "title": "That's When I Reach for My Revolver",
+          "score": 0.6499999999999999
+        },
+        {
+          "id": "2275692",
+          "artist": "Mission Of Burma",
+          "title": "Academy Fight Song",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "weakerthans-aside",
+        "artist": "The Weakerthans",
+        "title": "Aside"
+      },
+      "parsed": {
+        "title": "Aside",
+        "artist": "THE WEAKHERTHANS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE WEAKHERTHANS Aside",
+      "bestMatch": {
+        "id": "121120372",
+        "artist": "The Weakerthans",
+        "title": "Aside",
+        "score": 0.9666666666666667
+      },
+      "topCandidates": [
+        {
+          "id": "121120372",
+          "artist": "The Weakerthans",
+          "title": "Aside",
+          "score": 0.9666666666666667
+        },
+        {
+          "id": "121131202",
+          "artist": "The Weakerthans",
+          "title": "Aside",
+          "score": 0.9666666666666667
+        },
+        {
+          "id": "58614681",
+          "artist": "Devour The Day",
+          "title": "Step Aside",
+          "score": 0.61
+        },
+        {
+          "id": "214192223",
+          "artist": "Hope Sandoval and the Warm Inventions",
+          "title": "Fall Aside",
+          "score": 0.5671428571428572
+        },
+        {
+          "id": "121120374",
+          "artist": "The Weakerthans",
+          "title": "Pamphleteer",
+          "score": 0.3666666666666667
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "cameron-winter-try",
+        "artist": "Cameron Winter",
+        "title": "Try as I May"
+      },
+      "parsed": {
+        "title": "Try as I May",
+        "artist": "CAMERON WINTER",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-title",
+      "searchQuery": "CAMERON WINTER Try as I May",
+      "bestMatch": {
+        "id": "402947134",
+        "artist": "Cameron Winter",
+        "title": "Try as I May",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "402947134",
+          "artist": "Cameron Winter",
+          "title": "Try as I May",
+          "score": 1
+        },
+        {
+          "id": "402947129",
+          "artist": "Cameron Winter",
+          "title": "The Rolling Stones",
+          "score": 0.4
+        },
+        {
+          "id": "402947130",
+          "artist": "Cameron Winter",
+          "title": "Nausicaä (Love Will Be Revealed)",
+          "score": 0.4
+        },
+        {
+          "id": "11389033",
+          "artist": "Randy Grant",
+          "title": "Try As I May",
+          "score": 0.6
+        },
+        {
+          "id": "173342634",
+          "artist": "David Kempers",
+          "title": "Try as I May",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "rolling-stones-dead-flowers",
+        "artist": "The Rolling Stones",
+        "title": "Dead Flowers - 2009 Mix"
+      },
+      "parsed": {
+        "title": "Dead Flowers - 2009 Mix",
+        "artist": "THE ROLLING STONES",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE ROLLING STONES Dead Flowers",
+      "bestMatch": {
+        "id": "138684304",
+        "artist": "The Rolling Stones",
+        "title": "Dead Flowers",
+        "score": 0.9400000000000001
+      },
+      "topCandidates": [
+        {
+          "id": "138684304",
+          "artist": "The Rolling Stones",
+          "title": "Dead Flowers",
+          "score": 0.9400000000000001
+        },
+        {
+          "id": "145920020",
+          "artist": "The Rolling Stones",
+          "title": "Dead Flowers",
+          "score": 0.9400000000000001
+        },
+        {
+          "id": "238051023",
+          "artist": "The Rolling Stones",
+          "title": "Dead Flowers",
+          "score": 0.9400000000000001
+        },
+        {
+          "id": "274850990",
+          "artist": "The Rolling Stones",
+          "title": "Dead Flowers (Live)",
+          "score": 0.9400000000000001
+        },
+        {
+          "id": "274855674",
+          "artist": "The Rolling Stones",
+          "title": "Dead Flowers",
+          "score": 0.9400000000000001
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "fiona-apple-shadowboxer",
+        "artist": "Fiona Apple",
+        "title": "Shadowboxer"
+      },
+      "parsed": {
+        "title": "Shadowboxer",
+        "artist": "FIONA APPLE",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "FIONA APPLE Shadowboxer",
+      "bestMatch": {
+        "id": "33771518",
+        "artist": "Fiona Apple",
+        "title": "Shadowboxer",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "33771518",
+          "artist": "Fiona Apple",
+          "title": "Shadowboxer",
+          "score": 1
+        },
+        {
+          "id": "137338102",
+          "artist": "Fiona Apple",
+          "title": "I Want You To Love Me",
+          "score": 0.4
+        },
+        {
+          "id": "137338103",
+          "artist": "Fiona Apple",
+          "title": "Shameika",
+          "score": 0.4
+        },
+        {
+          "id": "137338104",
+          "artist": "Fiona Apple",
+          "title": "Fetch The Bolt Cutters",
+          "score": 0.4
+        },
+        {
+          "id": "137338105",
+          "artist": "Fiona Apple",
+          "title": "Under The Table",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "blood-orange-not-good",
+        "artist": "Blood Orange",
+        "title": "You're Not Good Enough"
+      },
+      "parsed": {
+        "title": "You're Not Good Enough",
+        "artist": "BLOOD ORANGE",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "BLOOD ORANGE Youre Not Good Enough",
+      "bestMatch": {
+        "id": "23673563",
+        "artist": "Blood Orange",
+        "title": "You're Not Good Enough",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "23673563",
+          "artist": "Blood Orange",
+          "title": "You're Not Good Enough",
+          "score": 1
+        },
+        {
+          "id": "241980094",
+          "artist": "Blood Orange",
+          "title": "You're Not Good Enough",
+          "score": 1
+        },
+        {
+          "id": "30405451",
+          "artist": "Blood Orange",
+          "title": "You're Not Good Enough",
+          "score": 1
+        },
+        {
+          "id": "112195464",
+          "artist": "Blood Orange",
+          "title": "Good For You",
+          "score": 0.6
+        },
+        {
+          "id": "23673565",
+          "artist": "Blood Orange",
+          "title": "No Right Thing",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "truman-sinclair-dust",
+        "artist": "Truman Sinclair",
+        "title": "dust to dust"
+      },
+      "parsed": {
+        "title": "dust to dust",
+        "artist": "TRUMAN SINCLAIR",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-title",
+      "searchQuery": "TRUMAN SINCLAIR dust to dust",
+      "bestMatch": {
+        "id": "490082020",
+        "artist": "Truman Sinclair",
+        "title": "dust to dust",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "490082020",
+          "artist": "Truman Sinclair",
+          "title": "dust to dust",
+          "score": 1
+        },
+        {
+          "id": "108259147",
+          "artist": "Quixotic",
+          "title": "Dust to Dust",
+          "score": 0.6
+        },
+        {
+          "id": "120433962",
+          "artist": "Menahan Street Band",
+          "title": "Dust to Dust",
+          "score": 0.6
+        },
+        {
+          "id": "194465267",
+          "artist": "The Civil Wars",
+          "title": "Dust to Dust",
+          "score": 0.6
+        },
+        {
+          "id": "19978062",
+          "artist": "Cloud One",
+          "title": "Dust to Dust",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "dbt-outfit",
+        "artist": "Drive-By Truckers",
+        "title": "Outfit"
+      },
+      "parsed": {
+        "title": "Outfit",
+        "artist": "DRIVE-BY TRUCKERS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "DRIVE-BY TRUCKERS Outfit",
+      "bestMatch": {
+        "id": "111697282",
+        "artist": "Drive-By Truckers",
+        "title": "Outfit",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "111697282",
+          "artist": "Drive-By Truckers",
+          "title": "Outfit",
+          "score": 1
+        },
+        {
+          "id": "460371968",
+          "artist": "Drive-By Truckers",
+          "title": "Outfit",
+          "score": 1
+        },
+        {
+          "id": "188712509",
+          "artist": "Drive-By Truckers",
+          "title": "Outfit (Live)",
+          "score": 0.85
+        },
+        {
+          "id": "111695458",
+          "artist": "Drive-By Truckers",
+          "title": "Where the Devil Don't Stay",
+          "score": 0.4
+        },
+        {
+          "id": "111695462",
+          "artist": "Drive-By Truckers",
+          "title": "Carl Perkins' Cadillac",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "majical-cloudz-downtown",
+        "artist": "Majical Cloudz",
+        "title": "Downtown"
+      },
+      "parsed": {
+        "title": "Downtown",
+        "artist": "MAJICAL CLOUDZ",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "MAJICAL CLOUDZ Downtown",
+      "bestMatch": {
+        "id": "52341980",
+        "artist": "Majical Cloudz",
+        "title": "Downtown",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "52341980",
+          "artist": "Majical Cloudz",
+          "title": "Downtown",
+          "score": 1
+        },
+        {
+          "id": "88631840",
+          "artist": "Majical Cloudz",
+          "title": "Downtown",
+          "score": 1
+        },
+        {
+          "id": "19705108",
+          "artist": "Majical Cloudz",
+          "title": "What That Was",
+          "score": 0.4
+        },
+        {
+          "id": "20134570",
+          "artist": "Majical Cloudz",
+          "title": "Impersonator",
+          "score": 0.4
+        },
+        {
+          "id": "20134571",
+          "artist": "Majical Cloudz",
+          "title": "This is Magic",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "big-star-watch-sunrise",
+        "artist": "Big Star",
+        "title": "Watch The Sunrise"
+      },
+      "parsed": {
+        "title": "Watch The Sunrise",
+        "artist": "BIG STAR",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "BIG STAR Watch The Sunrise",
+      "bestMatch": {
+        "id": "3089108",
+        "artist": "Big Star",
+        "title": "Watch the Sunrise (Live at Lafayette's Music Room, Memphis, TN, January 1973)",
+        "score": 0.85
+      },
+      "topCandidates": [
+        {
+          "id": "3089108",
+          "artist": "Big Star",
+          "title": "Watch the Sunrise (Live at Lafayette's Music Room, Memphis, TN, January 1973)",
+          "score": 0.85
+        },
+        {
+          "id": "317065467",
+          "artist": "Big Star",
+          "title": "Watch The Sunrise (Live at Lafayette's Music Room)",
+          "score": 0.85
+        },
+        {
+          "id": "445609006",
+          "artist": "Chris Lake",
+          "title": "Watch The Sunrise",
+          "score": 0.6
+        },
+        {
+          "id": "117142574",
+          "artist": "Fink",
+          "title": "We Watch The Stars",
+          "score": 0.24
+        },
+        {
+          "id": "134888326",
+          "artist": "Fink",
+          "title": "We Watch The Stars",
+          "score": 0.24
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "elf-power-jane",
+        "artist": "Elf Power",
+        "title": "Jane"
+      },
+      "parsed": {
+        "title": "Jane",
+        "artist": "ELF POWER",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "ELF POWER Jane",
+      "bestMatch": {
+        "id": "82221831",
+        "artist": "Elf Power",
+        "title": "Jane",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "82221831",
+          "artist": "Elf Power",
+          "title": "Jane",
+          "score": 1
+        },
+        {
+          "id": "1655786",
+          "artist": "Elf Power",
+          "title": "Spiral Stairs",
+          "score": 0.4
+        },
+        {
+          "id": "1655788",
+          "artist": "Elf Power",
+          "title": "Paralyzed",
+          "score": 0.4
+        },
+        {
+          "id": "216418156",
+          "artist": "Elf Power",
+          "title": "The Gas Inside the Tank",
+          "score": 0.4
+        },
+        {
+          "id": "216590985",
+          "artist": "Elf Power",
+          "title": "Artificial Countrysides",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "rhett-miller-world",
+        "artist": "Rhett Miller",
+        "title": "World Inside the World"
+      },
+      "parsed": {
+        "title": "World Inside the World",
+        "artist": "RHETT MILLER",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "RHETT MILLER World Inside the World",
+      "bestMatch": {
+        "id": "3467104",
+        "artist": "Rhett Miller",
+        "title": "World Inside the World",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "3467104",
+          "artist": "Rhett Miller",
+          "title": "World Inside the World",
+          "score": 1
+        },
+        {
+          "id": "186127145",
+          "artist": "Kosh",
+          "title": "The World Inside",
+          "score": 0.6
+        },
+        {
+          "id": "192203947",
+          "artist": "Tacoma Narrows Bridge Disaster",
+          "title": "The World Inside",
+          "score": 0.6
+        },
+        {
+          "id": "285417051",
+          "artist": "Charlotte de Witte",
+          "title": "The World Inside",
+          "score": 0.6
+        },
+        {
+          "id": "26919939",
+          "artist": "John Harrison",
+          "title": "The World Inside Your Eyes",
+          "score": 0.36
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "father-john-misty-companion",
+        "artist": "Father John Misty",
+        "title": "Everyman Needs a Companion"
+      },
+      "parsed": {
+        "title": "Everyman Needs a Companion",
+        "artist": "FATHER JOHN MISTY",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "FATHER JOHN MISTY Everyman Needs a Companion",
+      "bestMatch": {
+        "id": "34442250",
+        "artist": "Father John Misty",
+        "title": "Everyman Needs a Companion",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "34442250",
+          "artist": "Father John Misty",
+          "title": "Everyman Needs a Companion",
+          "score": 1
+        },
+        {
+          "id": "219949432",
+          "artist": "Father John Misty",
+          "title": "Only A Fool",
+          "score": 0.5
+        },
+        {
+          "id": "34442242",
+          "artist": "Father John Misty",
+          "title": "I'm Writing a Novel",
+          "score": 0.47500000000000003
+        },
+        {
+          "id": "219949413",
+          "artist": "Father John Misty",
+          "title": "Goodbye Mr. Blue",
+          "score": 0.4
+        },
+        {
+          "id": "34442239",
+          "artist": "Father John Misty",
+          "title": "Funtimes in Babylon",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    }
+  ]
+}

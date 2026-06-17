@@ -1,0 +1,247 @@
+/* App layout and WebTUI extensions */
+
+:root {
+  --app-max-width: 64ch;
+  --app-gutter: 2ch;
+  --radius-base: 6px;
+  --radius-medium: 12px;
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-menu: 0 4px 8px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header,
+.app-main {
+  width: 100%;
+  max-width: var(--app-max-width);
+  margin-inline: auto;
+  padding-inline: var(--app-gutter);
+  box-sizing: border-box;
+}
+
+.app-header {
+  padding-top: 1lh;
+}
+
+.app-main {
+  flex: 1;
+  padding-top: 1lh;
+  padding-bottom: 2lh;
+  min-width: 0;
+}
+
+.muted {
+  color: var(--foreground2);
+}
+
+.error-text {
+  color: #c40000;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  padding: 1lh 1ch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.panel--compact {
+  gap: 0.5lh;
+}
+
+.panel--overlap {
+  padding: 0 1ch 1lh;
+  gap: 0.5lh;
+}
+
+.panel__title {
+  display: flex;
+  font: inherit;
+  margin: 0;
+}
+
+.panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+  min-width: 0;
+}
+
+.toast {
+  position: fixed;
+  bottom: 2lh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(
+    calc(100% - 2 * var(--app-gutter)),
+    calc(var(--app-max-width) - 2 * var(--app-gutter))
+  );
+  padding: 0.5lh 2ch;
+  box-sizing: border-box;
+  text-align: center;
+  z-index: 100;
+}
+
+.review__footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--app-max-width));
+  padding: 0 var(--app-gutter) 1lh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5lh;
+  box-sizing: border-box;
+  z-index: 50;
+  background: var(--background0);
+}
+
+.review__footer > [is-='badge'] {
+  align-self: flex-start;
+}
+
+.review__footer-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5lh;
+}
+
+.review__footer-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25lh;
+  min-width: 0;
+  width: 100%;
+  padding-inline: 1ch;
+  padding-bottom: 0.5lh;
+  box-sizing: border-box;
+}
+
+.review__footer-field > [is-='badge'] {
+  align-self: flex-start;
+}
+
+.review__footer-field-input {
+  display: block;
+  width: 100%;
+}
+
+.review__footer-field-input input {
+  width: 100%;
+}
+
+.review__footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1ch;
+  flex-wrap: wrap;
+}
+
+.row-enter {
+  animation: row-enter 0.3s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes row-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.micro-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--foreground2);
+}
+
+@layer components {
+  /*
+   * WebTUI box borders assume container padding (1lh). Buttons use compact
+   * padding/height, so the :before border collapses to a center line on
+   * size-small (1lh) buttons — override sizing for button elements only.
+   */
+  button[box-] {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  button[box-][size-=small] {
+    min-height: calc(1lh + var(--box-border-width, 2px) * 2);
+    height: auto;
+  }
+
+  button[box-]::before {
+    width: calc(100% - var(--box-border-width, 2px) * 2);
+    height: calc(100% - var(--box-border-width, 2px) * 2);
+  }
+
+  /* Line-through on disabled buttons reads as a rendering bug in this UI */
+  button:disabled {
+    text-decoration: none;
+    opacity: 0.45;
+  }
+
+  [is-~='badge'][variant-='matched'] {
+    --badge-color: var(--foreground0);
+    --badge-text: var(--background0);
+  }
+
+  [is-~='badge'][variant-='ambiguous'] {
+    --badge-color: #a35200;
+    --badge-text: var(--background0);
+  }
+
+  [is-~='badge'][variant-='not-found'] {
+    --badge-color: #c40000;
+    --badge-text: var(--background0);
+  }
+
+  [is-~='badge'][variant-='connected'] {
+    --badge-color: #007a41;
+    --badge-text: var(--background0);
+  }
+
+  [is-~='badge'][variant-='flamingo'] {
+    --badge-color: #e84a8a;
+    --badge-text: var(--background0);
+  }
+
+  select {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    background: var(--background0);
+    color: var(--foreground0);
+    border: none;
+    padding: 0 1ch;
+    height: 1lh;
+    width: 100%;
+  }
+}
+
+textarea {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  background: transparent;
+  color: var(--foreground0);
+  border: none;
+  padding: 0 1ch;
+  height: 1lh;
+  width: 100%;
+}

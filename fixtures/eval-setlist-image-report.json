@@ -1,0 +1,1744 @@
+{
+  "generatedAt": "2026-06-06T15:22:53.769Z",
+  "image": "/Users/sdr/experiment/tidal-playlist/fixtures/parsed-setlist-image.json",
+  "parseModel": "gemini-2.5-flash",
+  "parseDurationMs": 8159,
+  "summary": {
+    "parsedCount": 30,
+    "groundTruthCount": 30,
+    "parseRecall": 30,
+    "matched": 29,
+    "ambiguous": 1,
+    "notFound": 0,
+    "matchRate": "29/30"
+  },
+  "planTriggers": {
+    "A": [],
+    "B": [
+      "old-97s-champaign"
+    ],
+    "C": [],
+    "D": [],
+    "E": [],
+    "F": [],
+    "G": [],
+    "I": []
+  },
+  "songs": [
+    {
+      "groundTruth": {
+        "id": "teenage-fanclub-what-you-do",
+        "artist": "Teenage Fanclub",
+        "title": "What You Do To Me"
+      },
+      "parsed": {
+        "title": "What You Do To Me",
+        "artist": "TEENAGE FANCLUB",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "TEENAGE FANCLUB What You Do To Me",
+      "bestMatch": {
+        "id": "35977566",
+        "artist": "Teenage Fanclub",
+        "title": "What You Do To Me",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "35977566",
+          "artist": "Teenage Fanclub",
+          "title": "What You Do To Me",
+          "score": 1
+        },
+        {
+          "id": "128384212",
+          "artist": "53 Thieves",
+          "title": "what you do to me",
+          "score": 0.6
+        },
+        {
+          "id": "269257369",
+          "artist": "Majid Jordan",
+          "title": "What You Do to Me",
+          "score": 0.6
+        },
+        {
+          "id": "27228948",
+          "artist": "Dan + Shay",
+          "title": "What You Do to Me",
+          "score": 0.6
+        },
+        {
+          "id": "34390584",
+          "artist": "Jim Jones",
+          "title": "What You Do to Me (feat. Billy Danze, Jim Jones & Nicole Wray)",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "superchunk-good-dreams",
+        "artist": "Superchunk",
+        "title": "Good Dreams"
+      },
+      "parsed": {
+        "title": "Good Dreams",
+        "artist": "SUPERCHUNK",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "SUPERCHUNK Good Dreams",
+      "bestMatch": {
+        "id": "48345296",
+        "artist": "Superchunk",
+        "title": "Good Dreams",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "48345296",
+          "artist": "Superchunk",
+          "title": "Good Dreams",
+          "score": 1
+        },
+        {
+          "id": "191440884",
+          "artist": "Reek0",
+          "title": "Good Dreams",
+          "score": 0.6
+        },
+        {
+          "id": "20298151",
+          "artist": "Susan Gable",
+          "title": "Good Dreams",
+          "score": 0.6
+        },
+        {
+          "id": "244111400",
+          "artist": "the pillows",
+          "title": "GOOD DREAMS",
+          "score": 0.6
+        },
+        {
+          "id": "25873424",
+          "artist": "chrome",
+          "title": "Our Good Dreams",
+          "score": 0.51
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "fugazi-public-witness",
+        "artist": "Fugazi",
+        "title": "Public Witness Program"
+      },
+      "parsed": {
+        "title": "Public Witness Program",
+        "artist": "FUGAZI",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "FUGAZI Public Witness Program",
+      "bestMatch": {
+        "id": "437648095",
+        "artist": "Fugazi",
+        "title": "Public Witness Program - NYC NY 09/24/93_FLS0593",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "437648095",
+          "artist": "Fugazi",
+          "title": "Public Witness Program - NYC NY 09/24/93_FLS0593",
+          "score": 1
+        },
+        {
+          "id": "446594705",
+          "artist": "Fugazi",
+          "title": "Public Witness Program - Los Angeles CA 03/08/99_FLS1049",
+          "score": 1
+        },
+        {
+          "id": "76117643",
+          "artist": "Fugazi",
+          "title": "Waiting Room",
+          "score": 0.4
+        },
+        {
+          "id": "76117644",
+          "artist": "Fugazi",
+          "title": "Bulldog Front",
+          "score": 0.4
+        },
+        {
+          "id": "76117645",
+          "artist": "Fugazi",
+          "title": "Bad Mouth",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "charly-bliss-percolator",
+        "artist": "Charly Bliss",
+        "title": "Percolator"
+      },
+      "parsed": {
+        "title": "Percolator",
+        "artist": "CHARLY BLISS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "CHARLY BLISS Percolator",
+      "bestMatch": {
+        "id": "111438616",
+        "artist": "Charly Bliss",
+        "title": "Percolator",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "111438616",
+          "artist": "Charly Bliss",
+          "title": "Percolator",
+          "score": 1
+        },
+        {
+          "id": "111438617",
+          "artist": "Charly Bliss",
+          "title": "Westermarck",
+          "score": 0.4
+        },
+        {
+          "id": "111438618",
+          "artist": "Charly Bliss",
+          "title": "Glitter",
+          "score": 0.4
+        },
+        {
+          "id": "111438619",
+          "artist": "Charly Bliss",
+          "title": "Black Hole",
+          "score": 0.4
+        },
+        {
+          "id": "111438620",
+          "artist": "Charly Bliss",
+          "title": "Scare U",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "built-to-spill-big-dipper",
+        "artist": "Built to Spill",
+        "title": "Big Dipper"
+      },
+      "parsed": {
+        "title": "Big Dipper",
+        "artist": "BUILT TO SPILL",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "BUILT TO SPILL Big Dipper",
+      "bestMatch": {
+        "id": "3726739",
+        "artist": "Built To Spill",
+        "title": "Big Dipper",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "3726739",
+          "artist": "Built To Spill",
+          "title": "Big Dipper",
+          "score": 1
+        },
+        {
+          "id": "10916033",
+          "artist": "Built To Spill",
+          "title": "Strange",
+          "score": 0.4
+        },
+        {
+          "id": "306840",
+          "artist": "Built To Spill",
+          "title": "Goin' Against Your Mind",
+          "score": 0.4
+        },
+        {
+          "id": "306842",
+          "artist": "Built To Spill",
+          "title": "Liar",
+          "score": 0.4
+        },
+        {
+          "id": "34433619",
+          "artist": "Built To Spill",
+          "title": "The Plan",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "mildred-fish-sticks",
+        "artist": "Mildred",
+        "title": "Fish Sticks"
+      },
+      "parsed": {
+        "title": "Fish Sticks",
+        "artist": "MILDRED",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "MILDRED Fish Sticks",
+      "bestMatch": {
+        "id": "480118447",
+        "artist": "Mildred",
+        "title": "Fish Sticks",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "480118447",
+          "artist": "Mildred",
+          "title": "Fish Sticks",
+          "score": 1
+        },
+        {
+          "id": "102384037",
+          "artist": "Unit Moebius",
+          "title": "Fish Sticks",
+          "score": 0.6
+        },
+        {
+          "id": "170860043",
+          "artist": "Da Vinci's Notebook",
+          "title": "Fish Sticks",
+          "score": 0.6
+        },
+        {
+          "id": "193993561",
+          "artist": "Gerald",
+          "title": "Fish Sticks",
+          "score": 0.6
+        },
+        {
+          "id": "20931162",
+          "artist": "Earth Dies Burning",
+          "title": "Fish Sticks",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "deer-tick-lets-go",
+        "artist": "Deer Tick",
+        "title": "Let's Go Dancing"
+      },
+      "parsed": {
+        "title": "Let's Go Dancing",
+        "artist": "DEER TICK",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "artist-album-browse",
+      "searchQuery": "DEER TICK Lets Go Dancing",
+      "bestMatch": {
+        "id": "509467010",
+        "artist": "Deer Tick",
+        "title": "Let’s Go Dancing",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "509467010",
+          "artist": "Deer Tick",
+          "title": "Let’s Go Dancing",
+          "score": 1
+        },
+        {
+          "id": "319173203",
+          "artist": "Deer Tick",
+          "title": "Dancing In The Dark",
+          "score": 0.4857142857142857
+        },
+        {
+          "id": "286047240",
+          "artist": "Deer Tick",
+          "title": "A Light Can Go Out in the Heart",
+          "score": 0.4545454545454546
+        },
+        {
+          "id": "386970000",
+          "artist": "Tiga",
+          "title": "Let's Go Dancing",
+          "score": 0.6
+        },
+        {
+          "id": "35476108",
+          "artist": "Wang Chung",
+          "title": "Let's Go",
+          "score": 0.3825
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "hovvdy-jean",
+        "artist": "Hovvdy",
+        "title": "Jean"
+      },
+      "parsed": {
+        "title": "Jean",
+        "artist": "HOVVDY",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "HOVVDY Jean",
+      "bestMatch": {
+        "id": "358207896",
+        "artist": "Hovvdy",
+        "title": "Jean",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "358207896",
+          "artist": "Hovvdy",
+          "title": "Jean",
+          "score": 1
+        },
+        {
+          "id": "393226164",
+          "artist": "Hovvdy",
+          "title": "Jean",
+          "score": 1
+        },
+        {
+          "id": "135695818",
+          "artist": "Hovvdy",
+          "title": "Pretend",
+          "score": 0.4
+        },
+        {
+          "id": "358207895",
+          "artist": "Hovvdy",
+          "title": "Bubba",
+          "score": 0.4
+        },
+        {
+          "id": "4276218",
+          "artist": "Oliver",
+          "title": "Jean",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "dandy-warhols-ride",
+        "artist": "The Dandy Warhols",
+        "title": "Ride"
+      },
+      "parsed": {
+        "title": "Ride",
+        "artist": "THE DANDY WARHOLS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE DANDY WARHOLS Ride",
+      "bestMatch": {
+        "id": "59789243",
+        "artist": "The Dandy Warhols",
+        "title": "Ride",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "59789243",
+          "artist": "The Dandy Warhols",
+          "title": "Ride",
+          "score": 1
+        },
+        {
+          "id": "117025704",
+          "artist": "The Growlers",
+          "title": "Night Ride",
+          "score": 0.61
+        },
+        {
+          "id": "275151297",
+          "artist": "The Dandy Warhols",
+          "title": "Finale: It's A Fast-Driving Rave-Up With The Dandy Warhols Sixteen Minutes",
+          "score": 0.4
+        },
+        {
+          "id": "275151364",
+          "artist": "The Dandy Warhols",
+          "title": "Boys Better",
+          "score": 0.4
+        },
+        {
+          "id": "275151365",
+          "artist": "The Dandy Warhols",
+          "title": "Minnesoter",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "soft-boys-destroy",
+        "artist": "The Soft Boys",
+        "title": "I Wanna Destroy You"
+      },
+      "parsed": {
+        "title": "I Wanna Destroy You",
+        "artist": "THE SOFT BOYS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE SOFT BOYS I Wanna Destroy You",
+      "bestMatch": {
+        "id": "111595255",
+        "artist": "The Soft Boys",
+        "title": "I Wanna Destroy You",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "111595255",
+          "artist": "The Soft Boys",
+          "title": "I Wanna Destroy You",
+          "score": 1
+        },
+        {
+          "id": "111595293",
+          "artist": "The Soft Boys",
+          "title": "I Wanna, Er",
+          "score": 0.64
+        },
+        {
+          "id": "101805043",
+          "artist": "The Slurs",
+          "title": "I Wanna Destroy You",
+          "score": 0.7
+        },
+        {
+          "id": "111595259",
+          "artist": "The Soft Boys",
+          "title": "Insanely Jealous of You",
+          "score": 0.4857142857142857
+        },
+        {
+          "id": "1867216",
+          "artist": "The Goo Goo Dolls",
+          "title": "I Wanna Destroy You",
+          "score": 0.6799999999999999
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "tragically-hip-vaccination",
+        "artist": "The Tragically Hip",
+        "title": "Vaccination Scar"
+      },
+      "parsed": {
+        "title": "Vaccination Scar",
+        "artist": "THE TRAGICALLY HIP",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE TRAGICALLY HIP Vaccination Scar",
+      "bestMatch": {
+        "id": "104533525",
+        "artist": "The Tragically Hip",
+        "title": "Vaccination Scar",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "104533525",
+          "artist": "The Tragically Hip",
+          "title": "Vaccination Scar",
+          "score": 1
+        },
+        {
+          "id": "7238596",
+          "artist": "The Tragically Hip",
+          "title": "Vaccination Scar",
+          "score": 1
+        },
+        {
+          "id": "151975256",
+          "artist": "The Tragically Hip",
+          "title": "Scared",
+          "score": 0.4
+        },
+        {
+          "id": "151975566",
+          "artist": "The Tragically Hip",
+          "title": "Blow At High Dough",
+          "score": 0.4
+        },
+        {
+          "id": "36056947",
+          "artist": "The Tragically Hip",
+          "title": "Locked In The Trunk Of A Car",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "smashing-pumpkins-frail",
+        "artist": "The Smashing Pumpkins",
+        "title": "Frail & Bedazzled"
+      },
+      "parsed": {
+        "title": "Frail & Bedazzled",
+        "artist": "THE SMASHING PUMPKINS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE SMASHING PUMPKINS Frail and Bedazzled",
+      "bestMatch": {
+        "id": "16307764",
+        "artist": "Smashing Pumpkins",
+        "title": "Frail & Bedazzled",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "16307764",
+          "artist": "Smashing Pumpkins",
+          "title": "Frail & Bedazzled",
+          "score": 1
+        },
+        {
+          "id": "35369081",
+          "artist": "Smashing Pumpkins",
+          "title": "Frail And Bedazzled",
+          "score": 0.8
+        },
+        {
+          "id": "143556",
+          "artist": "Smashing Pumpkins",
+          "title": "The Sacred And Profane",
+          "score": 0.4
+        },
+        {
+          "id": "143560",
+          "artist": "Smashing Pumpkins",
+          "title": "The Imploding Voice",
+          "score": 0.4
+        },
+        {
+          "id": "143561",
+          "artist": "Smashing Pumpkins",
+          "title": "Glass And The Ghost Children",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "vaselines-son-of-gun",
+        "artist": "The Vaselines",
+        "title": "Son Of A Gun"
+      },
+      "parsed": {
+        "title": "Son Of A Gun",
+        "artist": "THE VASELINES",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE VASELINES Son Of A Gun",
+      "bestMatch": {
+        "id": "2663705",
+        "artist": "The Vaselines",
+        "title": "Son of a Gun",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "2663705",
+          "artist": "The Vaselines",
+          "title": "Son of a Gun",
+          "score": 1
+        },
+        {
+          "id": "2663724",
+          "artist": "The Vaselines",
+          "title": "Son of a Gun (Demo)",
+          "score": 1
+        },
+        {
+          "id": "2663727",
+          "artist": "The Vaselines",
+          "title": "Son of a Gun (Live in Bristol)",
+          "score": 0.91
+        },
+        {
+          "id": "1666600",
+          "artist": "The La's",
+          "title": "Son Of A Gun",
+          "score": 0.7
+        },
+        {
+          "id": "142031752",
+          "artist": "Key Glock",
+          "title": "Son Of A Gun",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "rem-good-advices",
+        "artist": "R.E.M.",
+        "title": "Good Advices"
+      },
+      "parsed": {
+        "title": "Good Advices",
+        "artist": "R.E.M.",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "R.E.M. Good Advices",
+      "bestMatch": {
+        "id": "4134730",
+        "artist": "R.E.M.",
+        "title": "Good Advices",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "4134730",
+          "artist": "R.E.M.",
+          "title": "Good Advices",
+          "score": 1
+        },
+        {
+          "id": "77646069",
+          "artist": "R.E.M.",
+          "title": "Good Advices",
+          "score": 1
+        },
+        {
+          "id": "77777299",
+          "artist": "R.E.M.",
+          "title": "Good Advices",
+          "score": 1
+        },
+        {
+          "id": "59111796",
+          "artist": "R.E.M.",
+          "title": "Man On The Moon",
+          "score": 0.4
+        },
+        {
+          "id": "77646066",
+          "artist": "R.E.M.",
+          "title": "Green Grow The Rushes",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "elliott-smith-son-of-sam",
+        "artist": "Elliott Smith",
+        "title": "Son Of Sam"
+      },
+      "parsed": {
+        "title": "Son Of Sam",
+        "artist": "ELLIOTT SMITH",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "ELLIOTT SMITH Son Of Sam",
+      "bestMatch": {
+        "id": "114360590",
+        "artist": "Elliott Smith",
+        "title": "Son Of Sam",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "114360590",
+          "artist": "Elliott Smith",
+          "title": "Son Of Sam",
+          "score": 1
+        },
+        {
+          "id": "2528081",
+          "artist": "Elliott Smith",
+          "title": "Son Of Sam",
+          "score": 1
+        },
+        {
+          "id": "111398731",
+          "artist": "Elliott Smith",
+          "title": "Pictures of Me",
+          "score": 0.52
+        },
+        {
+          "id": "111398729",
+          "artist": "Elliott Smith",
+          "title": "Ballad of Big Nothing",
+          "score": 0.5
+        },
+        {
+          "id": "2528084",
+          "artist": "Elliott Smith",
+          "title": "Everything Reminds Me Of Her",
+          "score": 0.4857142857142857
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "old-97s-champaign",
+        "artist": "Old 97's",
+        "title": "Champaign, Illinois"
+      },
+      "parsed": {
+        "title": "Champaign, Illinois",
+        "artist": "OLD 97'S",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "ambiguous",
+      "strategyUsed": "search-combined",
+      "searchQuery": "OLD 97'S Champaign, Illinois",
+      "bestMatch": {
+        "id": "4918155",
+        "artist": "Carl Perkins",
+        "title": "Champaign, Illinois",
+        "score": 0.6
+      },
+      "topCandidates": [
+        {
+          "id": "4918155",
+          "artist": "Carl Perkins",
+          "title": "Champaign, Illinois",
+          "score": 0.6
+        },
+        {
+          "id": "1886393",
+          "artist": "Dan Fogelberg",
+          "title": "Illinois",
+          "score": 0.51
+        },
+        {
+          "id": "138341228",
+          "artist": "Michel Montecrossa",
+          "title": "Champaign, Illinois",
+          "score": 0.45
+        },
+        {
+          "id": "32235781",
+          "artist": "The Guy Who Sings Songs About Cities & Towns",
+          "title": "Champaign, Illinois",
+          "score": 0.45
+        },
+        {
+          "id": "338527415",
+          "artist": "The Cheatin' Hearts",
+          "title": "Drinkin' Beer in Champaign, Illinois",
+          "score": 0.3825
+        }
+      ],
+      "alternateStrategies": [
+        {
+          "name": "punctuation-normalized",
+          "query": "OLD 97'S Champaign, Illinois",
+          "best": {
+            "id": "1886393",
+            "artist": "Dan Fogelberg",
+            "title": "Illinois",
+            "score": 0.51
+          },
+          "wouldFix": false
+        },
+        {
+          "name": "title-first-no-artist",
+          "query": "Champaign, Illinois",
+          "best": {
+            "id": "138341228",
+            "artist": "Michel Montecrossa",
+            "title": "Champaign, Illinois",
+            "score": 0.6
+          },
+          "wouldFix": false
+        },
+        {
+          "name": "the-prefix:The OLD 97'S",
+          "query": "The OLD 97'S Champaign, Illinois",
+          "best": {
+            "id": "17439883",
+            "artist": "Old 97's",
+            "title": "Timebomb",
+            "score": 0.4
+          },
+          "wouldFix": false
+        }
+      ],
+      "failureReason": "homonym_wrong_artist"
+    },
+    {
+      "groundTruth": {
+        "id": "lissy-trullie-boy-boy",
+        "artist": "Lissy Trullie",
+        "title": "Boy Boy"
+      },
+      "parsed": {
+        "title": "Boy Boy",
+        "artist": "LISSY TRULLIE",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "LISSY TRULLIE Boy Boy",
+      "bestMatch": {
+        "id": "38056978",
+        "artist": "Lissy Trullie",
+        "title": "Boy Boy",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "38056978",
+          "artist": "Lissy Trullie",
+          "title": "Boy Boy",
+          "score": 1
+        },
+        {
+          "id": "458361239",
+          "artist": "lissy",
+          "title": "Funk Boy & Funk Girl (feat. Lissy)",
+          "score": 0.54
+        },
+        {
+          "id": "495426305",
+          "artist": "lissy",
+          "title": "Funk Boy & Funk Girl (Sped up) (feat. Lissy)",
+          "score": 0.54
+        },
+        {
+          "id": "480027051",
+          "artist": "lissy",
+          "title": "Weekend Link (feat. Lissy)",
+          "score": 0.34
+        },
+        {
+          "id": "4076620",
+          "artist": "Book Of Love",
+          "title": "Boy",
+          "score": 0.51
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "sparklehorse-sick",
+        "artist": "Sparklehorse",
+        "title": "Sick Of Goodbyes"
+      },
+      "parsed": {
+        "title": "Sick Of Goodbyes",
+        "artist": "SPARKLEHORSE",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-title",
+      "searchQuery": "SPARKLEHORSE Sick Of Goodbyes",
+      "bestMatch": {
+        "id": "621140",
+        "artist": "Sparklehorse",
+        "title": "Sick Of Goodbyes",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "621140",
+          "artist": "Sparklehorse",
+          "title": "Sick Of Goodbyes",
+          "score": 1
+        },
+        {
+          "id": "108787540",
+          "artist": "Sparklehorse",
+          "title": "King Of Nails",
+          "score": 0.52
+        },
+        {
+          "id": "2877519",
+          "artist": "Sparklehorse",
+          "title": "Heart Of Darkness",
+          "score": 0.52
+        },
+        {
+          "id": "108787536",
+          "artist": "Sparklehorse",
+          "title": "Gold Day",
+          "score": 0.4
+        },
+        {
+          "id": "11198491",
+          "artist": "Cracker",
+          "title": "Sick Of Goodbyes",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "crooked-fingers-call",
+        "artist": "Crooked Fingers",
+        "title": "Call to Love"
+      },
+      "parsed": {
+        "title": "Call to Love",
+        "artist": "CROOKED FINGERS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "CROOKED FINGERS Call to Love",
+      "bestMatch": {
+        "id": "10237368",
+        "artist": "Crooked Fingers",
+        "title": "Call To Love",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "10237368",
+          "artist": "Crooked Fingers",
+          "title": "Call To Love",
+          "score": 1
+        },
+        {
+          "id": "37263306",
+          "artist": "Crooked Fingers",
+          "title": "Call to Love",
+          "score": 1
+        },
+        {
+          "id": "119011406",
+          "artist": "MIKA",
+          "title": "Ready To Call This Love",
+          "score": 0.36
+        },
+        {
+          "id": "270302874",
+          "artist": "Vincent Bohanan & SOV",
+          "title": "I Love to Call Him",
+          "score": 0.36
+        },
+        {
+          "id": "297908711",
+          "artist": "Vincent Bohanan & SOV",
+          "title": "I Love to Call Him (Radio Edit)",
+          "score": 0.306
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "the-weight-job",
+        "artist": "The Weight",
+        "title": "Job to Do"
+      },
+      "parsed": {
+        "title": "Job to Do",
+        "artist": "THE WEIGHT",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-title",
+      "searchQuery": "THE WEIGHT Job to Do",
+      "bestMatch": {
+        "id": "66846409",
+        "artist": "The Weight",
+        "title": "Job to Do",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "66846409",
+          "artist": "The Weight",
+          "title": "Job to Do",
+          "score": 1
+        },
+        {
+          "id": "34454464",
+          "artist": "Genesis",
+          "title": "Just a Job to Do (2007 Remaster)",
+          "score": 0.51
+        },
+        {
+          "id": "25710484",
+          "artist": "The Everly Brothers",
+          "title": "All I Have to Do Is Dream",
+          "score": 0.25
+        },
+        {
+          "id": "144829450",
+          "artist": "The Front Bottoms",
+          "title": "Swear To God The Devil Made Me Do It",
+          "score": 0.22
+        },
+        {
+          "id": "1554381",
+          "artist": "Carly Simon",
+          "title": "The Right Thing to Do",
+          "score": 0.19999999999999998
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "wilco-i-got-you",
+        "artist": "Wilco",
+        "title": "I Got You - Dobro Mix Warzone"
+      },
+      "parsed": {
+        "title": "I Got You - Dobro Mix Warzone",
+        "artist": "WILCO",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "WILCO I Got You",
+      "bestMatch": {
+        "id": "158858751",
+        "artist": "Wilco",
+        "title": "I Got You (At the End of the Century) [Live at the Boulder Theater, Boulder, CO 11/1/99]",
+        "score": 0.91
+      },
+      "topCandidates": [
+        {
+          "id": "158858751",
+          "artist": "Wilco",
+          "title": "I Got You (At the End of the Century) [Live at the Boulder Theater, Boulder, CO 11/1/99]",
+          "score": 0.91
+        },
+        {
+          "id": "37712021",
+          "artist": "Wilco",
+          "title": "I Got You at the End of the Century (Live)",
+          "score": 0.8334999999999999
+        },
+        {
+          "id": "127864510",
+          "artist": "Split Enz",
+          "title": "I Got You",
+          "score": 0.6
+        },
+        {
+          "id": "22302655",
+          "artist": "Jack Johnson",
+          "title": "I Got You",
+          "score": 0.6
+        },
+        {
+          "id": "13666231",
+          "artist": "Cher",
+          "title": "I Got You Babe",
+          "score": 0.51
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "replacements-unsatisfied",
+        "artist": "The Replacements",
+        "title": "Unsatisfied"
+      },
+      "parsed": {
+        "title": "Unsatisfied",
+        "artist": "THE REPLACEMENTS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE REPLACEMENTS Unsatisfied",
+      "bestMatch": {
+        "id": "339350",
+        "artist": "The Replacements",
+        "title": "Unsatisfied",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "339350",
+          "artist": "The Replacements",
+          "title": "Unsatisfied",
+          "score": 1
+        },
+        {
+          "id": "117270991",
+          "artist": "The Replacements",
+          "title": "Unsatisfied (Live at University of Wisconsin-Milwaukee, WI, 6/2/1989)",
+          "score": 0.91
+        },
+        {
+          "id": "315337603",
+          "artist": "The Replacements",
+          "title": "Unsatisfied (Live at the Cabaret Metro, Chicago, IL, 1/11/86)",
+          "score": 0.91
+        },
+        {
+          "id": "452874954",
+          "artist": "The Replacements",
+          "title": "Unsatisfied (Alternate Mix) [Full-Length Version]",
+          "score": 0.91
+        },
+        {
+          "id": "452874960",
+          "artist": "The Replacements",
+          "title": "Unsatisfied (Live at Cubby Bear, Chicago, IL, 8/17/84)",
+          "score": 0.91
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "foo-fighters-big-me",
+        "artist": "Foo Fighters",
+        "title": "Big Me"
+      },
+      "parsed": {
+        "title": "Big Me",
+        "artist": "FOO FIGHTERS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "FOO FIGHTERS Big Me",
+      "bestMatch": {
+        "id": "116415087",
+        "artist": "Foo Fighters",
+        "title": "Big Me",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "116415087",
+          "artist": "Foo Fighters",
+          "title": "Big Me",
+          "score": 1
+        },
+        {
+          "id": "1290429",
+          "artist": "Foo Fighters",
+          "title": "Big Me",
+          "score": 1
+        },
+        {
+          "id": "50856335",
+          "artist": "Foo Fighters",
+          "title": "Big Me",
+          "score": 1
+        },
+        {
+          "id": "600178",
+          "artist": "Foo Fighters",
+          "title": "Big Me",
+          "score": 1
+        },
+        {
+          "id": "12197725",
+          "artist": "Foo Fighters",
+          "title": "Free Me",
+          "score": 0.6
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "j-mascis-movies",
+        "artist": "J Mascis",
+        "title": "See You At The Movies"
+      },
+      "parsed": {
+        "title": "See You At The Movies",
+        "artist": "J MASCIS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-title",
+      "searchQuery": "J MASCIS See You At The Movies",
+      "bestMatch": {
+        "id": "97184850",
+        "artist": "J Mascis",
+        "title": "See You At The Movies",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "97184850",
+          "artist": "J Mascis",
+          "title": "See You At The Movies",
+          "score": 1
+        },
+        {
+          "id": "273388472",
+          "artist": "レトロマイガール！！",
+          "title": "See you at the movies",
+          "score": 0.9175
+        },
+        {
+          "id": "141387846",
+          "artist": "Autonomads",
+          "title": "See You at the J.C.P",
+          "score": 0.3
+        },
+        {
+          "id": "153843580",
+          "artist": "Mike Crawford and His Secret Siblings",
+          "title": "The Woman at Jacob's Well or When Did We See You Thirsty?",
+          "score": 0.1714285714285714
+        },
+        {
+          "id": "102476788",
+          "artist": "Jefferson Airplane",
+          "title": "Have You Seen the Saucers (Live at Winterland Ballroom, San Francisco, CA September 1972)",
+          "score": 0.1275
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "van-morrison-purple",
+        "artist": "Van Morrison",
+        "title": "Purple Heather"
+      },
+      "parsed": {
+        "title": "Purple Heather",
+        "artist": "VAN MORRISON",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "VAN MORRISON Purple Heather",
+      "bestMatch": {
+        "id": "450071123",
+        "artist": "Van Morrison",
+        "title": "Purple Heather",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "450071123",
+          "artist": "Van Morrison",
+          "title": "Purple Heather",
+          "score": 1
+        },
+        {
+          "id": "452372723",
+          "artist": "Van Morrison",
+          "title": "Purple Heather (Live at the Troubadour, Los Angeles, CA - May 1973)",
+          "score": 0.91
+        },
+        {
+          "id": "213656",
+          "artist": "Van Morrison",
+          "title": "Domino (1999 Remaster)",
+          "score": 0.4
+        },
+        {
+          "id": "22968234",
+          "artist": "Van Morrison",
+          "title": "And It Stoned Me (2013 Remaster)",
+          "score": 0.4
+        },
+        {
+          "id": "22968235",
+          "artist": "Van Morrison",
+          "title": "Moondance (2013 Remaster)",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "white-fence-eyes",
+        "artist": "White Fence",
+        "title": "Your Eyes"
+      },
+      "parsed": {
+        "title": "Your Eyes",
+        "artist": "WHITE FENCE",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "WHITE FENCE Your Eyes",
+      "bestMatch": {
+        "id": "489537401",
+        "artist": "White Fence",
+        "title": "Your Eyes",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "489537401",
+          "artist": "White Fence",
+          "title": "Your Eyes",
+          "score": 1
+        },
+        {
+          "id": "5189695",
+          "artist": "White Fence",
+          "title": "Your Last Friend Alive",
+          "score": 0.502
+        },
+        {
+          "id": "5189707",
+          "artist": "White Fence",
+          "title": "You Can't Put Your Arms Around a Memory",
+          "score": 0.46
+        },
+        {
+          "id": "35716389",
+          "artist": "Barry White",
+          "title": "Love Is In Your Eyes",
+          "score": 0.6433333333333333
+        },
+        {
+          "id": "97241448",
+          "artist": "Peter White",
+          "title": "Lost In Your Eyes",
+          "score": 0.6433333333333333
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "drive-by-truckers-outfit",
+        "artist": "Drive-By Truckers",
+        "title": "Outfit"
+      },
+      "parsed": {
+        "title": "Outfit",
+        "artist": "DRIVE-BY TRUCKERS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "DRIVE-BY TRUCKERS Outfit",
+      "bestMatch": {
+        "id": "111697282",
+        "artist": "Drive-By Truckers",
+        "title": "Outfit",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "111697282",
+          "artist": "Drive-By Truckers",
+          "title": "Outfit",
+          "score": 1
+        },
+        {
+          "id": "460371968",
+          "artist": "Drive-By Truckers",
+          "title": "Outfit",
+          "score": 1
+        },
+        {
+          "id": "188712509",
+          "artist": "Drive-By Truckers",
+          "title": "Outfit (Live)",
+          "score": 0.91
+        },
+        {
+          "id": "111695458",
+          "artist": "Drive-By Truckers",
+          "title": "Where the Devil Don't Stay",
+          "score": 0.4
+        },
+        {
+          "id": "111695462",
+          "artist": "Drive-By Truckers",
+          "title": "Carl Perkins' Cadillac",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "oldstar-whiskey",
+        "artist": "Oldstar",
+        "title": "Whiskey"
+      },
+      "parsed": {
+        "title": "Whiskey",
+        "artist": "OLDSTAR",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "OLDSTAR Whiskey",
+      "bestMatch": {
+        "id": "504668867",
+        "artist": "oldstar",
+        "title": "Whiskey",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "504668867",
+          "artist": "oldstar",
+          "title": "Whiskey",
+          "score": 1
+        },
+        {
+          "id": "213999189",
+          "artist": "Hippie Sabotage",
+          "title": "Whiskey",
+          "score": 0.6
+        },
+        {
+          "id": "69035328",
+          "artist": "Tejon Street Corner Thieves",
+          "title": "Whiskey",
+          "score": 0.6
+        },
+        {
+          "id": "3247364",
+          "artist": "Highway 101",
+          "title": "Whiskey, If You Were a Woman",
+          "score": 0.51
+        },
+        {
+          "id": "3460679",
+          "artist": "Willie Nelson",
+          "title": "Whiskey River",
+          "score": 0.51
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "jayhawks-right-reasons",
+        "artist": "The Jayhawks",
+        "title": "All The Right Reasons"
+      },
+      "parsed": {
+        "title": "All The Right Reasons",
+        "artist": "THE JAYHAWKS",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "THE JAYHAWKS All The Right Reasons",
+      "bestMatch": {
+        "id": "31148606",
+        "artist": "The Jayhawks",
+        "title": "All The Right Reasons (Rotterdam)",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "31148606",
+          "artist": "The Jayhawks",
+          "title": "All The Right Reasons (Rotterdam)",
+          "score": 1
+        },
+        {
+          "id": "43758284",
+          "artist": "The Jayhawks",
+          "title": "All the Right Reasons (Live)",
+          "score": 0.91
+        },
+        {
+          "id": "39189432",
+          "artist": "The Ritchie Family",
+          "title": "All Right On the Night",
+          "score": 0.4
+        },
+        {
+          "id": "240584639",
+          "artist": "Arcando",
+          "title": "All The Right Moves (feat. Chris Jobe)",
+          "score": 0.36
+        },
+        {
+          "id": "2571162",
+          "artist": "Tom Petty",
+          "title": "All The Wrong Reasons",
+          "score": 0.36
+        }
+      ],
+      "alternateStrategies": []
+    },
+    {
+      "groundTruth": {
+        "id": "jte-graceland",
+        "artist": "Justin Townes Earle",
+        "title": "Graceland"
+      },
+      "parsed": {
+        "title": "Graceland",
+        "artist": "JUSTIN TOWNES EARLE",
+        "confidence": "high",
+        "source": "image"
+      },
+      "parseMatchedGroundTruth": true,
+      "status": "matched",
+      "strategyUsed": "search-combined",
+      "searchQuery": "JUSTIN TOWNES EARLE Graceland",
+      "bestMatch": {
+        "id": "111683488",
+        "artist": "Justin Townes Earle",
+        "title": "Graceland",
+        "score": 1
+      },
+      "topCandidates": [
+        {
+          "id": "111683488",
+          "artist": "Justin Townes Earle",
+          "title": "Graceland",
+          "score": 1
+        },
+        {
+          "id": "111680734",
+          "artist": "Justin Townes Earle",
+          "title": "The Saint of Lost Causes",
+          "score": 0.4
+        },
+        {
+          "id": "111680735",
+          "artist": "Justin Townes Earle",
+          "title": "Ain't Got No Money",
+          "score": 0.4
+        },
+        {
+          "id": "111680736",
+          "artist": "Justin Townes Earle",
+          "title": "Mornings in Memphis",
+          "score": 0.4
+        },
+        {
+          "id": "111680737",
+          "artist": "Justin Townes Earle",
+          "title": "Don't Drink the Water",
+          "score": 0.4
+        }
+      ],
+      "alternateStrategies": []
+    }
+  ]
+}

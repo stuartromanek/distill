@@ -1,0 +1,29 @@
+[
+  {
+    "id": "radiohead-creep",
+    "input": { "artist": "Radiohead", "title": "Creep" },
+    "expectedTrackId": "189051144",
+    "expectedUrl": "https://tidal.com/browse/track/189051144",
+    "source": "reference-playlist",
+    "notes": "Example row — replace with your playlist export"
+  },
+  {
+    "id": "bjork-hyperballad",
+    "input": { "artist": "Björk", "title": "Hyperballad" },
+    "expectedTrackId": "0000000",
+    "expectedUrl": "https://tidal.com/browse/track/0000000",
+    "source": "reference-playlist",
+    "notes": "Placeholder ID — run export-fixtures to populate"
+  },
+  {
+    "id": "denzel-lit-effect",
+    "input": {
+      "artist": "Denzel Curry",
+      "title": "LIT EFFECT (feat. BKTHERULA & LAZER DIM 700)"
+    },
+    "expectedTrackId": "502683197",
+    "expectedUrl": "https://tidal.com/browse/track/502683197",
+    "source": "manual",
+    "notes": "Parenthetical feat. — search uses base title LIT EFFECT only"
+  }
+]

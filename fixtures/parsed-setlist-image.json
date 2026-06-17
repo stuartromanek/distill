@@ -1,0 +1,387 @@
+{
+  "songs": [
+    {
+      "title": "What You Do To Me",
+      "artist": "TEENAGE FANCLUB",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Good Dreams",
+      "artist": "SUPERCHUNK",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Public Witness Program",
+      "artist": "FUGAZI",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Percolator",
+      "artist": "CHARLY BLISS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Big Dipper",
+      "artist": "BUILT TO SPILL",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Fish Sticks",
+      "artist": "MILDRED",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Let's Go Dancing",
+      "artist": "DEER TICK",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Jean",
+      "artist": "HOVVDY",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Ride",
+      "artist": "THE DANDY WARHOLS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "I Wanna Destroy You",
+      "artist": "THE SOFT BOYS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Vaccination Scar",
+      "artist": "THE TRAGICALLY HIP",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Frail & Bedazzled",
+      "artist": "THE SMASHING PUMPKINS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Son Of A Gun",
+      "artist": "THE VASELINES",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Good Advices",
+      "artist": "R.E.M.",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Son Of Sam",
+      "artist": "ELLIOTT SMITH",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Champaign, Illinois",
+      "artist": "OLD 97'S",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Boy Boy",
+      "artist": "LISSY TRULLIE",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Sick Of Goodbyes",
+      "artist": "SPARKLEHORSE",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Call to Love",
+      "artist": "CROOKED FINGERS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Job to Do",
+      "artist": "THE WEIGHT",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "I Got You - Dobro Mix Warzone",
+      "artist": "WILCO",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Unsatisfied",
+      "artist": "THE REPLACEMENTS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Big Me",
+      "artist": "FOO FIGHTERS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "See You At The Movies",
+      "artist": "J MASCIS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Purple Heather",
+      "artist": "VAN MORRISON",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Your Eyes",
+      "artist": "WHITE FENCE",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Outfit",
+      "artist": "DRIVE-BY TRUCKERS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Whiskey",
+      "artist": "OLDSTAR",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "All The Right Reasons",
+      "artist": "THE JAYHAWKS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Graceland",
+      "artist": "JUSTIN TOWNES EARLE",
+      "confidence": "high",
+      "source": "image"
+    }
+  ],
+  "debug": {
+    "model": "gemini-2.5-flash",
+    "durationMs": 8159,
+    "systemPrompt": "You extract song titles and artists from user-provided text and images.\nReturn ONLY valid JSON: { \"songs\": [{ \"title\", \"artist\", \"album?\", \"confidence\": \"high\"|\"medium\"|\"low\", \"source\": \"text\"|\"image\" }] }\nRules:\n- Handle numbered lists, \"Artist — Title\", setlists, screenshots, social posts\n- Deduplicate by artist+title (case insensitive)\n- Omit non-song content (headers, dates, venue names without songs)\n- If unsure, use lower confidence\n- album is optional",
+    "userContentSummary": [
+      {
+        "type": "text",
+        "text": "Extract all songs visible in these images."
+      },
+      {
+        "type": "image",
+        "mime": "image/jpeg",
+        "bytes": 127647
+      }
+    ],
+    "rawContent": "{\n  \"songs\": [\n    {\n      \"title\": \"What You Do To Me\",\n      \"artist\": \"TEENAGE FANCLUB\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Good Dreams\",\n      \"artist\": \"SUPERCHUNK\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Public Witness Program\",\n      \"artist\": \"FUGAZI\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Percolator\",\n      \"artist\": \"CHARLY BLISS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Big Dipper\",\n      \"artist\": \"BUILT TO SPILL\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Fish Sticks\",\n      \"artist\": \"MILDRED\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Let's Go Dancing\",\n      \"artist\": \"DEER TICK\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Jean\",\n      \"artist\": \"HOVVDY\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Ride\",\n      \"artist\": \"THE DANDY WARHOLS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"I Wanna Destroy You\",\n      \"artist\": \"THE SOFT BOYS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Vaccination Scar\",\n      \"artist\": \"THE TRAGICALLY HIP\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Frail & Bedazzled\",\n      \"artist\": \"THE SMASHING PUMPKINS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Son Of A Gun\",\n      \"artist\": \"THE VASELINES\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Good Advices\",\n      \"artist\": \"R.E.M.\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Son Of Sam\",\n      \"artist\": \"ELLIOTT SMITH\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Champaign, Illinois\",\n      \"artist\": \"OLD 97'S\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Boy Boy\",\n      \"artist\": \"LISSY TRULLIE\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Sick Of Goodbyes\",\n      \"artist\": \"SPARKLEHORSE\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Call to Love\",\n      \"artist\": \"CROOKED FINGERS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Job to Do\",\n      \"artist\": \"THE WEIGHT\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"I Got You - Dobro Mix Warzone\",\n      \"artist\": \"WILCO\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Unsatisfied\",\n      \"artist\": \"THE REPLACEMENTS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Big Me\",\n      \"artist\": \"FOO FIGHTERS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"See You At The Movies\",\n      \"artist\": \"J MASCIS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Purple Heather\",\n      \"artist\": \"VAN MORRISON\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Your Eyes\",\n      \"artist\": \"WHITE FENCE\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Outfit\",\n      \"artist\": \"DRIVE-BY TRUCKERS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Whiskey\",\n      \"artist\": \"OLDSTAR\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"All The Right Reasons\",\n      \"artist\": \"THE JAYHAWKS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Graceland\",\n      \"artist\": \"JUSTIN TOWNES EARLE\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    }\n  ]\n}",
+    "parsedJson": {
+      "songs": [
+        {
+          "title": "What You Do To Me",
+          "artist": "TEENAGE FANCLUB",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Good Dreams",
+          "artist": "SUPERCHUNK",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Public Witness Program",
+          "artist": "FUGAZI",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Percolator",
+          "artist": "CHARLY BLISS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Big Dipper",
+          "artist": "BUILT TO SPILL",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Fish Sticks",
+          "artist": "MILDRED",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Let's Go Dancing",
+          "artist": "DEER TICK",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Jean",
+          "artist": "HOVVDY",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Ride",
+          "artist": "THE DANDY WARHOLS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "I Wanna Destroy You",
+          "artist": "THE SOFT BOYS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Vaccination Scar",
+          "artist": "THE TRAGICALLY HIP",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Frail & Bedazzled",
+          "artist": "THE SMASHING PUMPKINS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Son Of A Gun",
+          "artist": "THE VASELINES",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Good Advices",
+          "artist": "R.E.M.",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Son Of Sam",
+          "artist": "ELLIOTT SMITH",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Champaign, Illinois",
+          "artist": "OLD 97'S",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Boy Boy",
+          "artist": "LISSY TRULLIE",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Sick Of Goodbyes",
+          "artist": "SPARKLEHORSE",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Call to Love",
+          "artist": "CROOKED FINGERS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Job to Do",
+          "artist": "THE WEIGHT",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "I Got You - Dobro Mix Warzone",
+          "artist": "WILCO",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Unsatisfied",
+          "artist": "THE REPLACEMENTS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Big Me",
+          "artist": "FOO FIGHTERS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "See You At The Movies",
+          "artist": "J MASCIS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Purple Heather",
+          "artist": "VAN MORRISON",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Your Eyes",
+          "artist": "WHITE FENCE",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Outfit",
+          "artist": "DRIVE-BY TRUCKERS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Whiskey",
+          "artist": "OLDSTAR",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "All The Right Reasons",
+          "artist": "THE JAYHAWKS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Graceland",
+          "artist": "JUSTIN TOWNES EARLE",
+          "confidence": "high",
+          "source": "image"
+        }
+      ]
+    },
+    "filteredCount": 30,
+    "droppedCount": 0
+  }
+}

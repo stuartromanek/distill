@@ -1,0 +1,387 @@
+{
+  "songs": [
+    {
+      "title": "Jupiter and Mars",
+      "artist": "AVALON EMERSON",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Changes",
+      "artist": "ANTONIO WILLIAMS, KERRY MCCOY",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "You Could Have It",
+      "artist": "HORSE VISION",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "The Springtime Reminds Me Of...",
+      "artist": "TOUCH GIRL APPLE BLOSSOM",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Hand Me Down",
+      "artist": "THE WALLFLOWERS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Long Weekend",
+      "artist": "CUT WORMS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Queen",
+      "artist": "PERFUME GENIUS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Turn My Way",
+      "artist": "NEW ORDER",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Incinerate",
+      "artist": "SONIC YOUTH",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Invisible Ink",
+      "artist": "KING TUFF",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "livin' was easy",
+      "artist": "THE GLANDS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Closet",
+      "artist": "PETE YORN",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Whatever Happened To My Rock...",
+      "artist": "BLACK REBEL MOTORCYCLE CLUB",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Start Choppin'",
+      "artist": "DINOSAUR JR.",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "No Culture Icons",
+      "artist": "THE THERMALS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Mess Me Around",
+      "artist": "THE BABIES",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Pistol Whipped",
+      "artist": "SOME SOVIET STATION",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "That's When I Reach for My Revol...",
+      "artist": "MISSION OF BURMA",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Aside",
+      "artist": "THE WEAKHERTHANS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Try as I May",
+      "artist": "CAMERON WINTER",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Dead Flowers - 2009 Mix",
+      "artist": "THE ROLLING STONES",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Shadowboxer",
+      "artist": "FIONA APPLE",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "You're Not Good Enough",
+      "artist": "BLOOD ORANGE",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "dust to dust",
+      "artist": "TRUMAN SINCLAIR",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Outfit",
+      "artist": "DRIVE-BY TRUCKERS",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Downtown",
+      "artist": "MAJICAL CLOUDZ",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Watch The Sunrise",
+      "artist": "BIG STAR",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Jane",
+      "artist": "ELF POWER",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "World Inside the World",
+      "artist": "RHETT MILLER",
+      "confidence": "high",
+      "source": "image"
+    },
+    {
+      "title": "Everyman Needs a Companion",
+      "artist": "FATHER JOHN MISTY",
+      "confidence": "high",
+      "source": "image"
+    }
+  ],
+  "debug": {
+    "model": "gemini-2.5-flash",
+    "durationMs": 8008,
+    "systemPrompt": "You extract song titles and artists from user-provided text and images.\nReturn ONLY valid JSON: { \"songs\": [{ \"title\", \"artist\", \"album?\", \"confidence\": \"high\"|\"medium\"|\"low\", \"source\": \"text\"|\"image\" }] }\nRules:\n- Handle numbered lists, \"Artist — Title\", setlists, screenshots, social posts\n- Deduplicate by artist+title (case insensitive)\n- Omit non-song content (headers, dates, venue names without songs)\n- If unsure, use lower confidence\n- album is optional",
+    "userContentSummary": [
+      {
+        "type": "text",
+        "text": "Extract all songs visible in these images."
+      },
+      {
+        "type": "image",
+        "mime": "image/jpeg",
+        "bytes": 64242
+      }
+    ],
+    "rawContent": "{\n  \"songs\": [\n    {\n      \"title\": \"Jupiter and Mars\",\n      \"artist\": \"AVALON EMERSON\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Changes\",\n      \"artist\": \"ANTONIO WILLIAMS, KERRY MCCOY\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"You Could Have It\",\n      \"artist\": \"HORSE VISION\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"The Springtime Reminds Me Of...\",\n      \"artist\": \"TOUCH GIRL APPLE BLOSSOM\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Hand Me Down\",\n      \"artist\": \"THE WALLFLOWERS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Long Weekend\",\n      \"artist\": \"CUT WORMS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Queen\",\n      \"artist\": \"PERFUME GENIUS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Turn My Way\",\n      \"artist\": \"NEW ORDER\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Incinerate\",\n      \"artist\": \"SONIC YOUTH\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Invisible Ink\",\n      \"artist\": \"KING TUFF\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"livin' was easy\",\n      \"artist\": \"THE GLANDS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Closet\",\n      \"artist\": \"PETE YORN\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Whatever Happened To My Rock...\",\n      \"artist\": \"BLACK REBEL MOTORCYCLE CLUB\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Start Choppin'\",\n      \"artist\": \"DINOSAUR JR.\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"No Culture Icons\",\n      \"artist\": \"THE THERMALS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Mess Me Around\",\n      \"artist\": \"THE BABIES\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Pistol Whipped\",\n      \"artist\": \"SOME SOVIET STATION\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"That's When I Reach for My Revol...\",\n      \"artist\": \"MISSION OF BURMA\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Aside\",\n      \"artist\": \"THE WEAKHERTHANS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Try as I May\",\n      \"artist\": \"CAMERON WINTER\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Dead Flowers - 2009 Mix\",\n      \"artist\": \"THE ROLLING STONES\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Shadowboxer\",\n      \"artist\": \"FIONA APPLE\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"You're Not Good Enough\",\n      \"artist\": \"BLOOD ORANGE\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"dust to dust\",\n      \"artist\": \"TRUMAN SINCLAIR\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Outfit\",\n      \"artist\": \"DRIVE-BY TRUCKERS\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Downtown\",\n      \"artist\": \"MAJICAL CLOUDZ\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Watch The Sunrise\",\n      \"artist\": \"BIG STAR\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Jane\",\n      \"artist\": \"ELF POWER\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"World Inside the World\",\n      \"artist\": \"RHETT MILLER\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    },\n    {\n      \"title\": \"Everyman Needs a Companion\",\n      \"artist\": \"FATHER JOHN MISTY\",\n      \"confidence\": \"high\",\n      \"source\": \"image\"\n    }\n  ]\n}",
+    "parsedJson": {
+      "songs": [
+        {
+          "title": "Jupiter and Mars",
+          "artist": "AVALON EMERSON",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Changes",
+          "artist": "ANTONIO WILLIAMS, KERRY MCCOY",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "You Could Have It",
+          "artist": "HORSE VISION",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "The Springtime Reminds Me Of...",
+          "artist": "TOUCH GIRL APPLE BLOSSOM",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Hand Me Down",
+          "artist": "THE WALLFLOWERS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Long Weekend",
+          "artist": "CUT WORMS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Queen",
+          "artist": "PERFUME GENIUS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Turn My Way",
+          "artist": "NEW ORDER",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Incinerate",
+          "artist": "SONIC YOUTH",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Invisible Ink",
+          "artist": "KING TUFF",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "livin' was easy",
+          "artist": "THE GLANDS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Closet",
+          "artist": "PETE YORN",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Whatever Happened To My Rock...",
+          "artist": "BLACK REBEL MOTORCYCLE CLUB",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Start Choppin'",
+          "artist": "DINOSAUR JR.",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "No Culture Icons",
+          "artist": "THE THERMALS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Mess Me Around",
+          "artist": "THE BABIES",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Pistol Whipped",
+          "artist": "SOME SOVIET STATION",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "That's When I Reach for My Revol...",
+          "artist": "MISSION OF BURMA",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Aside",
+          "artist": "THE WEAKHERTHANS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Try as I May",
+          "artist": "CAMERON WINTER",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Dead Flowers - 2009 Mix",
+          "artist": "THE ROLLING STONES",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Shadowboxer",
+          "artist": "FIONA APPLE",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "You're Not Good Enough",
+          "artist": "BLOOD ORANGE",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "dust to dust",
+          "artist": "TRUMAN SINCLAIR",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Outfit",
+          "artist": "DRIVE-BY TRUCKERS",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Downtown",
+          "artist": "MAJICAL CLOUDZ",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Watch The Sunrise",
+          "artist": "BIG STAR",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Jane",
+          "artist": "ELF POWER",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "World Inside the World",
+          "artist": "RHETT MILLER",
+          "confidence": "high",
+          "source": "image"
+        },
+        {
+          "title": "Everyman Needs a Companion",
+          "artist": "FATHER JOHN MISTY",
+          "confidence": "high",
+          "source": "image"
+        }
+      ]
+    },
+    "filteredCount": 30,
+    "droppedCount": 0
+  }
+}

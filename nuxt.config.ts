@@ -1,0 +1,31 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: true },
+  css: [
+    '~/assets/css/webtui.css',
+    '~/assets/css/app.css',
+  ],
+  runtimeConfig: {
+    tidalClientId: '',
+    tidalClientSecret: '',
+    tidalRedirectUri: 'http://localhost:3000/api/oauth/callback/tidal',
+    tidalCountryCode: 'US',
+    tidalMaxConcurrent: 1,
+    tidalMinIntervalMs: 300,
+    tidalMaxRetries: 5,
+    sessionPassword: '',
+    llmProvider: 'cursor',
+    cursorApiKey: '',
+    cursorProxyUrl: 'http://127.0.0.1:8765',
+    openaiApiKey: '',
+    openaiModel: 'auto',
+    openaiBaseUrl: 'https://api.openai.com/v1',
+    geminiApiKey: '',
+    geminiModel: 'gemini-2.5-flash',
+    geminiBaseUrl: 'https://generativelanguage.googleapis.com/v1beta',
+    anthropicApiKey: '',
+    anthropicModel: 'claude-sonnet-4-20250514',
+    anthropicBaseUrl: 'https://api.anthropic.com/v1',
+  },
+})

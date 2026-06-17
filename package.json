@@ -1,0 +1,30 @@
+{
+  "name": "tidal-playlist",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "cursor-proxy": "bash scripts/cursor-proxy.sh",
+    "export-fixtures": "node --experimental-strip-types scripts/export-fixtures.mts",
+    "eval:matches": "node --experimental-strip-types scripts/eval-matches.mts",
+    "debug:parse": "node --experimental-strip-types scripts/debug-parse.mts",
+    "eval:image": "node --experimental-strip-types scripts/eval-image-parse.mts",
+    "test:scoring": "node --experimental-strip-types scripts/match-scoring.test.mts",
+    "test:llm-parse": "node --experimental-strip-types scripts/llm-parse.test.mts",
+    "print-refresh-token": "node --experimental-strip-types scripts/print-refresh-token.mts",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@webtui/css": "^0.1.7",
+    "cursor-api-proxy": "^1.1.0",
+    "nuxt": "^4.4.6",
+    "vue": "^3.5.34",
+    "vue-router": "^5.0.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^2.3.0"
+  }
+}
