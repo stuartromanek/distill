@@ -18,7 +18,12 @@ export type SessionData = {
 export type OAuthPending = {
   codeVerifier: string
   state: string
+  popup?: boolean
 }
+
+type OAuthPendingStore =
+  | OAuthPending
+  | { attempts: OAuthPending[] }
 
 function encrypt(value: unknown, password: string) {
   return encryptSealed(value, password)
@@ -62,7 +67,12 @@ export function clearTidalSession(event: H3Event) {
 }
 
 export function setOAuthPending(event: H3Event, data: OAuthPending) {
-  const sealed = encrypt(data, sessionPassword(event))
+  const current = getOAuthPendingAttempts(event)
+  const attempts = [
+    data,
+    ...current.filter(attempt => attempt.state !== data.state),
+  ].slice(0, 5)
+  const sealed = encrypt({ attempts }, sessionPassword(event))
   setCookie(event, OAUTH_COOKIE, sealed, {
     httpOnly: true,
     sameSite: 'lax',
@@ -72,13 +82,39 @@ export function setOAuthPending(event: H3Event, data: OAuthPending) {
   })
 }
 
-export function getOAuthPending(event: H3Event): OAuthPending | null {
+function getOAuthPendingAttempts(event: H3Event): OAuthPending[] {
   const cookie = getCookie(event, OAUTH_COOKIE)
-  if (!cookie) return null
-  return decrypt<OAuthPending>(cookie, sessionPassword(event))
+  if (!cookie) return []
+  const pending = decrypt<OAuthPendingStore>(cookie, sessionPassword(event))
+  if (!pending) return []
+  if ('attempts' in pending) return pending.attempts
+  return [pending]
 }
 
-export function clearOAuthPending(event: H3Event) {
+export function getOAuthPending(event: H3Event, state?: string): OAuthPending | null {
+  const attempts = getOAuthPendingAttempts(event)
+  if (state) {
+    return attempts.find(attempt => attempt.state === state) ?? null
+  }
+  return attempts[0] ?? null
+}
+
+export function clearOAuthPending(event: H3Event, state?: string) {
+  if (state) {
+    const attempts = getOAuthPendingAttempts(event)
+      .filter(attempt => attempt.state !== state)
+    if (attempts.length) {
+      const sealed = encrypt({ attempts }, sessionPassword(event))
+      setCookie(event, OAUTH_COOKIE, sealed, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+        maxAge: 600,
+      })
+      return
+    }
+  }
   deleteCookie(event, OAUTH_COOKIE, { path: '/' })
 }
 

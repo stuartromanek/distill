@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div data-webtui-theme="dark">
     <NuxtRouteAnnouncer />
     <NuxtPage />
     <ClientOnly>
-      <DryRunToggle v-if="isDev" />
-      <DevRequestHud v-if="isDev" />
+      <AppToasts />
+      <DryRunToggle v-if="showDevControls" />
+      <DevRequestHud v-if="showDevControls" />
     </ClientOnly>
   </div>
 </template>
 
 <script setup lang="ts">
-const isDev = import.meta.dev
+const showDevControls = false
 </script>

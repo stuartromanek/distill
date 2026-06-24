@@ -66,6 +66,12 @@ export type MatchingState = {
 export type TidalAuthStatus = {
   connected: boolean
   displayName?: string
+  needsReconnect?: boolean
+}
+
+export type PlaylistMetadataSuggestion = {
+  name: string
+  description: string
 }
 
 export type PlaylistCreateResult = {

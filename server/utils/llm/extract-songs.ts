@@ -1,13 +1,15 @@
-import type { ParsedSong } from '../../../shared/types/playlist.ts'
+import type { ParsedSong, PlaylistMetadataSuggestion } from '../../../shared/types/playlist.ts'
 import { logParseResult, type ParseDebugInfo } from '../parse-log.ts'
 import { buildContentParts, summarizeContentParts } from './content.ts'
 import { isHttpError, readLlmConfig } from './config.ts'
 import { filterSongs, parseJsonFromLlm, SYSTEM_PROMPT } from './parse-json.ts'
 import { resolveLlmAdapter } from './resolve.ts'
+import { suggestPlaylistMetadata } from './suggest-playlist.ts'
 import type { ExtractSongsOptions, ParseInput } from './types.ts'
 
 export type ExtractSongsResult = {
   songs: ParsedSong[]
+  playlist?: PlaylistMetadataSuggestion
   debug?: ParseDebugInfo
 }
 
@@ -55,6 +57,9 @@ export async function extractSongs(
   const rawSongs = parsed.songs ?? []
   const songs = filterSongs(rawSongs)
   const droppedCount = rawSongs.length - songs.length
+  const playlist = songs.length
+    ? await suggestPlaylistMetadata(songs, adapter)
+    : undefined
 
   const debug: ParseDebugInfo = {
     model: result.model,
@@ -71,5 +76,5 @@ export async function extractSongs(
     logParseResult(input, songs, debug)
   }
 
-  return options?.debug ? { songs, debug } : { songs }
+  return options?.debug ? { songs, playlist, debug } : { songs, playlist }
 }

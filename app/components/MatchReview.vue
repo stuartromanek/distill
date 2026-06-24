@@ -36,6 +36,16 @@ const matchingLine = computed(() => {
   return 'Matching…'
 })
 
+const editorStatus = computed(() => {
+  if (!props.matching) return 'Fix matches, reorder, or add more songs before creating.'
+  if (props.matching.parsing) return 'Extracting songs…'
+
+  const base = `${props.tracks.length} of ${props.matching.total} matched`
+  return props.matching.current
+    ? `${base} · matching ${props.matching.current.artist} — ${props.matching.current.title}`
+    : base
+})
+
 onMounted(() => {
   requestAnimationFrame(() => {
     showStagger.value = true
@@ -68,47 +78,60 @@ function onDiscardBackdropClick(event: MouseEvent) {
 
 <template>
   <section class="review" :class="{ 'review--matching': isMatching }">
-    <div class="review__list">
-      <TrackRow
-        v-for="(track, index) in tracks"
-        :key="track.id"
-        :track="track"
-        :index="index"
-        :total="tracks.length + (isMatching ? 1 : 0)"
-        :animate="isMatching || showStagger"
-        :style="!isMatching && showStagger ? { animationDelay: `${index * 80}ms` } : undefined"
-        @remove="emit('remove', track.id)"
-        @move-up="emit('reorder', index, index - 1)"
-        @move-down="emit('reorder', index, index + 1)"
-        @reorder="(from, to) => emit('reorder', from, to)"
-        @select-alternative="(t) => emit('selectAlternative', track.id, t)"
-      />
+    <div class="review__editor">
+      <section box-="round" shear-="top" class="review__editor-panel">
+        <header class="review__editor-status">
+          <span is-="badge" cap-="square">
+            {{ isMatching ? 'Matching tracks' : 'Review playlist' }}
+          </span>
+          <!-- <span class="muted review__editor-status-text">{{ editorStatus }}</span> -->
+        </header>
 
-      <div
-        v-if="matching"
-        class="matching-row-wrap row-enter"
-      >
-        <span class="matching-row__num muted">{{ tracks.length + 1 }}</span>
-        <article box-="round" shear-="top" class="matching-row">
-          <span is-="badge" variant-="foreground2">Matching</span>
-          <div class="matching-row__inner">
-            <p class="matching-row__title" :title="matchingLine">
-              {{ matchingLine }}
-            </p>
-            <span is-="spinner" />
+        <div class="review__list">
+          <TrackRow
+            v-for="(track, index) in tracks"
+            :key="track.id"
+            :track="track"
+            :index="index"
+            :total="tracks.length + (isMatching ? 1 : 0)"
+            :animate="isMatching || showStagger"
+            :style="!isMatching && showStagger ? { animationDelay: `${index * 80}ms` } : undefined"
+            @remove="emit('remove', track.id)"
+            @move-up="emit('reorder', index, index - 1)"
+            @move-down="emit('reorder', index, index + 1)"
+            @reorder="(from, to) => emit('reorder', from, to)"
+            @select-alternative="(t) => emit('selectAlternative', track.id, t)"
+          />
+
+          <div
+            v-if="matching"
+            class="matching-row-wrap row-enter"
+          >
+            <span class="matching-row__num muted">{{ tracks.length + 1 }}</span>
+            <article box-="round" shear-="top" class="matching-row">
+              <span is-="badge" variant-="foreground2">Matching</span>
+              <div class="matching-row__inner">
+                <p class="matching-row__title" :title="matchingLine">
+                  {{ matchingLine }}
+                </p>
+                <span is-="spinner" />
+              </div>
+            </article>
           </div>
-        </article>
-      </div>
+        </div>
+      </section>
     </div>
 
-    <template v-if="!isMatching">
-      <AddMoreInput :loading="loading" @submit="emit('appendInput', $event)" />
+    <aside class="review__details">
+      <div class="review__add-more">
+        <AddMoreInput :loading="loading" @submit="emit('appendInput', $event)" />
 
-      <p v-if="appendSummary" class="muted">
-        {{ appendSummary }}
-      </p>
+        <p v-if="appendSummary" class="muted">
+          {{ appendSummary }}
+        </p>
+      </div>
 
-      <footer box-="round" shear-="top" class="review__footer">
+      <section box-="round" shear-="top" class="review__footer">
         <span is-="badge" cap-="square">Playlist</span>
 
         <div class="review__footer-fields">
@@ -145,6 +168,7 @@ function onDiscardBackdropClick(event: MouseEvent) {
             type="button"
             size-="small"
             box-="round"
+            class="button-primary"
             :disabled="loading || tracks.length === 0"
             @click="onCreateClick"
           >
@@ -152,68 +176,138 @@ function onDiscardBackdropClick(event: MouseEvent) {
             Create playlist
           </button>
         </div>
-      </footer>
+      </section>
+    </aside>
 
-      <Teleport to="body">
-        <dialog
-          ref="discardDialog"
-          box-="round"
-          class="review__discard"
-          @click="onDiscardBackdropClick"
-        >
-          <div class="review__discard-body" @click.stop>
-            <p class="review__discard-title">
-              Discard unmatched tracks?
-            </p>
-            <p class="muted">
-              {{ unresolvedCount }} unmatched track{{ unresolvedCount === 1 ? '' : 's' }}
-              will be left out of the playlist.
-            </p>
-            <div class="review__discard-actions">
-              <button
-                type="button"
-                size-="small"
-                box-="round"
-                variant-="foreground2"
-                @click="onCancelDiscard"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                size-="small"
-                box-="round"
-                :disabled="resolvableCount === 0"
-                @click="onConfirmDiscard"
-              >
-                Continue with {{ resolvableCount }} track{{ resolvableCount === 1 ? '' : 's' }}
-              </button>
-            </div>
+    <Teleport to="body">
+      <dialog
+        ref="discardDialog"
+        box-="round"
+        class="review__discard"
+        @click="onDiscardBackdropClick"
+      >
+        <div class="review__discard-body" @click.stop>
+          <p class="review__discard-title">
+            Discard unmatched tracks?
+          </p>
+          <p class="muted">
+            {{ unresolvedCount }} unmatched track{{ unresolvedCount === 1 ? '' : 's' }}
+            will be left out of the playlist.
+          </p>
+          <div class="review__discard-actions">
+            <button
+              type="button"
+              size-="small"
+              box-="round"
+              variant-="foreground2"
+              @click="onCancelDiscard"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              size-="small"
+              box-="round"
+              :disabled="resolvableCount === 0"
+              @click="onConfirmDiscard"
+            >
+              Continue with {{ resolvableCount }} track{{ resolvableCount === 1 ? '' : 's' }}
+            </button>
           </div>
-        </dialog>
-      </Teleport>
-    </template>
+        </div>
+      </dialog>
+    </Teleport>
   </section>
 </template>
 
 <style scoped>
 .review {
-  display: flex;
-  flex-direction: column;
-  gap: 1lh;
-  padding-bottom: 10lh;
+  display: grid;
+  grid-template-columns: minmax(0, 60vw) minmax(0, 40vw);
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
+  margin-inline: calc(var(--app-gutter, 2ch) * -1);
+  padding-bottom: 0;
 }
 
 .review--matching {
-  padding-bottom: 2lh;
+  padding-bottom: 0;
+}
+
+.review__editor {
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  padding: 1lh 1ch 1lh var(--app-gutter, 2ch);
+  box-sizing: border-box;
+}
+
+.review__editor-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75lh;
+  height: 100%;
+  min-height: 0;
+  padding: 0 1ch 1lh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.review__editor-status {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  min-width: 0;
+  flex-wrap: wrap;
+  padding-inline: 1ch;
+  box-sizing: border-box;
+}
+
+.review__editor-status > [is-='badge'] {
+  flex-shrink: 0;
+}
+
+.review__editor-status-text {
+  flex: 1 1 18ch;
+  min-width: 0;
+  overflow: hidden;
+  padding-top: 0.45lh;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.review__details {
+  display: grid;
+  grid-template-rows: minmax(0, 60fr) minmax(0, 40fr);
+  gap: 1lh;
+  height: 100%;
+  min-width: 0;
+  padding: 1lh var(--app-gutter, 2ch) 1lh 1ch;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.review__add-more {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5lh;
+  min-height: 0;
+}
+
+.review__add-more .add-more {
+  flex: 1;
 }
 
 .review__list {
   display: flex;
   flex-direction: column;
   gap: 0.25lh;
-  padding: 0.5lh 0.5ch;
-  padding-right: calc(0.5ch + 10px);
+  min-height: 0;
+  overflow: auto;
+  padding: 0 0 1lh 1ch;
+  padding-right: calc(1ch + 10px);
+  box-sizing: border-box;
 }
 
 .matching-row-wrap {
@@ -257,11 +351,16 @@ function onDiscardBackdropClick(event: MouseEvent) {
 }
 
 .matching-row__title {
+  flex: 1 1 auto;
   margin: 0;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.matching-row__inner > [is-='spinner'] {
+  flex-shrink: 0;
 }
 
 .review__discard {

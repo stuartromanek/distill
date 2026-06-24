@@ -14,6 +14,7 @@ const images = ref<{ id: string; dataUrl: string; name: string }[]>([])
 const fileInput = ref<HTMLInputElement | null>(null)
 const previewDialog = ref<HTMLDialogElement | null>(null)
 const previewId = ref<string | null>(null)
+const { showToast } = useToast()
 
 const previewImage = computed(() =>
   images.value.find(img => img.id === previewId.value) ?? null,
@@ -22,10 +23,31 @@ const previewImage = computed(() =>
 const MAX_IMAGES = 5
 const MAX_SIZE = 5 * 1024 * 1024
 
+function isImageFile(file: File) {
+  return file.type.startsWith('image/')
+    || /\.(avif|gif|heic|heif|jpe?g|png|webp)$/i.test(file.name)
+}
+
+function fileLabel(file: File) {
+  return file.name || 'Dropped file'
+}
+
+function validateImageFile(file: File) {
+  if (!isImageFile(file)) {
+    return `${fileLabel(file)} is not a supported image. Use PNG, JPG, GIF, WebP, AVIF, or HEIC.`
+  }
+  if (file.size > MAX_SIZE) {
+    return `${fileLabel(file)} is too large. Images must be 5 MB or smaller.`
+  }
+  return null
+}
+
 function addImageFile(file: File, name?: string) {
-  if (images.value.length >= MAX_IMAGES) return
-  if (!file.type.startsWith('image/')) return
-  if (file.size > MAX_SIZE) return
+  const issue = validateImageFile(file)
+  if (issue) {
+    showToast(issue, 'error')
+    return false
+  }
 
   const reader = new FileReader()
   reader.onload = () => {
@@ -38,11 +60,15 @@ function addImageFile(file: File, name?: string) {
     }
   }
   reader.readAsDataURL(file)
+  return true
 }
 
 function addImageFiles(files: File[]) {
   for (const file of files) {
-    if (images.value.length >= MAX_IMAGES) break
+    if (images.value.length >= MAX_IMAGES) {
+      showToast(`You can attach up to ${MAX_IMAGES} images. Remove one before adding more.`, 'error')
+      break
+    }
     addImageFile(file)
   }
 }
@@ -117,7 +143,7 @@ function clear() {
   closePreview()
 }
 
-defineExpose({ clear })
+defineExpose({ clear, addImageFiles })
 </script>
 
 <template>
@@ -195,6 +221,7 @@ defineExpose({ clear })
     <button
       type="button"
       box-="round"
+      class="button-primary"
       :disabled="loading || (!text.trim() && !images.length)"
       @click="submit"
     >
@@ -246,7 +273,10 @@ defineExpose({ clear })
 }
 
 .input-panel--compact {
-  gap: 0.5lh;
+  flex: 1;
+  gap: 0.35lh;
+  min-height: 0;
+  height: 100%;
 }
 
 .input-panel__textarea-wrap {
@@ -260,11 +290,20 @@ defineExpose({ clear })
   resize: vertical;
 }
 
+.input-panel--compact .input-panel__textarea-wrap textarea {
+  min-height: 4lh;
+}
+
 .input-panel__images {
   --image-tile-size: calc(5 * var(--font-size) * var(--line-height));
   display: flex;
   flex-direction: column;
   gap: 0.5lh;
+}
+
+.input-panel--compact .input-panel__images {
+  --image-tile-size: calc(3 * var(--font-size) * var(--line-height));
+  gap: 0.25lh;
 }
 
 .input-panel__images-header {
@@ -287,6 +326,10 @@ defineExpose({ clear })
   align-items: start;
 }
 
+.input-panel--compact .input-panel__images-grid {
+  gap: 0.25lh;
+}
+
 .input-panel__images-grid--empty {
   display: block;
 }
@@ -297,6 +340,11 @@ defineExpose({ clear })
   flex-direction: row;
   gap: 0.5ch;
   border: none;
+}
+
+.input-panel--compact .input-panel__images-grid--empty .input-panel__add {
+  min-height: calc(1lh + var(--box-border-width, 2px) * 2);
+  padding-block: 0;
 }
 
 .input-panel__tile {
@@ -472,6 +520,17 @@ defineExpose({ clear })
   font-size: 0.625rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+
+.input-panel--compact .input-panel__add-label {
+  font-size: 0.5625rem;
+}
+
+.input-panel--compact > button[box-] {
+  min-height: calc(1lh + var(--box-border-width, 2px) * 2);
+  margin-top: auto;
+  padding-block: 0;
+  width: 100%;
 }
 
 .input-panel__add:hover:not(.input-panel__add--disabled) {

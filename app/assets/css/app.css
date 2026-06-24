@@ -1,12 +1,70 @@
 /* App layout and WebTUI extensions */
 
+@font-face {
+  font-family: 'iA Writer Quattro S';
+  src: url('/ServerMono-Regular.woff2.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ecrou';
+  src: url('/ecrou-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+  color-scheme: dark;
+  --background0: #0b0c0f;
+  --background1: #15171c;
+  --background2: #20232a;
+  --foreground0: #f3f0e8;
+  --foreground1: #d7d1c4;
+  --foreground2: #9b9488;
+  --box-border-color: var(--background2);
+  --font-family: 'iA Writer Quattro S', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-heading: 'Ecrou', 'iA Writer Quattro S', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --app-max-width: 64ch;
   --app-gutter: 2ch;
   --radius-base: 6px;
   --radius-medium: 12px;
-  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-menu: 0 4px 8px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.28), 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-menu: 0 4px 8px rgba(0, 0, 0, 0.32), 0 8px 28px rgba(0, 0, 0, 0.48);
+  --button-bevel-light: color-mix(in srgb, var(--foreground0) 24%, var(--background0));
+  --button-bevel-shadow: color-mix(in srgb, black 70%, var(--background0));
+  --button-hover-face: var(--foreground0);
+  --button-hover-text: var(--background0);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--background0);
+  color: var(--foreground0);
+}
+
+body {
+  background: var(--background0);
+  color: var(--foreground0);
+}
+
+::selection {
+  background: var(--foreground0);
+  color: var(--background0);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-heading);
+  font-weight: 400;
+  font-size: 1.25rem;
 }
 
 .app-shell {
@@ -58,12 +116,11 @@
 
 .panel--overlap {
   padding: 0 1ch 1lh;
-  gap: 0.5lh;
+  gap: 0.75lh;
 }
 
 .panel__title {
   display: flex;
-  font: inherit;
   margin: 0;
 }
 
@@ -72,6 +129,8 @@
   flex-direction: column;
   gap: 1lh;
   min-width: 0;
+  padding-inline: 1ch;
+  box-sizing: border-box;
 }
 
 .toast {
@@ -90,19 +149,15 @@
 }
 
 .review__footer {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(100%, var(--app-max-width));
-  padding: 0 var(--app-gutter) 1lh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.5lh;
+  gap: 0.75lh;
+  min-height: 0;
+  padding: 0 1ch 1lh;
   box-sizing: border-box;
-  z-index: 50;
   background: var(--background0);
+  overflow: hidden;
 }
 
 .review__footer > [is-='badge'] {
@@ -112,17 +167,19 @@
 .review__footer-fields {
   display: flex;
   flex-direction: column;
-  gap: 0.5lh;
+  gap: 0.75lh;
+  min-height: 0;
+  padding-inline: 1ch;
+  box-sizing: border-box;
 }
 
 .review__footer-field {
   display: flex;
   flex-direction: column;
-  gap: 0.25lh;
+  gap: 0.4lh;
   min-width: 0;
   width: 100%;
-  padding-inline: 1ch;
-  padding-bottom: 0.5lh;
+  padding: 0 1ch 0.9lh;
   box-sizing: border-box;
 }
 
@@ -141,10 +198,20 @@
 
 .review__footer-actions {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1ch;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5lh;
+  margin-top: auto;
+  padding-inline: 1ch;
+  box-sizing: border-box;
+}
+
+.review__footer-actions > .muted {
+  text-align: center;
+}
+
+.review__footer-actions button {
+  width: 100%;
 }
 
 .row-enter {
@@ -176,24 +243,71 @@
    * size-small (1lh) buttons — override sizing for button elements only.
    */
   button[box-] {
-    padding-top: 0;
-    padding-bottom: 0;
+    cursor: pointer;
+    padding: 0.45lh 1.5ch;
+    border-left: 3px solid var(--button-bevel-light);
+    border-top: 3px solid var(--button-bevel-light);
+    border-right: 3px solid var(--button-bevel-shadow);
+    border-bottom: 3px solid var(--button-bevel-shadow);
+    outline: 2px solid var(--foreground0);
+    outline-offset: 0;
+    background: var(--background0);
+    color: var(--foreground0);
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+    transition-property: background-color, border-color, color, outline-color, transform;
+    transition-duration: 120ms;
+    transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
   }
 
   button[box-][size-=small] {
-    min-height: calc(1lh + var(--box-border-width, 2px) * 2);
+    min-height: calc(1lh + var(--box-border-width, 2px) * 2 + 6px);
     height: auto;
+    padding-block: 0;
   }
 
   button[box-]::before {
-    width: calc(100% - var(--box-border-width, 2px) * 2);
-    height: calc(100% - var(--box-border-width, 2px) * 2);
+    border-color: transparent;
+  }
+
+  button[box-]:not(:disabled):hover {
+    border-left-color: var(--background0);
+    border-top-color: var(--background0);
+    border-right-color: var(--button-bevel-shadow);
+    border-bottom-color: var(--button-bevel-shadow);
+    outline-color: var(--button-hover-face);
+    background: var(--button-hover-face);
+    color: var(--button-hover-text);
+  }
+
+  button[box-]:not(:disabled):active {
+    border-left-color: var(--button-bevel-shadow);
+    border-top-color: var(--button-bevel-shadow);
+    border-right-color: var(--background0);
+    border-bottom-color: var(--background0);
+    transform: scale(0.99);
   }
 
   /* Line-through on disabled buttons reads as a rendering bug in this UI */
   button:disabled {
     text-decoration: none;
     opacity: 0.45;
+  }
+
+  .button-primary[box-] {
+    --mapped-primary: var(--background0);
+    --mapped-secondary: var(--foreground0);
+    color: var(--background0);
+    background: var(--foreground0);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .button-primary[box-]::before {
+    border-color: transparent;
+  }
+
+  .button-primary[box-]:not(:disabled):active {
+    transform: scale(0.99);
   }
 
   [is-~='badge'][variant-='matched'] {

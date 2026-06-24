@@ -3,6 +3,7 @@ import type {
   MatchingState,
   ParsedSong,
   PlaylistCreateResult,
+  PlaylistMetadataSuggestion,
   ReviewTrack,
   TidalAuthStatus,
   TidalTrackSummary,
@@ -13,6 +14,7 @@ import {
   dryRunAppendMatch,
   dryRunMatchToReviewTrack,
   dryRunParsedSongs,
+  dryRunPlaylistSuggestion,
   dryRunSearchResults,
 } from '../fixtures/dry-run-tracks'
 import { sleep, useDryRun } from './useDryRun'
@@ -73,10 +75,22 @@ function formatAppError(e: unknown): string {
     return 'Tidal is rate limiting — wait a minute and try again'
   }
   if (/401|Connect Tidal|session expired|Not connected/i.test(msg)) {
-    return 'Tidal session expired — disconnect and reconnect, then try again'
+    return TIDAL_RECONNECT_MESSAGE
   }
   return msg
 }
+
+const TIDAL_RECONNECT_MESSAGE = 'Tidal session expired — reconnect, then try again'
+const TIDAL_POPUP_MESSAGE = 'tidal-oauth'
+const TIDAL_POPUP_FEATURES = [
+  'popup=yes',
+  'width=520',
+  'height=720',
+  'left=120',
+  'top=80',
+  'noopener=no',
+  'noreferrer=no',
+].join(',')
 
 export function usePlaylistBuilder() {
   const { dryRunEnabled, registerWizardReset } = useDryRun()
@@ -92,8 +106,30 @@ export function usePlaylistBuilder() {
 
   const playlistName = ref('Imported playlist')
   const playlistDescription = ref('')
+  let workVersion = 0
+
+  function beginWork() {
+    workVersion += 1
+    return workVersion
+  }
+
+  function cancelCurrentWork() {
+    workVersion += 1
+  }
+
+  function isCurrentWork(version: number) {
+    return version === workVersion
+  }
+
+  function applyPlaylistSuggestion(playlist?: PlaylistMetadataSuggestion) {
+    const name = playlist?.name?.trim()
+    const description = playlist?.description?.trim()
+    if (name) playlistName.value = name
+    if (description) playlistDescription.value = description
+  }
 
   function resetWizardState() {
+    cancelCurrentWork()
     reviewTracks.value = []
     matchingState.value = null
     loading.value = false
@@ -112,7 +148,7 @@ export function usePlaylistBuilder() {
   async function refreshAuth() {
     if (dryRunEnabled.value) {
       authStatus.value = { connected: false }
-      return
+      return authStatus.value
     }
 
     try {
@@ -123,6 +159,8 @@ export function usePlaylistBuilder() {
     } catch {
       authStatus.value = { connected: false }
     }
+
+    return authStatus.value
   }
 
   function connectTidal() {
@@ -131,7 +169,57 @@ export function usePlaylistBuilder() {
       step.value = 'input'
       return
     }
-    window.location.href = '/api/auth/tidal/login'
+
+    error.value = null
+    const popup = window.open('/api/auth/tidal/login?popup=1', 'tidal-connect', TIDAL_POPUP_FEATURES)
+
+    if (!popup) {
+      error.value = 'Could not open the Tidal sign-in popup. Please allow popups and try again.'
+      return
+    }
+
+    popup.focus()
+
+    function cleanupPopupListeners() {
+      window.clearInterval(authPollTimer)
+      window.clearTimeout(authTimeout)
+      window.removeEventListener('message', onPopupMessage)
+    }
+
+    const authPollTimer = window.setInterval(async () => {
+      const status = await refreshAuth()
+      if (status.connected) {
+        cleanupPopupListeners()
+        popup.close()
+      }
+    }, 1500)
+
+    const authTimeout = window.setTimeout(() => {
+      cleanupPopupListeners()
+    }, 10 * 60 * 1000)
+
+    async function onPopupMessage(event: MessageEvent) {
+      if (event.origin !== window.location.origin) return
+      if (!event.data || typeof event.data !== 'object') return
+      if ((event.data as { type?: string }).type !== TIDAL_POPUP_MESSAGE) return
+
+      cleanupPopupListeners()
+      popup.close()
+
+      const data = event.data as { ok?: boolean; message?: string }
+      if (!data.ok) {
+        error.value = data.message ?? 'Tidal sign-in failed.'
+        return
+      }
+
+      await refreshAuth()
+    }
+
+    window.addEventListener('message', onPopupMessage)
+  }
+
+  function reconnectTidal() {
+    connectTidal()
   }
 
   async function logoutTidal() {
@@ -147,8 +235,10 @@ export function usePlaylistBuilder() {
     reviewTracks.value = []
   }
 
-  async function matchSongsWithProgress(songs: ParsedSong[]) {
+  async function matchSongsWithProgress(songs: ParsedSong[], workId: number) {
     for (let i = 0; i < songs.length; i++) {
+      if (!isCurrentWork(workId)) return false
+
       const song = songs[i]!
       matchingState.value = {
         index: i,
@@ -156,9 +246,11 @@ export function usePlaylistBuilder() {
         current: song,
       }
       await nextTick()
+      if (!isCurrentWork(workId)) return false
 
       if (dryRunEnabled.value) {
         await sleep(350)
+        if (!isCurrentWork(workId)) return false
         const match = DRY_RUN_MATCHES[i] ?? DRY_RUN_MATCHES[0]!
         reviewTracks.value.push(dryRunMatchToReviewTrack(match))
       } else {
@@ -166,18 +258,21 @@ export function usePlaylistBuilder() {
           method: 'POST',
           body: { songs: [song] },
         })
+        if (!isCurrentWork(workId)) return false
         reviewTracks.value.push(matchToReviewTrack(batch[0]!))
       }
       await nextTick()
     }
+    return true
   }
 
-  async function matchDryRunFixtures() {
+  async function matchDryRunFixtures(workId: number) {
     const songs = dryRunParsedSongs()
-    await matchSongsWithProgress(songs)
+    return matchSongsWithProgress(songs, workId)
   }
 
   async function parseAndMatch(text?: string, images?: string[]) {
+    const workId = beginWork()
     loading.value = true
     error.value = null
     reviewTracks.value = []
@@ -187,15 +282,22 @@ export function usePlaylistBuilder() {
     try {
       if (dryRunEnabled.value) {
         await sleep(400)
-        await matchDryRunFixtures()
+        if (!isCurrentWork(workId)) return
+        applyPlaylistSuggestion(dryRunPlaylistSuggestion())
+        const completed = await matchDryRunFixtures(workId)
+        if (!completed || !isCurrentWork(workId)) return
         step.value = 'review'
         return
       }
 
-      const { songs } = await $fetch<{ songs: ParsedSong[] }>('/api/parse', {
+      const { songs, playlist } = await $fetch<{
+        songs: ParsedSong[]
+        playlist?: PlaylistMetadataSuggestion
+      }>('/api/parse', {
         method: 'POST',
         body: { text, images },
       })
+      if (!isCurrentWork(workId)) return
 
       if (!songs.length) {
         error.value = 'No songs found in the input.'
@@ -203,19 +305,25 @@ export function usePlaylistBuilder() {
         return
       }
 
-      await matchSongsWithProgress(songs)
+      applyPlaylistSuggestion(playlist)
+      const completed = await matchSongsWithProgress(songs, workId)
+      if (!completed || !isCurrentWork(workId)) return
       step.value = 'review'
     } catch (e: unknown) {
+      if (!isCurrentWork(workId)) return
       error.value = formatAppError(e)
       step.value = 'input'
     } finally {
-      loading.value = false
-      matchingState.value = null
+      if (isCurrentWork(workId)) {
+        loading.value = false
+        matchingState.value = null
+      }
     }
   }
 
   async function appendFromInput(payload: { text: string; images: string[] }) {
     const { text, images } = payload
+    const workId = workVersion
     loading.value = true
     appendSummary.value = null
     error.value = null
@@ -223,6 +331,7 @@ export function usePlaylistBuilder() {
     try {
       if (dryRunEnabled.value) {
         await sleep(300)
+        if (!isCurrentWork(workId)) return
         const appendMatch = dryRunAppendMatch()
         const key = normalizeKey(appendMatch.parsed!.artist, appendMatch.parsed!.title)
         const exists = reviewTracks.value.some(t =>
@@ -243,6 +352,7 @@ export function usePlaylistBuilder() {
         method: 'POST',
         body: { text, images },
       })
+      if (!isCurrentWork(workId)) return
 
       const existingKeys = new Set(
         reviewTracks.value.map(t =>
@@ -275,13 +385,17 @@ export function usePlaylistBuilder() {
         method: 'POST',
         body: { songs: newSongs },
       })
+      if (!isCurrentWork(workId)) return
 
       reviewTracks.value.push(...matches.map(matchToReviewTrack))
       appendSummary.value = `Added ${matches.length} song${matches.length === 1 ? '' : 's'}${skipped ? `, skipped ${skipped} duplicate${skipped === 1 ? '' : 's'}` : ''}`
     } catch (e: unknown) {
+      if (!isCurrentWork(workId)) return
       error.value = formatAppError(e)
     } finally {
-      loading.value = false
+      if (isCurrentWork(workId)) {
+        loading.value = false
+      }
     }
   }
 
@@ -354,6 +468,8 @@ export function usePlaylistBuilder() {
   )
 
   async function createPlaylist({ discardUnresolved = false }: { discardUnresolved?: boolean } = {}) {
+    const workId = workVersion
+
     if (discardUnresolved) {
       reviewTracks.value = reviewTracks.value.filter(isPlaylistReady)
     }
@@ -373,11 +489,19 @@ export function usePlaylistBuilder() {
     try {
       if (dryRunEnabled.value) {
         await sleep(500)
+        if (!isCurrentWork(workId)) return
         playlistResult.value = {
           playlistId: 'dry-run-playlist',
           url: 'https://tidal.com/browse/playlist/dry-run-playlist',
         }
         step.value = 'done'
+        return
+      }
+
+      const status = await refreshAuth()
+      if (!isCurrentWork(workId)) return
+      if (!status.connected) {
+        error.value = TIDAL_RECONNECT_MESSAGE
         return
       }
 
@@ -389,17 +513,25 @@ export function usePlaylistBuilder() {
           trackIds: reviewTracks.value.map(t => t.selectedTrackId!),
         },
       })
+      if (!isCurrentWork(workId)) return
       step.value = 'done'
     } catch (e: unknown) {
+      if (!isCurrentWork(workId)) return
       error.value = formatAppError(e)
     } finally {
-      loading.value = false
+      if (isCurrentWork(workId)) {
+        loading.value = false
+      }
     }
   }
 
   function startOver() {
+    cancelCurrentWork()
     reviewTracks.value = []
+    matchingState.value = null
+    loading.value = false
     playlistResult.value = null
+    appendSummary.value = null
     playlistName.value = 'Imported playlist'
     playlistDescription.value = ''
     error.value = null
@@ -422,6 +554,7 @@ export function usePlaylistBuilder() {
     unresolvedCount,
     refreshAuth,
     connectTidal,
+    reconnectTidal,
     logoutTidal,
     parseAndMatch,
     appendFromInput,

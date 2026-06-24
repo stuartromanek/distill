@@ -1,6 +1,7 @@
 import type {
   MatchedSong,
   ParsedSong,
+  PlaylistMetadataSuggestion,
   ReviewTrack,
   TidalTrackSummary,
 } from '../../shared/types/playlist'
@@ -116,6 +117,13 @@ export const DRY_RUN_MATCHES: MatchedSong[] = [
 
 export function dryRunParsedSongs(): ParsedSong[] {
   return DRY_RUN_MATCHES.map(m => m.parsed!).filter(Boolean)
+}
+
+export function dryRunPlaylistSuggestion(): PlaylistMetadataSuggestion {
+  return {
+    name: 'Dry Run Radio Mix',
+    description: 'A test playlist spanning alt rock, art pop, rap, and one unresolved demo.',
+  }
 }
 
 export function dryRunMatchToReviewTrack(match: MatchedSong): ReviewTrack {

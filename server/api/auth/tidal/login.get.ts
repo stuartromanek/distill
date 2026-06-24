@@ -2,13 +2,18 @@ import { generatePkce, setOAuthPending } from '../../../utils/session'
 
 export default defineEventHandler((event) => {
   const config = useRuntimeConfig(event)
+  const query = getQuery(event)
 
   if (!config.tidalClientId) {
     throw createError({ statusCode: 500, message: 'NUXT_TIDAL_CLIENT_ID is not configured' })
   }
 
   const { codeVerifier, codeChallenge, state } = generatePkce()
-  setOAuthPending(event, { codeVerifier, state })
+  setOAuthPending(event, {
+    codeVerifier,
+    state,
+    popup: query.popup === '1',
+  })
 
   const params = new URLSearchParams({
     response_type: 'code',

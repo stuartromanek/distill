@@ -6,8 +6,8 @@ export default defineEventHandler(async (event) => {
   const result = await extractSongs(body ?? {}, { debug: wantDebug })
 
   if (wantDebug && result.debug) {
-    return { songs: result.songs, debug: result.debug }
+    return { songs: result.songs, playlist: result.playlist, debug: result.debug }
   }
 
-  return { songs: result.songs }
+  return { songs: result.songs, playlist: result.playlist }
 })
