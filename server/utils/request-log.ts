@@ -1,5 +1,5 @@
 export type RequestLogStatus = 'pending' | 'ok' | 'retry' | 'error'
-export type RequestLogSource = 'tidal' | 'llm'
+export type RequestLogSource = 'tidal' | 'spotify' | 'llm'
 
 export type RequestLogEntry = {
   id: string
@@ -177,6 +177,36 @@ export function parseTidalLogPath(url: string, method = 'GET'): { path: string; 
     return { path: truncatePath(path), label }
   } catch {
     return { path: truncatePath(url), label: 'tidal' }
+  }
+}
+
+export function parseSpotifyLogPath(url: string, method = 'GET'): { path: string; label?: string } {
+  try {
+    const parsed = new URL(url)
+    let path = parsed.pathname.replace(/^\/v1/, '') + parsed.search
+    const upperMethod = method.toUpperCase()
+    let label: string | undefined
+
+    if (path.startsWith('/search')) {
+      label = 'search'
+      const q = parsed.searchParams.get('q')
+      path = q ? `/search?q=${q}` : '/search'
+    } else if (path.startsWith('/tracks')) {
+      label = 'track-details'
+      path = '/tracks'
+    } else if (/\/playlists\/[^/]+\/tracks/.test(path)) {
+      label = 'playlist-add'
+      path = path.replace(/\/playlists\/[^/]+/, '/playlists/…')
+    } else if (/\/users\/[^/]+\/playlists/.test(path) && upperMethod === 'POST') {
+      label = 'playlist-create'
+      path = path.replace(/\/users\/[^/]+/, '/users/…')
+    } else if (path.startsWith('/me')) {
+      label = 'profile'
+    }
+
+    return { path: truncatePath(path), label }
+  } catch {
+    return { path: truncatePath(url), label: 'spotify' }
   }
 }
 

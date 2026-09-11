@@ -1,15 +1,16 @@
 <script setup lang="ts">
 const props = defineProps<{
   loading?: boolean
+  processedImages?: { id: string; dataUrl: string; name: string }[]
 }>()
 
 const emit = defineEmits<{
-  submit: [payload: { text: string; images: string[] }]
+  submit: [payload: { text: string; images: string[]; imageItems: { dataUrl: string; name: string }[] }]
 }>()
 
 const panelRef = ref<{ clear: () => void } | null>(null)
 
-function onSubmit(payload: { text: string; images: string[] }) {
+function onSubmit(payload: { text: string; images: string[]; imageItems: { dataUrl: string; name: string }[] }) {
   emit('submit', payload)
   panelRef.value?.clear()
 }
@@ -17,12 +18,15 @@ function onSubmit(payload: { text: string; images: string[] }) {
 
 <template>
   <section box-="round" shear-="top" class="add-more">
-    <span is-="badge" cap-="square">Add more songs</span>
+    <header class="box-header">
+      <span is-="badge" cap-="square">Add more songs</span>
+    </header>
     <div class="add-more__panel">
       <InputPanel
         ref="panelRef"
         compact
         :loading="loading"
+        :processed-images="processedImages"
         submit-label="Add to list"
         @submit="onSubmit"
       />
@@ -38,10 +42,6 @@ function onSubmit(payload: { text: string; images: string[] }) {
   min-height: 0;
   padding: 0 1ch 1lh;
   overflow: hidden;
-}
-
-.add-more > [is-='badge'] {
-  align-self: flex-start;
 }
 
 .add-more__panel {

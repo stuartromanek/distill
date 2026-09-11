@@ -1,8 +1,8 @@
 import type { ParsedSong, PlaylistMetadataSuggestion } from '../../../shared/types/playlist.ts'
 import { logParseResult, type ParseDebugInfo } from '../parse-log.ts'
 import { buildContentParts, summarizeContentParts } from './content.ts'
-import { isHttpError, readLlmConfig } from './config.ts'
-import { filterSongs, parseJsonFromLlm, SYSTEM_PROMPT } from './parse-json.ts'
+import { isHttpError, isServerLlmConfigured, readLlmConfig, type LlmRequestKeys } from './config.ts'
+import { filterSongs, getExtractSystemPrompt, parseJsonFromLlm } from './parse-json.ts'
 import { resolveLlmAdapter } from './resolve.ts'
 import { suggestPlaylistMetadata } from './suggest-playlist.ts'
 import type { ExtractSongsOptions, ParseInput } from './types.ts'
@@ -34,7 +34,27 @@ export async function extractSongs(
 
   const parts = buildContentParts(input)
   const partsHaveImages = parts.some(p => p.type === 'image')
-  const config = readLlmConfig()
+  const provider = options?.provider ?? input.provider
+  const requestApiKey = options?.apiKey?.trim()
+
+  if (requestApiKey && isServerLlmConfigured()) {
+    throw createError({
+      statusCode: 400,
+      message: 'This instance uses server-configured LLM credentials — browser API keys are not accepted',
+    })
+  }
+
+  if (requestApiKey && !provider) {
+    throw createError({
+      statusCode: 400,
+      message: 'provider is required when apiKey is sent',
+    })
+  }
+
+  const requestKeys: LlmRequestKeys | undefined = requestApiKey && provider
+    ? { [provider]: requestApiKey }
+    : undefined
+  const config = readLlmConfig(provider, requestKeys)
 
   let adapter
   try {
@@ -48,8 +68,9 @@ export async function extractSongs(
     })
   }
 
+  const systemPrompt = getExtractSystemPrompt()
   const result = await adapter.complete({
-    systemPrompt: SYSTEM_PROMPT,
+    systemPrompt,
     parts,
   })
 
@@ -64,7 +85,7 @@ export async function extractSongs(
   const debug: ParseDebugInfo = {
     model: result.model,
     durationMs: result.durationMs,
-    systemPrompt: SYSTEM_PROMPT,
+    systemPrompt,
     userContentSummary: summarizeContentParts(parts),
     rawContent: result.raw,
     parsedJson: parsed,

@@ -2,10 +2,11 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { loadEnv, root, getTidalRefreshToken } from './_load-env.mts'
 import { parseArgs, slugify } from './_args.mts'
-import { createTidalClient, refreshUserAccessToken } from '../server/utils/tidal-client.ts'
-import { fetchPlaylistTracks } from '../server/utils/match.ts'
+import { createTidalHttpClient, refreshUserAccessToken } from '../server/utils/music/providers/tidal/client.ts'
+import { fetchPlaylistTracks } from '../server/utils/music/providers/tidal/search.ts'
 import { normalizeSongKey } from '../server/utils/match-scoring.ts'
-import { parseTidalPlaylistUrl, tidalTrackBrowseUrl } from '../server/utils/tidal-url.ts'
+import { parseTidalPlaylistUrl, tidalTrackBrowseUrl } from '../server/utils/music/providers/tidal/url.ts'
+import { envVarName, getTidalCountryCode, tidalClientId, tidalClientSecret } from '../server/utils/env.ts'
 import type { MatchFixture, ParsedSong } from '../shared/types/playlist.ts'
 
 loadEnv()
@@ -15,18 +16,18 @@ const playlistArg = String(args.playlist ?? '')
 const parsedPath = String(args.parsed ?? resolve(root, 'fixtures/parsed.json'))
 const outPath = String(args.out ?? resolve(root, 'fixtures/match-cases.json'))
 
-const clientId = process.env.NUXT_TIDAL_CLIENT_ID
-const clientSecret = process.env.NUXT_TIDAL_CLIENT_SECRET
+const clientId = tidalClientId()
+const clientSecret = tidalClientSecret()
 const refreshToken = getTidalRefreshToken()
-const countryCode = process.env.NUXT_TIDAL_COUNTRY_CODE ?? 'US'
+const countryCode = getTidalCountryCode()
 
 if (!clientId || !clientSecret) {
-  console.error('Set NUXT_TIDAL_CLIENT_ID and NUXT_TIDAL_CLIENT_SECRET in .env')
+  console.error(`Set ${envVarName('TIDAL_CLIENT_ID')} and ${envVarName('TIDAL_CLIENT_SECRET')} in .env`)
   process.exit(1)
 }
 
 if (!refreshToken) {
-  console.error('Set TIDAL_REFRESH_TOKEN in .env (refresh token from OAuth — see README)')
+  console.error(`Set ${envVarName('TIDAL_REFRESH_TOKEN')} in .env (refresh token from OAuth — see README)`)
   process.exit(1)
 }
 
@@ -44,7 +45,7 @@ if (!Array.isArray(songs) || !songs.length) {
 }
 
 const token = await refreshUserAccessToken(refreshToken, clientId, clientSecret)
-const client = createTidalClient(token, countryCode)
+const client = createTidalHttpClient(token, countryCode)
 
 console.log(`Fetching playlist ${playlistId}…`)
 const playlistTracks = await fetchPlaylistTracks(client, playlistId)

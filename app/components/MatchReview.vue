@@ -1,31 +1,53 @@
 <script setup lang="ts">
-import type { MatchingState, ReviewTrack, TidalTrackSummary } from '../../shared/types/playlist'
+import type { MatchingState, MusicProviderId, ReviewTrack, TrackSummary } from '../../shared/types/playlist'
 
 const props = defineProps<{
   tracks: ReviewTrack[]
+  provider: MusicProviderId
+  providerName: string
   matching?: MatchingState | null
   loading?: boolean
   resolvableCount: number
   unresolvedCount: number
   playlistName: string
   playlistDescription: string
+  playlistUrl?: string | null
+  playlistDirty?: boolean
   appendSummary?: string | null
+  processedImages?: { id: string; dataUrl: string; name: string }[]
 }>()
 
 const emit = defineEmits<{
   remove: [id: string]
   reorder: [from: number, to: number]
-  selectAlternative: [id: string, track: TidalTrackSummary]
-  appendInput: [payload: { text: string; images: string[] }]
+  selectAlternative: [id: string, track: TrackSummary]
+  appendInput: [payload: { text: string; images: string[]; imageItems: { dataUrl: string; name: string }[] }]
   create: [options?: { discardUnresolved?: boolean }]
+  toggleMatchingPause: []
   'update:playlistName': [value: string]
   'update:playlistDescription': [value: string]
 }>()
 
 const showStagger = ref(false)
 const discardDialog = ref<HTMLDialogElement | null>(null)
+const showNeedsAttentionOnly = ref(false)
 
 const isMatching = computed(() => Boolean(props.matching))
+const isMatchingTracks = computed(() => Boolean(props.matching && !props.matching.parsing))
+const saveButtonLabel = computed(() =>
+  props.playlistUrl && props.playlistDirty ? 'Update playlist' : 'Create playlist',
+)
+const saveDisabled = computed(() =>
+  Boolean(props.loading)
+  || props.tracks.length === 0
+  || Boolean(props.playlistUrl && !props.playlistDirty),
+)
+
+const reviewRows = computed(() =>
+  props.tracks
+    .map((track, index) => ({ track, index }))
+    .filter(({ track }) => !showNeedsAttentionOnly.value || !isPlaylistReady(track)),
+)
 
 const matchingLine = computed(() => {
   if (!props.matching) return ''
@@ -51,6 +73,20 @@ onMounted(() => {
     showStagger.value = true
   })
 })
+
+watch(() => props.unresolvedCount, (count) => {
+  if (count === 0) {
+    showNeedsAttentionOnly.value = false
+  }
+})
+
+function isPlaylistReady(track: ReviewTrack) {
+  return Boolean(track.selectedTrackId) && (
+    track.status === 'matched'
+    || track.status === 'manual'
+    || track.status === 'ambiguous'
+  )
+}
 
 function onCreateClick() {
   if (props.unresolvedCount > 0) {
@@ -79,8 +115,64 @@ function onDiscardBackdropClick(event: MouseEvent) {
 <template>
   <section class="review" :class="{ 'review--matching': isMatching }">
     <div class="review__editor">
+      <section
+        box-="round"
+        shear-="top"
+        class="review__status"
+      >
+        <header class="box-header">
+          <span is-="badge" cap-="square">Status</span>
+        </header>
+        <p class="muted review__status-text">
+          <template v-if="matching?.parsing">
+            Extracting songs…
+          </template>
+          <template v-else>
+            {{ tracks.length }} track{{ tracks.length === 1 ? '' : 's' }}
+            <template v-if="isMatchingTracks">
+              ·
+              <button
+                type="button"
+                class="text-link"
+                @click="emit('toggleMatchingPause')"
+              >
+                {{ matching?.paused ? 'Resume Processing' : 'Pause' }}
+              </button>
+            </template>
+            <template v-if="!isMatchingTracks && unresolvedCount">
+              ·
+              <button
+                type="button"
+                class="text-link"
+                :class="{ 'text-link--active': showNeedsAttentionOnly }"
+                :aria-pressed="showNeedsAttentionOnly"
+                @click="showNeedsAttentionOnly = !showNeedsAttentionOnly"
+              >
+                <template v-if="showNeedsAttentionOnly">
+                  Back to All Tracks
+                </template>
+                <template v-else>
+                  {{ unresolvedCount }} need{{ unresolvedCount === 1 ? 's' : '' }} attention
+                </template>
+              </button>
+            </template>
+            <template v-if="playlistUrl">
+              ·
+              <a
+                :href="playlistUrl"
+                class="text-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open playlist
+              </a>
+            </template>
+          </template>
+        </p>
+      </section>
+
       <section box-="round" shear-="top" class="review__editor-panel">
-        <header class="review__editor-status">
+        <header class="box-header">
           <span is-="badge" cap-="square">
             {{ isMatching ? 'Matching tracks' : 'Review playlist' }}
           </span>
@@ -89,32 +181,31 @@ function onDiscardBackdropClick(event: MouseEvent) {
 
         <div class="review__list">
           <TrackRow
-            v-for="(track, index) in tracks"
-            :key="track.id"
-            :track="track"
-            :index="index"
-            :total="tracks.length + (isMatching ? 1 : 0)"
+            v-for="(row, visibleIndex) in reviewRows"
+            :key="row.track.id"
+            :track="row.track"
+            :provider="provider"
+            :provider-name="providerName"
+            :index="row.index"
             :animate="isMatching || showStagger"
-            :style="!isMatching && showStagger ? { animationDelay: `${index * 80}ms` } : undefined"
-            @remove="emit('remove', track.id)"
-            @move-up="emit('reorder', index, index - 1)"
-            @move-down="emit('reorder', index, index + 1)"
+            :style="!isMatching && showStagger ? { animationDelay: `${visibleIndex * 80}ms` } : undefined"
+            @remove="emit('remove', row.track.id)"
             @reorder="(from, to) => emit('reorder', from, to)"
-            @select-alternative="(t) => emit('selectAlternative', track.id, t)"
+            @select-alternative="(t) => emit('selectAlternative', row.track.id, t)"
           />
 
           <div
-            v-if="matching"
+            v-if="matching && !showNeedsAttentionOnly"
             class="matching-row-wrap row-enter"
           >
             <span class="matching-row__num muted">{{ tracks.length + 1 }}</span>
             <article box-="round" shear-="top" class="matching-row">
-              <span is-="badge" variant-="foreground2">Matching</span>
+              <span is-="badge" variant-="foreground2">{{ matching?.paused ? 'Paused' : 'Matching' }}</span>
               <div class="matching-row__inner">
                 <p class="matching-row__title" :title="matchingLine">
                   {{ matchingLine }}
                 </p>
-                <span is-="spinner" />
+                <span v-if="!matching?.paused" is-="spinner" />
               </div>
             </article>
           </div>
@@ -124,7 +215,11 @@ function onDiscardBackdropClick(event: MouseEvent) {
 
     <aside class="review__details">
       <div class="review__add-more">
-        <AddMoreInput :loading="loading" @submit="emit('appendInput', $event)" />
+        <AddMoreInput
+          :loading="loading"
+          :processed-images="processedImages"
+          @submit="emit('appendInput', $event)"
+        />
 
         <p v-if="appendSummary" class="muted">
           {{ appendSummary }}
@@ -132,7 +227,9 @@ function onDiscardBackdropClick(event: MouseEvent) {
       </div>
 
       <section box-="round" shear-="top" class="review__footer">
-        <span is-="badge" cap-="square">Playlist</span>
+        <header class="box-header">
+          <span is-="badge" cap-="square">Playlist</span>
+        </header>
 
         <div class="review__footer-fields">
           <div box-="round" shear-="top" class="review__footer-field">
@@ -148,32 +245,27 @@ function onDiscardBackdropClick(event: MouseEvent) {
           <div box-="round" shear-="top" class="review__footer-field">
             <span is-="badge" variant-="foreground2">Description</span>
             <label class="review__footer-field-input">
-              <input
+              <textarea
                 :value="playlistDescription"
+                rows="2"
                 placeholder="Optional"
-                @input="emit('update:playlistDescription', ($event.target as HTMLInputElement).value)"
-              >
+                @input="emit('update:playlistDescription', ($event.target as HTMLTextAreaElement).value)"
+              />
             </label>
           </div>
         </div>
 
         <div class="review__footer-actions">
-          <span class="muted">
-            {{ tracks.length }} track{{ tracks.length === 1 ? '' : 's' }}
-            <template v-if="unresolvedCount">
-              · {{ unresolvedCount }} need{{ unresolvedCount === 1 ? 's' : '' }} attention
-            </template>
-          </span>
           <button
             type="button"
             size-="small"
             box-="round"
             class="button-primary"
-            :disabled="loading || tracks.length === 0"
+            :disabled="saveDisabled"
             @click="onCreateClick"
           >
             <span v-if="loading" is-="spinner" />
-            Create playlist
+            {{ saveButtonLabel }}
           </button>
         </div>
       </section>
@@ -236,36 +328,44 @@ function onDiscardBackdropClick(event: MouseEvent) {
 }
 
 .review__editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75lh;
   height: 100%;
   min-width: 0;
+  min-height: 0;
   overflow: hidden;
   padding: 1lh 1ch 1lh var(--app-gutter, 2ch);
   box-sizing: border-box;
+}
+
+.review__status {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75lh;
+  flex-shrink: 0;
+  padding: 0 1ch 1lh;
+  box-sizing: border-box;
+}
+
+.review__status-text {
+  margin: 0;
+  padding-inline: 1ch;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
 }
 
 .review__editor-panel {
   display: flex;
   flex-direction: column;
   gap: 0.75lh;
+  flex: 1 1 auto;
   height: 100%;
   min-height: 0;
   padding: 0 1ch 1lh;
   box-sizing: border-box;
   overflow: hidden;
-}
-
-.review__editor-status {
-  display: flex;
-  align-items: center;
-  gap: 1ch;
-  min-width: 0;
-  flex-wrap: wrap;
-  padding-inline: 1ch;
-  box-sizing: border-box;
-}
-
-.review__editor-status > [is-='badge'] {
-  flex-shrink: 0;
 }
 
 .review__editor-status-text {
@@ -283,9 +383,14 @@ function onDiscardBackdropClick(event: MouseEvent) {
   gap: 1lh;
   height: 100%;
   min-width: 0;
+  min-height: 0;
   padding: 1lh var(--app-gutter, 2ch) 1lh 1ch;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.review__details > .review__footer {
+  min-height: 0;
 }
 
 .review__add-more {

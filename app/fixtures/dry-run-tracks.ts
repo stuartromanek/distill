@@ -3,7 +3,7 @@ import type {
   ParsedSong,
   PlaylistMetadataSuggestion,
   ReviewTrack,
-  TidalTrackSummary,
+  TrackSummary,
 } from '../../shared/types/playlist'
 
 function newId() {
@@ -15,7 +15,7 @@ const track = (
   artist: string,
   title: string,
   score?: number,
-): TidalTrackSummary => ({
+): TrackSummary => ({
   id,
   artist,
   title,
@@ -157,16 +157,17 @@ export function dryRunAppendMatch(): MatchedSong {
   }
 }
 
-export function dryRunSearchResults(_query: string): TidalTrackSummary[] {
+export function dryRunSearchResults(_query: string): TrackSummary[] {
   return [
     track('dry-run-search-1', 'Dry Run Artist', 'Search Result A', 0.88),
     track('dry-run-search-2', 'Dry Run Artist', 'Search Result B', 0.81),
   ]
 }
 
-export function dryRunResolveUrl(url: string): TidalTrackSummary {
-  if (!/tidal\.com\/browse\/track\//i.test(url) && !url.startsWith('dry-run-')) {
-    throw new Error('Paste a Tidal track URL (dry run accepts tidal.com/browse/track/…)')
+export function dryRunResolveUrl(url: string): TrackSummary {
+  const looksLikeTrackUrl = /(?:tidal\.com\/browse\/track\/|open\.spotify\.com\/track\/|spotify:track:)/i.test(url)
+  if (!looksLikeTrackUrl && !url.startsWith('dry-run-')) {
+    throw new Error('Paste a track URL (dry run accepts tidal.com/browse/track/… or open.spotify.com/track/…)')
   }
   return track('dry-run-resolve-1', 'Resolved Artist', 'Resolved Track', 1)
 }

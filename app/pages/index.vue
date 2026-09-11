@@ -2,28 +2,47 @@
 const {
   step,
   authStatus,
+  selectedProvider,
+  providerName,
+  selectedLlmProvider,
+  llmProviderLocked,
+  serverConfigured,
+  llmReady,
+  pendingProvider,
+  apiKeyDraft,
+  apiKeyError,
+  verifying,
+  setLlmProvider,
+  cancelLlmProviderEntry,
+  verifyLlmKey,
   reviewTracks,
   matchingState,
   loading,
   error,
   playlistResult,
+  playlistDirty,
   appendSummary,
   toastMessage,
   playlistName,
   playlistDescription,
+  processedImages,
+  playlistTabs,
+  activePlaylistId,
   resolvableCount,
   unresolvedCount,
   refreshAuth,
-  connectTidal,
-  reconnectTidal,
-  logoutTidal,
+  connect,
+  reconnect,
+  logout,
   parseAndMatch,
+  toggleMatchingPause,
   appendFromInput,
   selectAlternative,
   removeRow,
   reorderRows,
-  createPlaylist,
-  startOver,
+  savePlaylist,
+  startNewPlaylist,
+  switchPlaylist,
   dryRunEnabled,
 } = usePlaylistBuilder()
 
@@ -32,12 +51,35 @@ const inputDragDepth = ref(0)
 const inputDragActive = computed(() => step.value === 'input' && inputDragDepth.value > 0)
 const { showToast } = useToast()
 const DIRECT_IMAGE_UPLOAD_ERROR = 'This image can\'t be uploaded directly — try saving it first and dragging the file'
-const isTidalAuthError = computed(() =>
-  Boolean(error.value && /Tidal session expired|Connect Tidal|Not connected/i.test(error.value)),
+const isAuthError = computed(() =>
+  Boolean(error.value && /session expired|Connect (Tidal|Spotify)|Not connected/i.test(error.value)),
 )
+const connectedProvider = computed(() =>
+  authStatus.value.connected ? selectedProvider.value : null,
+)
+const showPlaylistNav = computed(() => authStatus.value.connected)
+
+type SetupIssue = {
+  id: string
+  envVar: string
+  message: string
+  hint?: string
+}
+
+const setupIssues = ref<SetupIssue[]>([])
+const setupReady = computed(() => setupIssues.value.length === 0)
+
+async function refreshSetupStatus() {
+  try {
+    const status = await $fetch<{ ready: boolean; issues: SetupIssue[] }>('/api/setup/status')
+    setupIssues.value = status.issues
+  } catch {
+    setupIssues.value = []
+  }
+}
 
 onMounted(async () => {
-  await refreshAuth()
+  await Promise.all([refreshAuth(), refreshSetupStatus()])
   const route = useRoute()
   if (route.query.connected) {
     await refreshAuth()
@@ -47,8 +89,8 @@ onMounted(async () => {
   }
 })
 
-function onInputSubmit(payload: { text: string; images: string[] }) {
-  parseAndMatch(payload.text, payload.images)
+function onInputSubmit(payload: { text: string; images: string[]; imageItems: { dataUrl: string; name: string }[] }) {
+  parseAndMatch(payload.text, payload.images, payload.imageItems)
 }
 
 function getDroppedFiles(dataTransfer: DataTransfer | null) {
@@ -183,59 +225,134 @@ async function onInputDrop(event: DragEvent) {
 <template>
   <div
     class="app-shell"
-    :class="{ 'app-shell--drop-active': inputDragActive }"
+    :class="{
+      'app-shell--drop-active': inputDragActive,
+      'app-shell--connect': step === 'connect',
+    }"
     @dragenter="onInputDragEnter"
     @dragover="onInputDragOver"
     @dragleave="onInputDragLeave"
     @drop="onInputDrop"
   >
-    <header
-      v-if="step !== 'matching' && step !== 'review'"
-      class="app-header"
+    <div
+      v-if="step === 'connect'"
+      class="app-connect"
     >
-      <h1>Tidal Playlist</h1>
-      <p class="muted">
-        Turn text and images into a Tidal playlist.
-      </p>
-    </header>
+      <header class="app-header">
+        <h1 class="app-header__title">Distill</h1>
+        <p class="muted">
+          Turn text and images into a playlist.
+        </p>
+      </header>
+
+      <main class="app-main app-main--connect">
+        <div v-if="error" box-="round" class="error-panel">
+          <p class="error-text">
+            {{ error }}
+          </p>
+          <button
+            v-if="isAuthError"
+            type="button"
+            size-="small"
+            box-="round"
+            class="button-primary"
+            @click="reconnect"
+          >
+            Reconnect {{ providerName }}
+          </button>
+        </div>
+
+        <SetupRequired
+          v-if="!setupReady"
+          :issues="setupIssues"
+        />
+
+        <ServiceConnect
+          v-else
+          :connected-provider="connectedProvider"
+          :selected-llm-provider="selectedLlmProvider"
+          :llm-provider-locked="llmProviderLocked"
+          :server-configured="serverConfigured"
+          :llm-ready="llmReady"
+          :pending-provider="pendingProvider"
+          :api-key-draft="apiKeyDraft"
+          :api-key-error="apiKeyError"
+          :verifying="verifying"
+          @connect="connect"
+          @logout="logout"
+          @select-llm="setLlmProvider"
+          @cancel-llm="cancelLlmProviderEntry"
+          @verify-llm="(provider, apiKey) => verifyLlmKey(provider, apiKey)"
+          @update:api-key-draft="apiKeyDraft = $event"
+        />
+      </main>
+    </div>
 
     <main
+      v-else
       class="app-main"
-      :class="{ 'app-main--review': step === 'matching' || step === 'review' }"
+      :class="{
+        'app-main--with-playlist-nav': showPlaylistNav,
+        'app-main--review': step === 'matching' || step === 'review',
+      }"
     >
+      <nav v-if="showPlaylistNav" class="playlist-menu" aria-label="Playlists">
+        <div class="playlist-menu__tabs" role="tablist" aria-label="In-progress playlists">
+          <button
+            v-for="tab in playlistTabs"
+            :key="tab.id"
+            type="button"
+            role="tab"
+            class="playlist-menu__tab"
+            :class="{
+              'playlist-menu__tab--active': tab.id === activePlaylistId,
+              'playlist-menu__tab--loading': tab.loading,
+            }"
+            :aria-selected="tab.id === activePlaylistId"
+            :title="tab.label"
+            @click="switchPlaylist(tab.id)"
+          >
+            <span class="playlist-menu__tab-label">{{ tab.label }}</span>
+            <span v-if="tab.loading" class="playlist-menu__tab-status" aria-label="Loading">...</span>
+          </button>
+          <button
+            type="button"
+            class="playlist-menu__tab playlist-menu__tab--action playlist-menu__tab--new"
+            aria-label="New playlist"
+            title="New playlist"
+            @click="startNewPlaylist"
+          >
+            +
+          </button>
+        </div>
+      </nav>
+
       <div v-if="error" box-="round" class="error-panel">
         <p class="error-text">
           {{ error }}
         </p>
         <button
-          v-if="isTidalAuthError"
+          v-if="isAuthError"
           type="button"
           size-="small"
           box-="round"
           class="button-primary"
-          @click="reconnectTidal"
+          @click="reconnect"
         >
-          Reconnect Tidal
+          Reconnect {{ providerName }}
         </button>
       </div>
 
-      <TidalConnect
-        v-if="step === 'connect'"
-        :connected="authStatus.connected"
-        :display-name="authStatus.displayName"
-        @connect="connectTidal"
-        @logout="logoutTidal"
-      />
-
-      <section v-else-if="step === 'input'" box-="round" shear-="top" class="panel panel--overlap">
-        <div class="panel__title">
+      <section v-if="step === 'input'" box-="round" shear-="top" class="panel panel--overlap">
+        <header class="box-header">
           <span is-="badge" cap-="square">Add songs</span>
-        </div>
+        </header>
         <div class="panel__body">
           <p class="muted">
             Paste a track list, or paste or upload images of setlists, screenshots, or notes.
           </p>
           <InputPanel
+            :key="activePlaylistId"
             ref="inputPanelRef"
             :loading="loading"
             @submit="onInputSubmit"
@@ -244,44 +361,31 @@ async function onInputDrop(event: DragEvent) {
       </section>
 
       <section v-else-if="step === 'matching' || step === 'review'" class="review-screen">
-        <nav class="review-menu" aria-label="Review actions">
-          <div class="review-menu__tabs">
-            <span class="review-menu__tab review-menu__tab--active">Review</span>
-            <button
-              type="button"
-              class="review-menu__tab review-menu__tab--action"
-              @click="startOver"
-            >
-              New Playlist
-            </button>
-          </div>
-        </nav>
-
         <MatchReview
+          :key="activePlaylistId"
           :tracks="reviewTracks"
+          :provider="selectedProvider"
+          :provider-name="providerName"
           :matching="step === 'matching' ? matchingState : null"
           :loading="loading"
           :resolvable-count="resolvableCount"
           :unresolved-count="unresolvedCount"
           :playlist-name="playlistName"
           :playlist-description="playlistDescription"
+          :playlist-url="playlistResult?.url"
+          :playlist-dirty="playlistDirty"
+          :processed-images="processedImages"
           :append-summary="appendSummary"
           @remove="removeRow"
           @reorder="reorderRows"
           @select-alternative="selectAlternative"
           @append-input="appendFromInput"
-          @create="createPlaylist"
+          @toggle-matching-pause="toggleMatchingPause"
+          @create="savePlaylist"
           @update:playlist-name="playlistName = $event"
           @update:playlist-description="playlistDescription = $event"
         />
       </section>
-
-      <PlaylistResult
-        v-else-if="step === 'done' && playlistResult"
-        :result="playlistResult"
-        :dry-run="dryRunEnabled"
-        @start-over="startOver"
-      />
     </main>
 
     <div v-if="toastMessage" box-="round" class="toast">
@@ -298,10 +402,14 @@ async function onInputDrop(event: DragEvent) {
 </template>
 
 <style scoped>
+.app-main--with-playlist-nav {
+  padding-top: calc(1lh + 34px);
+}
+
 .app-main--review {
   max-width: none;
   padding-inline: var(--app-gutter);
-  padding-top: 0;
+  padding-top: 34px;
   padding-bottom: 0;
 }
 
@@ -325,7 +433,7 @@ async function onInputDrop(event: DragEvent) {
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 34px);
   min-height: 0;
   width: 100%;
 }
@@ -336,27 +444,33 @@ async function onInputDrop(event: DragEvent) {
   min-height: 0;
 }
 
-.review-menu {
-  flex: 0 0 34px;
+.playlist-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  height: 34px;
+  min-height: 34px;
   width: 100vw;
-  margin-inline: calc(var(--app-gutter, 2ch) * -1);
+  margin: 0;
   display: flex;
   align-items: stretch;
+  border-bottom: 1px solid var(--foreground2);
   background: var(--background0);
-  box-shadow: inset 0 -1px 0 var(--foreground2);
   overflow: hidden;
 }
 
-.review-menu__tabs {
+.playlist-menu__tabs {
   display: flex;
   align-items: stretch;
   min-width: 0;
   width: 100%;
 }
 
-.review-menu__tab {
+.playlist-menu__tab {
   display: inline-flex;
   align-items: center;
+  gap: 0.5ch;
   min-width: 0;
   height: 34px;
   min-height: 0;
@@ -369,28 +483,41 @@ async function onInputDrop(event: DragEvent) {
   font: inherit;
   white-space: nowrap;
   box-sizing: border-box;
-}
-
-.review-menu__tab--active {
-  background: var(--background1);
-  box-shadow: inset 0 -2px 0 var(--foreground0);
-}
-
-.review-menu__tab--action {
   cursor: pointer;
-  color: var(--foreground2);
-  transition-property: background-color, color, transform;
-  transition-duration: 140ms;
-  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
-.review-menu__tab--action:hover {
+.playlist-menu__tab--active {
+  background: var(--background1);
+  border-bottom-color: var(--foreground0);
+}
+
+.playlist-menu__tab--action {
+  color: var(--foreground2);
+}
+
+.playlist-menu__tab--new {
+  justify-content: center;
+  width: 34px;
+  min-width: 34px;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.playlist-menu__tab-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-menu__tab-status {
+  color: var(--foreground2);
+  font-variant-numeric: tabular-nums;
+}
+
+.playlist-menu__tab:hover {
   background: var(--background1);
   color: var(--foreground0);
-}
-
-.review-menu__tab--action:active {
-  transform: scale(0.96);
 }
 
 .drop-overlay {

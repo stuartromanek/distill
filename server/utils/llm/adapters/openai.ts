@@ -1,4 +1,5 @@
 import type { LlmAdapter, LlmCompleteInput, LlmConfig, LlmProviderDefinition } from '../types.ts'
+import { envVarName } from '../../env.ts'
 import { postChatCompletions, resolveOpenAiVisionModel } from '../transport/openai-chat.ts'
 
 const CAPABILITIES = {
@@ -10,7 +11,7 @@ function validateOpenAiConfig(config: LlmConfig): void {
   if (!config.openai.apiKey) {
     throw createError({
       statusCode: 500,
-      message: 'NUXT_OPENAI_API_KEY is not configured',
+      message: `${envVarName('OPENAI_API_KEY')} is not configured`,
     })
   }
 }
@@ -19,7 +20,9 @@ function resolveModel(config: LlmConfig, ctx: { hasImages: boolean }): string {
   if (ctx.hasImages) {
     return resolveOpenAiVisionModel(config.openai.model)
   }
-  return config.openai.model.trim() || 'gpt-4o-mini'
+  const model = config.openai.model.trim()
+  if (!model || model === 'auto') return 'gpt-4o-mini'
+  return model
 }
 
 export function createOpenAiAdapter(config: LlmConfig, model: string): LlmAdapter {
@@ -34,7 +37,7 @@ export function createOpenAiAdapter(config: LlmConfig, model: string): LlmAdapte
         model,
         systemPrompt: input.systemPrompt,
         parts: input.parts,
-        jsonMode: true,
+        jsonMode: input.jsonMode !== false,
         logLabel: 'parse',
         providerId: 'openai',
       })

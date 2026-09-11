@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Interface-Essential-Expand-2--Streamline-Pixel</title>
+    <g id="Interface-Essential-Expand-2--Streamline-Pixel" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
+        <g fill="#000000" id="Group" transform="translate(4.33, 25.5) rotate(180) translate(-4.33, -25.5)translate(-6.67, 16)">
+            <polygon id="Path" fill-rule="nonzero" points="13.23 13.72 15.23 13.72 15.23 16.77 13.23 16.77"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="13.71 4.58 15.23 4.58 15.23 7.62 13.71 7.62"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="12.19 7.62 13.71 7.62 13.71 9.15 12.19 9.15"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="10.66 3.05 13.71 3.05 13.71 9.05 10.66 9.05"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="1.52 13.29 13.71 13.29 13.71 18.29 1.52 18.29"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="5.19 7.67 12.19 7.67 12.19 10.67 5.19 10.67"></polygon>
+            <path d="M9.14,12.19 L2.29253482,12.19 C1.81292203,12.9125603 2.68292203,13.4225603 4.90253482,13.72 C7.12214761,14.0174397 10.0579693,14.0174397 13.71,13.72 L13.71,12.19 L10.66,12.19 L10.66,10.67 L9.14,10.67 L9.14,12.19 Z" id="Path" fill-rule="nonzero"></path>
+            <polygon id="Path" fill-rule="nonzero" points="9.14 4.58 14.14 4.58 14.14 7.58 9.14 7.58"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="7.61 6.1 11.61 6.1 11.61 8.1 7.61 8.1"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="4.57 10.67 6.09 10.67 6.09 9.15 7.61 9.15 7.61 7.62 6.09 7.62 6.09 4.58 4.57 4.58"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="1.52 3.05 4.57 3.05 4.57 4.58 1.52 4.58"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="0 4.58 5 4.58 5 16.77 0 16.77"></polygon>
+            <rect id="Rectangle" x="4" y="10.29" width="6" height="2"></rect>
+        </g>
+        <g id="Interface-Essential-Expand-2--Streamline-Pixel-Copy" transform="translate(16.43, 15.66) rotate(180) translate(-16.43, -15.66)translate(0.43, -0.34)" fill="#000000">
+            <g id="Group" transform="translate(4.33, 25.5) rotate(180) translate(-4.33, -25.5)translate(-6.67, 16)">
+                <polygon id="Path" fill-rule="nonzero" points="13.23 13.72 15.23 13.72 15.23 16.77 13.23 16.77"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="13.71 4.58 15.23 4.58 15.23 7.62 13.71 7.62"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="12.19 7.62 13.71 7.62 13.71 9.15 12.19 9.15"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="10.66 3.05 13.71 3.05 13.71 9.05 10.66 9.05"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="1.52 13.29 13.71 13.29 13.71 18.29 1.52 18.29"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="5.19 7.67 12.19 7.67 12.19 10.67 5.19 10.67"></polygon>
+                <path d="M9.14,12.19 L2.29253482,12.19 C1.81292203,12.9125603 2.68292203,13.4225603 4.90253482,13.72 C7.12214761,14.0174397 10.0579693,14.0174397 13.71,13.72 L13.71,12.19 L10.66,12.19 L10.66,10.67 L9.14,10.67 L9.14,12.19 Z" id="Path" fill-rule="nonzero"></path>
+                <polygon id="Path" fill-rule="nonzero" points="9.14 4.58 14.14 4.58 14.14 7.58 9.14 7.58"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="7.61 6.1 11.61 6.1 11.61 8.1 7.61 8.1"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="4.57 10.67 6.09 10.67 6.09 9.15 7.61 9.15 7.61 7.62 6.09 7.62 6.09 4.58 4.57 4.58"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="1.52 3.05 4.57 3.05 4.57 4.58 1.52 4.58"></polygon>
+                <polygon id="Path" fill-rule="nonzero" points="0 4.58 5 4.58 5 16.77 0 16.77"></polygon>
+                <rect id="Rectangle" x="4" y="10.29" width="6" height="2"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

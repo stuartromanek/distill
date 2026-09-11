@@ -3,10 +3,12 @@ import {
   randomBytes,
 } from 'node:crypto'
 import type { H3Event } from 'h3'
+import type { MusicProviderId } from '../../shared/types/playlist'
+import { sessionPassword as readSessionPassword } from './env'
+import { isSecureRequest } from './request-origin.ts'
 import { decryptSealed, encryptSealed } from './session-crypto'
 
-const COOKIE_NAME = 'tidal_session'
-const OAUTH_COOKIE = 'tidal_oauth'
+const OAUTH_COOKIE = 'music_oauth'
 
 export type SessionData = {
   accessToken: string
@@ -16,6 +18,7 @@ export type SessionData = {
 }
 
 export type OAuthPending = {
+  provider: MusicProviderId
   codeVerifier: string
   state: string
   popup?: boolean
@@ -25,6 +28,10 @@ type OAuthPendingStore =
   | OAuthPending
   | { attempts: OAuthPending[] }
 
+function sessionCookieName(provider: MusicProviderId) {
+  return `session_${provider}`
+}
+
 function encrypt(value: unknown, password: string) {
   return encryptSealed(value, password)
 }
@@ -33,37 +40,29 @@ function decrypt<T>(payload: string, password: string): T | null {
   return decryptSealed<T>(payload, password)
 }
 
-function sessionPassword(event: H3Event) {
-  const config = useRuntimeConfig(event)
-  const password = config.sessionPassword
-  if (!password || password.length < 16) {
-    throw createError({
-      statusCode: 500,
-      message: 'NUXT_SESSION_PASSWORD must be set (16+ characters)',
-    })
-  }
-  return password
+function sessionPassword(_event: H3Event) {
+  return readSessionPassword()
 }
 
-export function setTidalSession(event: H3Event, data: SessionData) {
+export function setProviderSession(event: H3Event, provider: MusicProviderId, data: SessionData) {
   const sealed = encrypt(data, sessionPassword(event))
-  setCookie(event, COOKIE_NAME, sealed, {
+  setCookie(event, sessionCookieName(provider), sealed, {
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    secure: isSecureRequest(event),
     path: '/',
     maxAge: 60 * 60 * 24 * 30,
   })
 }
 
-export function getTidalSession(event: H3Event): SessionData | null {
-  const cookie = getCookie(event, COOKIE_NAME)
+export function getProviderSession(event: H3Event, provider: MusicProviderId): SessionData | null {
+  const cookie = getCookie(event, sessionCookieName(provider))
   if (!cookie) return null
   return decrypt<SessionData>(cookie, sessionPassword(event))
 }
 
-export function clearTidalSession(event: H3Event) {
-  deleteCookie(event, COOKIE_NAME, { path: '/' })
+export function clearProviderSession(event: H3Event, provider: MusicProviderId) {
+  deleteCookie(event, sessionCookieName(provider), { path: '/' })
 }
 
 export function setOAuthPending(event: H3Event, data: OAuthPending) {
@@ -76,7 +75,7 @@ export function setOAuthPending(event: H3Event, data: OAuthPending) {
   setCookie(event, OAUTH_COOKIE, sealed, {
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    secure: isSecureRequest(event),
     path: '/',
     maxAge: 600,
   })
@@ -108,7 +107,7 @@ export function clearOAuthPending(event: H3Event, state?: string) {
       setCookie(event, OAUTH_COOKIE, sealed, {
         httpOnly: true,
         sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
+        secure: isSecureRequest(event),
         path: '/',
         maxAge: 600,
       })

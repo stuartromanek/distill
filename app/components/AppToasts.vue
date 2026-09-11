@@ -16,7 +16,21 @@ const { toasts, dismissToast } = useToast()
         <span is-="badge" cap-="square" :variant-="toast.variant === 'error' ? 'not-found' : 'foreground2'">
           {{ toast.variant === 'error' ? 'Issue' : 'Note' }}
         </span>
-        <p>{{ toast.message }}</p>
+        <p>
+          {{ toast.message }}
+          <template v-if="toast.href">
+            ·
+            <a
+              :href="toast.href"
+              class="text-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              @click="dismissToast(toast.id)"
+            >
+              {{ toast.linkLabel ?? 'Open' }}
+            </a>
+          </template>
+        </p>
         <button
           type="button"
           size-="small"

@@ -4,6 +4,13 @@ export type AppToast = {
   id: string
   message: string
   variant: ToastVariant
+  href?: string
+  linkLabel?: string
+}
+
+export type ShowToastOptions = {
+  href?: string
+  linkLabel?: string
 }
 
 export function useToast() {
@@ -13,9 +20,19 @@ export function useToast() {
     toasts.value = toasts.value.filter(toast => toast.id !== id)
   }
 
-  function showToast(message: string, variant: ToastVariant = 'info') {
+  function showToast(
+    message: string,
+    variant: ToastVariant = 'info',
+    options: ShowToastOptions = {},
+  ) {
     const id = crypto.randomUUID()
-    toasts.value = [...toasts.value, { id, message, variant }]
+    toasts.value = [...toasts.value, {
+      id,
+      message,
+      variant,
+      href: options.href,
+      linkLabel: options.linkLabel,
+    }]
 
     if (import.meta.client) {
       window.setTimeout(() => dismissToast(id), 4500)

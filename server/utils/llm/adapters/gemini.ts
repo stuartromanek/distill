@@ -1,4 +1,5 @@
 import type { LlmAdapter, LlmCompleteInput, LlmConfig, LlmContentPart, LlmProviderDefinition } from '../types.ts'
+import { envVarName } from '../../env.ts'
 import { loggedLlmFetch, parseGeminiLogPath } from '../http.ts'
 
 const CAPABILITIES = {
@@ -24,7 +25,7 @@ function validateGeminiConfig(config: LlmConfig): void {
   if (!config.gemini.apiKey) {
     throw createError({
       statusCode: 500,
-      message: 'NUXT_GEMINI_API_KEY is not configured',
+      message: `${envVarName('GEMINI_API_KEY')} is not configured`,
     })
   }
 }
@@ -39,7 +40,7 @@ export function createGeminiAdapter(config: LlmConfig, model: string): LlmAdapte
       const url = `${baseUrl}/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(config.gemini.apiKey)}`
       const { path, label } = parseGeminiLogPath(model)
 
-      const body = {
+      const body: Record<string, unknown> = {
         systemInstruction: {
           parts: [{ text: input.systemPrompt }],
         },
@@ -50,8 +51,8 @@ export function createGeminiAdapter(config: LlmConfig, model: string): LlmAdapte
           },
         ],
         generationConfig: {
-          responseMimeType: 'application/json',
           temperature: 0.2,
+          ...(input.jsonMode !== false ? { responseMimeType: 'application/json' } : {}),
         },
       }
 
@@ -70,7 +71,7 @@ export function createGeminiAdapter(config: LlmConfig, model: string): LlmAdapte
         try {
           const parsed = JSON.parse(err) as { error?: { code?: number; message?: string } }
           if (parsed.error?.code === 429) {
-            message = `Gemini rate limit exceeded for model "${model}". Try NUXT_GEMINI_MODEL=gemini-2.5-flash or check billing at https://ai.google.dev/gemini-api/docs/rate-limits`
+            message = `Gemini rate limit exceeded for model "${model}". Try GEMINI_MODEL=gemini-2.5-flash or check billing at https://ai.google.dev/gemini-api/docs/rate-limits`
           } else if (parsed.error?.message) {
             message = `Gemini request failed: ${parsed.error.message}`
           }

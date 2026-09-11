@@ -1,20 +1,21 @@
 import { loadEnv } from './_load-env.mts'
 import { decryptSealedOrThrow, normalizeSealedCookie } from '../server/utils/session-crypto.ts'
+import { devUrl, envVarName, sessionPasswordFromEnv } from '../server/utils/env.ts'
 
 /**
- * Dev helper: print Tidal refresh token for TIDAL_REFRESH_TOKEN in .env.
+ * Dev helper: print Tidal refresh token for DST_TIDAL_REFRESH_TOKEN in .env.
  *
  * Preferred (logged in, dev server running):
  *   open http://localhost:3000/api/dev/tidal-refresh-token
  *
  * With cookie paste (dev server must be running):
- *   pnpm print-refresh-token -- '<tidal_session cookie value>'
+ *   pnpm print-refresh-token -- '<session_tidal cookie value>'
  */
 
 loadEnv()
 
 const args = process.argv.slice(2)
-const serverUrl = process.env.NUXT_DEV_URL ?? 'http://127.0.0.1:3000'
+const serverUrl = devUrl()
 const cookie = args.filter(a => !a.startsWith('--')).join(' ').trim()
 
 async function fromDevServer(sealed: string): Promise<string> {
@@ -44,9 +45,9 @@ async function fromDevServer(sealed: string): Promise<string> {
 }
 
 function fromLocalEnv(sealed: string): string {
-  const password = process.env.NUXT_SESSION_PASSWORD
+  const password = sessionPasswordFromEnv()
   if (!password) {
-    throw new Error('NUXT_SESSION_PASSWORD not set in .env')
+    throw new Error(`${envVarName('SESSION_PASSWORD')} not set in .env`)
   }
 
   type SessionData = { refreshToken: string }
@@ -59,7 +60,7 @@ function fromLocalEnv(sealed: string): string {
 
 async function main() {
   if (!cookie) {
-    console.error('Usage: pnpm print-refresh-token -- \'<tidal_session cookie value>\'')
+    console.error('Usage: pnpm print-refresh-token -- \'<session_tidal cookie value>\'')
     console.error('')
     console.error('Easier: visit http://localhost:3000/api/dev/tidal-refresh-token while logged in')
     process.exit(1)
@@ -96,13 +97,13 @@ async function main() {
     console.error('')
     console.error('Try this instead:')
     console.error('  1. Make sure pnpm dev is running')
-    console.error('  2. Log into Tidal in the app (or log out and back in if you changed NUXT_SESSION_PASSWORD)')
+    console.error(`  2. Log into Tidal in the app (or log out and back in if you changed ${envVarName('SESSION_PASSWORD')})`)
     console.error('  3. Open http://localhost:3000/api/dev/tidal-refresh-token in the same browser')
     process.exit(1)
   }
 
   console.log('\nAdd to .env:\n')
-  console.log(`TIDAL_REFRESH_TOKEN=${refreshToken}`)
+  console.log(`DST_TIDAL_REFRESH_TOKEN=${refreshToken}`)
   console.log('')
 }
 

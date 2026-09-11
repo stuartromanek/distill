@@ -8,7 +8,7 @@ Song extraction (`extractSongs`) uses a provider registry. Each provider impleme
 llm/
   extract-songs.ts    # orchestrator (validate → content → adapter → parse JSON)
   content.ts          # ParseInput → LlmContentPart[]
-  parse-json.ts       # SYSTEM_PROMPT, parseJsonFromLlm
+  parse-json.ts       # getExtractSystemPrompt, parseJsonFromLlm
   config.ts           # readLlmConfig()
   registry.ts         # registerProvider / getProvider
   resolve.ts          # resolveLlmAdapter()
@@ -26,7 +26,7 @@ llm/
 
 2. Register in `resolve.ts` inside `ensureProvidersRegistered()`: `registerProvider(myProvider)`
 
-3. Add config namespace in `config.ts` + `nuxt.config.ts` + `.env.example`
+3. Add config namespace in `config.ts` + `server/utils/env.ts` + `.env.example`
 
 4. Document in root `README.md` provider table
 
@@ -36,7 +36,6 @@ Adapters receive provider-agnostic `LlmContentPart[]` (text + base64 images). Ma
 
 | File | Provider | Vision |
 |------|----------|--------|
-| `cursor.ts` | Cursor via proxy | No (OpenAI fallback when images + openai key) |
 | `openai.ts` | Vanilla OpenAI | Yes |
 | `gemini.ts` | Google Gemini REST | Yes |
 | `anthropic.ts` | Stub (501) | Planned |

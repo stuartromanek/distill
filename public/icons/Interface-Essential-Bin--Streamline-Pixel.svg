@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Interface-Essential-Bin--Streamline-Pixel</title>
+    <g id="Interface-Essential-Bin--Streamline-Pixel" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
+        <g>
+            <polygon id="Path" fill="#000000" fill-rule="nonzero" points="25.905 8.38 25.905 25.14 27.435 25.14 27.435 8.38 30.475 8.38 30.475 6.86 28.955 6.86 28.955 5.33 22.855 5.33 22.855 2.28 21.335 2.28 21.335 5.33 10.665 5.33 10.665 2.28 9.145 2.28 9.145 5.33 3.055 5.33 3.055 6.86 1.525 6.86 1.525 8.38 4.575 8.38 4.575 25.14 6.095 25.14 6.095 8.38"></polygon>
+            <path d="M26,8 L26,30 L6,30 L6,8 L26,8 Z M21.335,23.62 L19.815,23.62 L19.815,26.66 L21.335,26.66 L21.335,23.62 Z M16.765,11.43 L15.245,11.43 L15.245,26.66 L16.765,26.66 L16.765,11.43 Z M12.195,23.62 L10.665,23.62 L10.665,26.66 L12.195,26.66 L12.195,23.62 Z M22.855,11.43 L21.335,11.43 L21.335,23.62 L22.855,23.62 L22.855,11.43 Z M10.665,11.43 L9.145,11.43 L9.145,23.62 L10.665,23.62 L10.665,11.43 Z" id="Combined-Shape" fill="#000000"></path>
+            <polygon id="Path" fill="#000000" fill-rule="nonzero" points="24.385 25.14 25.905 25.14 25.905 29.71 24.385 29.71"></polygon>
+            <polygon id="Path" fill="#000000" fill-rule="nonzero" points="7.625 29.71 24.385 29.71 24.385 31.24 7.625 31.24"></polygon>
+            <g id="Group" transform="translate(9.145, 11.43)"></g>
+            <polygon id="Path" fill="#000000" fill-rule="nonzero" points="10.665 0.76 21.335 0.76 21.335 2.28 10.665 2.28"></polygon>
+            <polygon id="Path" fill="#000000" fill-rule="nonzero" points="6.095 25.14 7.625 25.14 7.625 29.71 6.095 29.71"></polygon>
+        </g>
+    </g>
+</svg>

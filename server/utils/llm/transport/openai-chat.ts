@@ -23,7 +23,7 @@ export async function postChatCompletions(opts: {
   jsonMode: boolean
   extraHeaders?: Record<string, string>
   logLabel: string
-  providerId: 'cursor' | 'openai'
+  providerId: 'openai'
 }): Promise<{ raw: string; durationMs: number }> {
   const url = `${opts.baseUrl.replace(/\/$/, '')}/chat/completions`
   const { path, label } = parseLlmLogPath(url)
@@ -73,13 +73,4 @@ export function resolveOpenAiVisionModel(modelHint: string): string {
   if (!model || model === 'auto') return 'gpt-4o-mini'
   if (/^gpt-[34o]|^o[0-9-]/i.test(model)) return model
   return 'gpt-4o-mini'
-}
-
-/** Cursor CLI rejects OpenAI-era model ids (e.g. gpt-4o). */
-export function resolveCursorModel(model: string | undefined): string {
-  const chosen = model?.trim() || 'auto'
-  if (/^gpt-[34o]/i.test(chosen) || /^o[0-9]/i.test(chosen)) {
-    return 'auto'
-  }
-  return chosen
 }

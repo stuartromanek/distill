@@ -2,9 +2,11 @@ import { readFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { loadEnv, root } from './_load-env.mts'
 import { parseArgs } from './_args.mts'
-import { createTidalClient, getClientCredentialsToken } from '../server/utils/tidal-client.ts'
-import { matchSongWithMeta } from '../server/utils/match.ts'
+import { createTidalHttpClient, getClientCredentialsToken } from '../server/utils/music/providers/tidal/client.ts'
+import { createTidalSearchClient } from '../server/utils/music/providers/tidal/search.ts'
+import { matchSongWithMeta } from '../server/utils/music/match/match.ts'
 import { parseTitleMetadata } from '../server/utils/match-scoring.ts'
+import { envVarName, getTidalCountryCode, tidalClientId, tidalClientSecret } from '../server/utils/env.ts'
 import type { MatchFixture } from '../shared/types/playlist.ts'
 
 loadEnv()
@@ -21,18 +23,18 @@ if (!existsSync(fixturesPath)) {
   process.exit(1)
 }
 
-const clientId = process.env.NUXT_TIDAL_CLIENT_ID
-const clientSecret = process.env.NUXT_TIDAL_CLIENT_SECRET
-const countryCode = process.env.NUXT_TIDAL_COUNTRY_CODE ?? 'US'
+const clientId = tidalClientId()
+const clientSecret = tidalClientSecret()
+const countryCode = getTidalCountryCode()
 
 if (!clientId || !clientSecret) {
-  console.error('Set NUXT_TIDAL_CLIENT_ID and NUXT_TIDAL_CLIENT_SECRET in .env')
+  console.error(`Set ${envVarName('TIDAL_CLIENT_ID')} and ${envVarName('TIDAL_CLIENT_SECRET')} in .env`)
   process.exit(1)
 }
 
 const fixtures = JSON.parse(readFileSync(fixturesPath, 'utf8')) as MatchFixture[]
 const token = await getClientCredentialsToken(clientId, clientSecret)
-const client = createTidalClient(token, countryCode)
+const client = createTidalSearchClient(createTidalHttpClient(token, countryCode))
 
 let top1 = 0
 let top5 = 0

@@ -1,6 +1,7 @@
 import type { ParsedSong } from '../../../shared/types/playlist.ts'
+import { readMultilineEnv } from '../env.ts'
 
-export const SYSTEM_PROMPT = `You extract song titles and artists from user-provided text and images.
+export const DEFAULT_EXTRACT_SYSTEM_PROMPT = `You extract song titles and artists from user-provided text and images.
 Return ONLY valid JSON: { "songs": [{ "title", "artist", "album?", "confidence": "high"|"medium"|"low", "source": "text"|"image" }] }
 Rules:
 - Handle numbered lists, "Artist — Title", setlists, screenshots, social posts
@@ -8,6 +9,10 @@ Rules:
 - Omit non-song content (headers, dates, venue names without songs)
 - If unsure, use lower confidence
 - album is optional`
+
+export function getExtractSystemPrompt(): string {
+  return readMultilineEnv('LLM_EXTRACT_SYSTEM_PROMPT') || DEFAULT_EXTRACT_SYSTEM_PROMPT
+}
 
 export function parseJsonFromLlm(raw: string): { songs?: ParsedSong[] } {
   const trimmed = raw.trim()

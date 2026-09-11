@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Interface-Essential-Expand-2--Streamline-Pixel</title>
+    <g id="Interface-Essential-Expand-2--Streamline-Pixel" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
+        <g fill="#000000">
+            <polygon id="Path" fill-rule="nonzero" points="26 1.52 32 1.52 32 13.71 26 13.71"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="27.42 13.71 30.47 13.71 30.47 15.24 27.42 15.24"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="27.42 7.62 25.9 7.62 25.9 9.14 24.38 9.14 24.38 10.67 25.9 10.67 25.9 13.71 27.42 13.71"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="22.85 10.19 24.38 10.19 24.38 12.19 22.85 12.19"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="17.85 10.71 22.85 10.71 22.85 13.71 17.85 13.71"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="26.2096989 6.09 30.0782203 4.57 24.38 4.57 18.28 4.57 18.28 6.09 21.33 6.09 21.33 7.62 29.917721 7.62"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="19.8 7.62 26.8 7.62 26.8 10.62 19.8 10.62"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="18.28 0 30.47 0 30.47 5 18.28 5"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="18.28 13.71 21.33 13.71 21.33 15.24 18.28 15.24"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="18.28 9.14 24.28 9.14 24.28 12.14 18.28 12.14"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="16.76 10.67 18.28 10.67 18.28 13.71 16.76 13.71"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="16.76 1.52 18.28 1.52 18.28 4.57 16.76 4.57"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="13.23 27.43 15.23 27.43 15.23 30.48 13.23 30.48"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="13.71 18.29 15.23 18.29 15.23 21.33 13.71 21.33"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="12.19 21.33 13.71 21.33 13.71 22.86 12.19 22.86"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="10.66 16.76 13.71 16.76 13.71 22.76 10.66 22.76"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="1.52 27 13.71 27 13.71 32 1.52 32"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="5.19 21.38 12.19 21.38 12.19 24.38 5.19 24.38"></polygon>
+            <path d="M9.14,25.9 L2.29253482,25.9 C1.81292203,26.6225603 2.68292203,27.1325603 4.90253482,27.43 C7.12214761,27.7274397 10.0579693,27.7274397 13.71,27.43 L13.71,25.9 L10.66,25.9 L10.66,24.38 L9.14,24.38 L9.14,25.9 Z" id="Path" fill-rule="nonzero"></path>
+            <polygon id="Path" fill-rule="nonzero" points="9.14 18.29 14.14 18.29 14.14 21.29 9.14 21.29"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="7.61 19.81 11.61 19.81 11.61 21.81 7.61 21.81"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="4.57 24.38 6.09 24.38 6.09 22.86 7.61 22.86 7.61 21.33 6.09 21.33 6.09 18.29 4.57 18.29"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="1.52 16.76 4.57 16.76 4.57 18.29 1.52 18.29"></polygon>
+            <polygon id="Path" fill-rule="nonzero" points="0 18.29 5 18.29 5 30.48 0 30.48"></polygon>
+            <rect id="Rectangle" x="4" y="24" width="6" height="2"></rect>
+        </g>
+    </g>
+</svg>

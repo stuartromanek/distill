@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type RequestLogStatus = 'pending' | 'ok' | 'retry' | 'error'
-type RequestLogSource = 'tidal' | 'llm'
+type RequestLogSource = 'tidal' | 'spotify' | 'llm'
 
 type RequestLogEntry = {
   id: string
@@ -280,7 +280,7 @@ onUnmounted(() => {
 
 .dev-hud__stat--ok { color: #6ee7a8; }
 .dev-hud__stat--retry { color: #fbbf77; }
-.dev-hud__stat--error { color: #ff8a8a; }
+.dev-hud__stat--error { color: rgb(239 68 68); }
 
 .dev-hud__queue {
   opacity: 0.55;
@@ -341,7 +341,7 @@ onUnmounted(() => {
 
 .dev-hud__row--ok { border-left-color: #6ee7a8; }
 .dev-hud__row--retry { border-left-color: #fbbf77; }
-.dev-hud__row--error { border-left-color: #ff8a8a; }
+.dev-hud__row--error { border-left-color: rgb(239 68 68); }
 .dev-hud__row--pending { border-left-color: #93c5fd; }
 
 .dev-hud__row-head {
@@ -372,7 +372,7 @@ onUnmounted(() => {
 
 .dev-hud__row--ok .dev-hud__status { color: #6ee7a8; }
 .dev-hud__row--retry .dev-hud__status { color: #fbbf77; }
-.dev-hud__row--error .dev-hud__status { color: #ff8a8a; }
+.dev-hud__row--error .dev-hud__status { color: rgb(239 68 68); }
 .dev-hud__row--pending .dev-hud__status { color: #93c5fd; }
 
 .dev-hud__time {

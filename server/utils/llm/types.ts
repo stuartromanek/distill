@@ -1,8 +1,9 @@
-export type LlmProviderId = 'cursor' | 'openai' | 'gemini' | 'anthropic'
+import type { LlmProviderId } from '../../../shared/types/playlist'
 
 export type ParseInput = {
   text?: string
   images?: string[]
+  provider?: LlmProviderId
 }
 
 export type LlmContentPart =
@@ -12,6 +13,8 @@ export type LlmContentPart =
 export type LlmCompleteInput = {
   systemPrompt: string
   parts: LlmContentPart[]
+  /** When false, skip provider JSON response constraints (e.g. key verification). Default: true */
+  jsonMode?: boolean
 }
 
 export type LlmCompleteResult = {
@@ -46,11 +49,12 @@ export type LlmProviderDefinition = {
 export type LlmConfig = {
   provider: LlmProviderId
   openai: { apiKey: string; baseUrl: string; model: string }
-  cursor: { apiKey: string; proxyUrl: string; model: string }
   gemini: { apiKey: string; baseUrl: string; model: string }
   anthropic: { apiKey: string; baseUrl: string; model: string }
 }
 
 export type ExtractSongsOptions = {
   debug?: boolean
+  provider?: LlmProviderId
+  apiKey?: string
 }

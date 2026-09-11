@@ -1,4 +1,5 @@
-import { getTidalSession } from '../../utils/session'
+import { envVarName } from '../../utils/env'
+import { getProviderSession } from '../../utils/session'
 
 /** Dev-only: return refresh token for CLI export-fixtures setup. */
 export default defineEventHandler((event) => {
@@ -6,13 +7,13 @@ export default defineEventHandler((event) => {
     throw createError({ statusCode: 404 })
   }
 
-  const session = getTidalSession(event)
+  const session = getProviderSession(event, 'tidal')
   if (!session?.refreshToken) {
     throw createError({ statusCode: 401, message: 'Connect Tidal in the app first' })
   }
 
   return {
     refreshToken: session.refreshToken,
-    hint: 'Add to .env as TIDAL_REFRESH_TOKEN=...',
+    hint: `Add to .env as ${envVarName('TIDAL_REFRESH_TOKEN')}=...`,
   }
 })

@@ -1,9 +1,9 @@
 import type { LlmProviderDefinition } from '../types.ts'
+import { envVarName } from '../../env.ts'
 
 // Future: POST {baseUrl}/messages
 // system: systemPrompt
 // messages: [{ role: 'user', content: [{ type: 'text' }, { type: 'image', source: { type: 'base64', ... } }] }]
-// Do NOT route through cursor-api-proxy (strips images like OpenAI compat path)
 
 const CAPABILITIES = {
   vision: true,
@@ -17,7 +17,7 @@ export const anthropicProvider: LlmProviderDefinition = {
     if (!config.anthropic.apiKey) {
       throw createError({
         statusCode: 500,
-        message: 'NUXT_ANTHROPIC_API_KEY is not configured',
+        message: `${envVarName('ANTHROPIC_API_KEY')} is not configured`,
       })
     }
   },
@@ -27,7 +27,7 @@ export const anthropicProvider: LlmProviderDefinition = {
   async createAdapter() {
     throw createError({
       statusCode: 501,
-      message: 'Anthropic provider not implemented yet. Set NUXT_LLM_PROVIDER=gemini or openai.',
+      message: `Anthropic provider not implemented yet. Set ${envVarName('LLM_PROVIDER')}=gemini or openai.`,
     })
   },
 }

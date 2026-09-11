@@ -1,8 +1,8 @@
 /* App layout and WebTUI extensions */
 
 @font-face {
-  font-family: 'iA Writer Quattro S';
-  src: url('/ServerMono-Regular.woff2.woff2') format('woff2');
+  font-family: 'Server Mono';
+  src: url('/fonts/ServerMono-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,15 @@
 
 @font-face {
   font-family: 'Ecrou';
-  src: url('/ecrou-Regular.woff2') format('woff2');
+  src: url('/fonts/ecrou-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Redaction';
+  src: url('/fonts/Redaction_50-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -25,8 +33,8 @@
   --foreground1: #d7d1c4;
   --foreground2: #9b9488;
   --box-border-color: var(--background2);
-  --font-family: 'iA Writer Quattro S', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --font-family-heading: 'Ecrou', 'iA Writer Quattro S', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family: 'Server Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-family-heading: 'Redaction', 'Ecrou', 'Server Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --app-max-width: 64ch;
   --app-gutter: 2ch;
   --radius-base: 6px;
@@ -64,13 +72,47 @@ h5,
 h6 {
   font-family: var(--font-family-heading);
   font-weight: 400;
-  font-size: 1.25rem;
+  font-size: 2rem;
 }
 
 .app-shell {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.app-shell--connect {
+  justify-content: center;
+  align-items: center;
+}
+
+.app-connect {
+  width: 100%;
+  max-width: var(--app-max-width);
+  margin-inline: auto;
+  padding-inline: var(--app-gutter);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-connect .app-header,
+.app-connect .app-main {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+.app-main--connect {
+  flex: 0 0 auto;
+  padding-top: 1lh;
+  padding-bottom: 0;
+}
+
+.app-shell--connect .app-header {
+  padding-top: 0;
 }
 
 .app-header,
@@ -84,6 +126,26 @@ h6 {
 
 .app-header {
   padding-top: 1lh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.app-header__title {
+  margin: 0;
+  display: inline-grid;
+  place-items: center;
+  padding-block: 0.48em 0.38em;
+  padding-inline: 1.45ch;
+  background: #fff;
+  color: #111;
+  line-height: 1;
+  text-align: center;
+}
+
+.app-header .muted {
+  margin-top: 1lh;
 }
 
 .app-main {
@@ -98,7 +160,7 @@ h6 {
 }
 
 .error-text {
-  color: #c40000;
+  color: rgb(239 68 68);
 }
 
 .panel {
@@ -119,9 +181,19 @@ h6 {
   gap: 0.75lh;
 }
 
-.panel__title {
+.box-header {
   display: flex;
+  align-items: center;
+  gap: 1ch;
+  min-width: 0;
   margin: 0;
+  flex-wrap: wrap;
+  padding-inline: 1ch;
+  box-sizing: border-box;
+}
+
+.box-header > [is-='badge'] {
+  flex-shrink: 0;
 }
 
 .panel__body {
@@ -153,6 +225,7 @@ h6 {
   flex-direction: column;
   align-items: stretch;
   gap: 0.75lh;
+  height: 100%;
   min-height: 0;
   padding: 0 1ch 1lh;
   box-sizing: border-box;
@@ -160,15 +233,14 @@ h6 {
   overflow: hidden;
 }
 
-.review__footer > [is-='badge'] {
-  align-self: flex-start;
+.review__footer > .box-header {
+  flex-shrink: 0;
 }
 
 .review__footer-fields {
   display: flex;
   flex-direction: column;
   gap: 0.75lh;
-  min-height: 0;
   padding-inline: 1ch;
   box-sizing: border-box;
 }
@@ -192,8 +264,17 @@ h6 {
   width: 100%;
 }
 
-.review__footer-field-input input {
+.review__footer-field-input input,
+.review__footer-field-input textarea {
   width: 100%;
+}
+
+.review__footer-field-input textarea {
+  height: auto;
+  min-height: 2lh;
+  max-height: 5lh;
+  resize: none;
+  overflow: auto;
 }
 
 .review__footer-actions {
@@ -210,7 +291,7 @@ h6 {
   text-align: center;
 }
 
-.review__footer-actions button {
+.review__footer-actions > button:not(.text-link) {
   width: 100%;
 }
 
@@ -236,6 +317,61 @@ h6 {
   color: var(--foreground2);
 }
 
+.text-link,
+button.text-link,
+a.text-link {
+  display: inline;
+  height: auto;
+  min-height: 0;
+  width: auto;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--accent0);
+  font: inherit;
+  font-weight: inherit;
+  font-variant-numeric: tabular-nums;
+  line-height: inherit;
+  text-align: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  vertical-align: baseline;
+}
+
+button.text-link:not(:disabled):hover,
+a.text-link:hover,
+.text-link:not(:disabled):hover {
+  background: transparent;
+  color: var(--foreground0);
+  border-color: transparent;
+  outline: none;
+}
+
+button.text-link:not(:disabled):active,
+a.text-link:active,
+.text-link:not(:disabled):active {
+  transform: scale(0.96);
+  background: transparent;
+  border-color: transparent;
+}
+
+.text-link:focus-visible {
+  outline: 2px solid var(--accent0);
+  outline-offset: 2px;
+}
+
+.text-link--active {
+  color: var(--foreground0);
+}
+
 @layer components {
   /*
    * WebTUI box borders assume container padding (1lh). Buttons use compact
@@ -255,15 +391,13 @@ h6 {
     color: var(--foreground0);
     font-family: var(--font-family);
     font-weight: var(--font-weight-bold);
-    transition-property: background-color, border-color, color, outline-color, transform;
-    transition-duration: 120ms;
-    transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
   }
 
   button[box-][size-=small] {
-    min-height: calc(1lh + var(--box-border-width, 2px) * 2 + 6px);
-    height: auto;
+    min-height: calc(1lh + 6px);
+    height: calc(1lh + 6px);
     padding-block: 0;
+    line-height: 1lh;
   }
 
   button[box-]::before {
@@ -278,6 +412,11 @@ h6 {
     outline-color: var(--button-hover-face);
     background: var(--button-hover-face);
     color: var(--button-hover-text);
+  }
+
+  button[box-]:not(:disabled):hover [class*='-icon'] {
+    color: var(--button-hover-text);
+    background-color: currentColor;
   }
 
   button[box-]:not(:disabled):active {
@@ -321,7 +460,7 @@ h6 {
   }
 
   [is-~='badge'][variant-='not-found'] {
-    --badge-color: #c40000;
+    --badge-color: rgb(239 68 68);
     --badge-text: var(--background0);
   }
 
@@ -358,4 +497,17 @@ textarea {
   padding: 0 1ch;
   height: 1lh;
   width: 100%;
+}
+
+.env-var-pill {
+  display: inline-block;
+  font-family: var(--font-family);
+  font-size: 0.9em;
+  line-height: 1.2;
+  padding: 0.08em 0.4em;
+  border-radius: 3px;
+  border: 1px solid dimgray;
+  color: var(--foreground0);
+  vertical-align: baseline;
+  white-space: nowrap;
 }

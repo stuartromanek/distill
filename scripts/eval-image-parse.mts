@@ -4,12 +4,10 @@ import './_nitro-shim.mts'
 import { loadEnv, root } from './_load-env.mts'
 import { parseArgs } from './_args.mts'
 import { extractSongs } from '../server/utils/llm/extract-songs.ts'
-import { createTidalClient, getClientCredentialsToken } from '../server/utils/tidal-client.ts'
-import {
-  buildMatchQuery,
-  matchSongWithMeta,
-  searchTidalQuery,
-} from '../server/utils/match.ts'
+import { createTidalHttpClient, getClientCredentialsToken } from '../server/utils/music/providers/tidal/client.ts'
+import { createTidalSearchClient, searchTidalQuery } from '../server/utils/music/providers/tidal/search.ts'
+import { buildMatchQuery } from '../server/utils/music/match/cascade.ts'
+import { matchSongWithMeta } from '../server/utils/music/match/match.ts'
 import {
   normalize,
   normalizeSongKey,
@@ -21,6 +19,7 @@ import {
   SCORE_WEIGHTS,
   similarity,
 } from '../server/utils/match-scoring.ts'
+import { envVarName, getTidalCountryCode, tidalClientId, tidalClientSecret } from '../server/utils/env.ts'
 import type { ParsedSong, TidalTrackSummary } from '../shared/types/playlist.ts'
 
 loadEnv()
@@ -93,7 +92,7 @@ function summarizeTrack(t: TidalTrackSummary) {
 async function scoreSearchResults(
   parsed: ParsedSong,
   query: string,
-  client: ReturnType<typeof createTidalClient>,
+  client: ReturnType<typeof createTidalHttpClient>,
   limit = 12,
 ) {
   const raw = await searchTidalQuery(client, query, limit)
@@ -104,7 +103,7 @@ async function scoreSearchResults(
 
 async function testAlternateStrategies(
   parsed: ParsedSong,
-  client: ReturnType<typeof createTidalClient>,
+  client: ReturnType<typeof createTidalHttpClient>,
   baseline: SongReport,
 ): Promise<AlternateResult[]> {
   const results: AlternateResult[] = []
@@ -195,7 +194,7 @@ async function testAlternateStrategies(
 
 async function testAlternateStrategies_scored(
   parsed: ParsedSong,
-  client: ReturnType<typeof createTidalClient>,
+  client: ReturnType<typeof createTidalHttpClient>,
   query: string,
 ) {
   return scoreSearchResults(parsed, query, client, 12)
@@ -225,12 +224,12 @@ async function main() {
   const outMd = String(args['out-md'] ?? resolve(root, 'fixtures/eval-setlist-image-report.md'))
   const imagePath = args.image ? String(args.image) : undefined
 
-  const clientId = process.env.NUXT_TIDAL_CLIENT_ID
-  const clientSecret = process.env.NUXT_TIDAL_CLIENT_SECRET
-  const countryCode = process.env.NUXT_TIDAL_COUNTRY_CODE ?? 'US'
+  const clientId = tidalClientId()
+  const clientSecret = tidalClientSecret()
+  const countryCode = getTidalCountryCode()
 
   if (!clientId || !clientSecret) {
-    console.error('Set NUXT_TIDAL_CLIENT_ID and NUXT_TIDAL_CLIENT_SECRET in .env')
+    console.error(`Set ${envVarName('TIDAL_CLIENT_ID')} and ${envVarName('TIDAL_CLIENT_SECRET')} in .env`)
     process.exit(1)
   }
 
@@ -256,7 +255,8 @@ async function main() {
   const groundTruth = JSON.parse(readFileSync(groundTruthPath, 'utf8')) as GroundTruthRow[]
 
   const token = await getClientCredentialsToken(clientId, clientSecret)
-  const client = createTidalClient(token, countryCode)
+  const client = createTidalHttpClient(token, countryCode)
+  const searchClient = createTidalSearchClient(client)
 
   // Parse recall: match parsed songs to ground truth rows
   const gtMatched = new Set<string>()
@@ -280,7 +280,7 @@ async function main() {
 
     process.stdout.write(`\rMatching ${i + 1}/${parsedSongs.length}: ${parsed.artist} — ${parsed.title}`.slice(0, 80).padEnd(80))
 
-    const { match, searchQuery, strategyUsed, allScored } = await matchSongWithMeta(client, parsed)
+    const { match, searchQuery, strategyUsed, allScored } = await matchSongWithMeta(searchClient, parsed)
     const status = match.status
     if (status === 'matched') matched++
     else if (status === 'ambiguous') ambiguous++

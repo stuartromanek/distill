@@ -1,13 +1,18 @@
 import type { ParsedSong, PlaylistMetadataSuggestion } from '../../../shared/types/playlist.ts'
+import { readMultilineEnv } from '../env.ts'
 import type { LlmAdapter } from './types.ts'
 
-const SYSTEM_PROMPT = `You create concise playlist metadata from a track list.
+export const DEFAULT_PLAYLIST_METADATA_SYSTEM_PROMPT = `You create concise playlist metadata from a track list.
 Return ONLY valid JSON: { "name": string, "description": string }
 Rules:
 - name should be short, natural, and playlist-like
 - description should be one sentence, no more than 140 characters
 - Do not mention that you are an AI
 - Do not include markdown`
+
+export function getPlaylistMetadataSystemPrompt(): string {
+  return readMultilineEnv('LLM_PLAYLIST_METADATA_SYSTEM_PROMPT') || DEFAULT_PLAYLIST_METADATA_SYSTEM_PROMPT
+}
 
 function parseSuggestion(raw: string): PlaylistMetadataSuggestion {
   const trimmed = raw.trim()
@@ -52,7 +57,7 @@ export async function suggestPlaylistMetadata(
   adapter: LlmAdapter,
 ): Promise<PlaylistMetadataSuggestion> {
   const result = await adapter.complete({
-    systemPrompt: SYSTEM_PROMPT,
+    systemPrompt: getPlaylistMetadataSystemPrompt(),
     parts: [
       {
         type: 'text',

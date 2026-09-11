@@ -1,10 +1,10 @@
 import { anthropicProvider } from './adapters/anthropic.ts'
-import { cursorProvider } from './adapters/cursor.ts'
 import { geminiProvider } from './adapters/gemini.ts'
 import { openaiProvider } from './adapters/openai.ts'
 import { PROVIDER_IDS, isHttpError, readLlmConfig } from './config.ts'
 import { getProvider, listProviderIds, registerProvider } from './registry.ts'
-import type { LlmAdapter, LlmConfig, LlmProviderId } from './types.ts'
+import type { LlmProviderId } from '../../../shared/types/playlist'
+import type { LlmAdapter, LlmConfig } from './types.ts'
 
 let providersRegistered = false
 
@@ -12,7 +12,6 @@ let providersRegistered = false
 function ensureProvidersRegistered() {
   if (providersRegistered) return
   providersRegistered = true
-  registerProvider(cursorProvider)
   registerProvider(openaiProvider)
   registerProvider(geminiProvider)
   registerProvider(anthropicProvider)
@@ -37,8 +36,7 @@ export async function resolveLlmAdapter(
   const def = getProvider(config.provider)
   def.validateConfig(config)
 
-  // Cursor handles image fallback inside createAdapter; skip generic vision guard
-  if (ctx.hasImages && !def.capabilities.vision && config.provider !== 'cursor') {
+  if (ctx.hasImages && !def.capabilities.vision) {
     throw createError({
       statusCode: 502,
       message: `Provider "${config.provider}" does not support image input.`,
@@ -56,4 +54,3 @@ export async function resolveLlmAdapter(
     })
   }
 }
-

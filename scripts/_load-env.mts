@@ -35,20 +35,20 @@ export function parseTidalRefreshToken(raw: string | undefined): string | undefi
   return val.trim() || undefined
 }
 
-/** Read TIDAL_REFRESH_TOKEN from .env (handles multiline JSON paste from dev endpoint). */
+/** Read DST_TIDAL_REFRESH_TOKEN from .env (handles multiline JSON paste from dev endpoint). */
 export function readTidalRefreshTokenFromFile(): string | undefined {
   const envPath = resolve(root, '.env')
   if (!existsSync(envPath)) return undefined
 
   const content = readFileSync(envPath, 'utf8')
-  const match = content.match(/^TIDAL_REFRESH_TOKEN=(.*)$/ms)
+  const match = content.match(/^DST_TIDAL_REFRESH_TOKEN=(.*)$/ms)
   if (!match?.[1]) return undefined
 
   return parseTidalRefreshToken(match[1].trim())
 }
 
 export function getTidalRefreshToken(): string | undefined {
-  return parseTidalRefreshToken(process.env.TIDAL_REFRESH_TOKEN)
+  return parseTidalRefreshToken(process.env.DST_TIDAL_REFRESH_TOKEN)
     ?? readTidalRefreshTokenFromFile()
 }
 
@@ -95,7 +95,7 @@ export function loadEnv() {
   // Normalize refresh token to plain JWT for downstream scripts
   const token = getTidalRefreshToken()
   if (token) {
-    process.env.TIDAL_REFRESH_TOKEN = token
+    process.env.DST_TIDAL_REFRESH_TOKEN = token
   }
 }
 

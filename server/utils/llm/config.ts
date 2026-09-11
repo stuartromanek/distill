@@ -1,70 +1,129 @@
-import type { LlmConfig, LlmProviderId } from './types.ts'
+import type { LlmProviderId } from '../../../shared/types/playlist'
+import type { LlmConfig } from './types.ts'
+import {
+  anthropicApiKey,
+  anthropicBaseUrl,
+  anthropicModel,
+  geminiApiKey,
+  geminiBaseUrl,
+  geminiModel,
+  llmProvider as readLlmProvider,
+  envVarName,
+  openaiApiKey,
+  openaiBaseUrl,
+  openaiModel,
+} from '../env.ts'
 
-const PROVIDER_IDS: LlmProviderId[] = ['cursor', 'openai', 'gemini', 'anthropic']
+const PROVIDER_IDS: LlmProviderId[] = ['openai', 'gemini', 'anthropic']
 
-function parseProvider(raw: string | undefined): LlmProviderId {
-  const value = (raw ?? 'cursor').trim().toLowerCase()
-  if (PROVIDER_IDS.includes(value as LlmProviderId)) {
-    return value as LlmProviderId
-  }
-  return 'cursor'
+export type LlmCredentialSource = 'server' | 'browser'
+
+function isProviderId(value: string): value is LlmProviderId {
+  return PROVIDER_IDS.includes(value as LlmProviderId)
 }
 
-function configFromEnv(): LlmConfig {
+export type LlmRequestKeys = {
+  openai?: string
+  gemini?: string
+}
+
+function requestKeyForProvider(
+  requestKeys: LlmRequestKeys | undefined,
+  provider: LlmProviderId,
+): string | undefined {
+  if (!requestKeys) return undefined
+  if (provider === 'openai') return requestKeys.openai
+  if (provider === 'gemini') return requestKeys.gemini
+  return undefined
+}
+
+export function inferCredentialSource(
+  override?: LlmProviderId,
+  requestKeys?: LlmRequestKeys,
+): LlmCredentialSource {
+  if (!override || !requestKeys) return 'server'
+  const key = requestKeyForProvider(requestKeys, override)?.trim()
+  return key ? 'browser' : 'server'
+}
+
+function resolveProvider(override: LlmProviderId | undefined, source: LlmCredentialSource): LlmProviderId {
+  if (source === 'browser') {
+    if (!override || !isProviderId(override) || override === 'anthropic') {
+      throw createError({
+        statusCode: 400,
+        message: 'LLM provider must be openai or gemini when using a browser API key',
+      })
+    }
+    return override
+  }
+
+  const fromEnv = readLlmProvider()
+  if (fromEnv) return fromEnv
+  if (override && isProviderId(override)) return override
+  throw createError({
+    statusCode: 400,
+    message: `LLM provider not configured — set ${envVarName('LLM_PROVIDER')} or select a provider in the app`,
+  })
+}
+
+function resolveApiKey(
+  envKey: string,
+  requestKey: string | undefined,
+  source: LlmCredentialSource,
+): string {
+  if (source === 'browser') return requestKey?.trim() ?? ''
+  return envKey
+}
+
+function buildLlmConfig(
+  provider: LlmProviderId,
+  requestKeys: LlmRequestKeys | undefined,
+  source: LlmCredentialSource,
+): LlmConfig {
   return {
-    provider: parseProvider(process.env.NUXT_LLM_PROVIDER),
+    provider,
     openai: {
-      apiKey: process.env.NUXT_OPENAI_API_KEY ?? '',
-      baseUrl: process.env.NUXT_OPENAI_BASE_URL ?? 'https://api.openai.com/v1',
-      model: process.env.NUXT_OPENAI_MODEL ?? 'auto',
-    },
-    cursor: {
-      apiKey: process.env.NUXT_CURSOR_API_KEY ?? '',
-      proxyUrl: process.env.NUXT_CURSOR_PROXY_URL ?? 'http://127.0.0.1:8765',
-      model: process.env.NUXT_OPENAI_MODEL ?? 'auto',
+      apiKey: resolveApiKey(openaiApiKey(), requestKeys?.openai, source),
+      baseUrl: openaiBaseUrl(),
+      model: openaiModel(),
     },
     gemini: {
-      apiKey: process.env.NUXT_GEMINI_API_KEY ?? '',
-      baseUrl: process.env.NUXT_GEMINI_BASE_URL ?? 'https://generativelanguage.googleapis.com/v1beta',
-      model: process.env.NUXT_GEMINI_MODEL ?? 'gemini-2.5-flash',
+      apiKey: resolveApiKey(geminiApiKey(), requestKeys?.gemini, source),
+      baseUrl: geminiBaseUrl(),
+      model: geminiModel(),
     },
     anthropic: {
-      apiKey: process.env.NUXT_ANTHROPIC_API_KEY ?? '',
-      baseUrl: process.env.NUXT_ANTHROPIC_BASE_URL ?? 'https://api.anthropic.com/v1',
-      model: process.env.NUXT_ANTHROPIC_MODEL ?? 'claude-sonnet-4-20250514',
+      apiKey: resolveApiKey(anthropicApiKey(), undefined, source),
+      baseUrl: anthropicBaseUrl(),
+      model: anthropicModel(),
     },
   }
 }
 
-export function readLlmConfig(): LlmConfig {
-  try {
-    const config = useRuntimeConfig()
-    return {
-      provider: parseProvider(config.llmProvider),
-      openai: {
-        apiKey: config.openaiApiKey,
-        baseUrl: config.openaiBaseUrl,
-        model: config.openaiModel,
-      },
-      cursor: {
-        apiKey: config.cursorApiKey,
-        proxyUrl: config.cursorProxyUrl,
-        model: config.openaiModel,
-      },
-      gemini: {
-        apiKey: config.geminiApiKey,
-        baseUrl: config.geminiBaseUrl,
-        model: config.geminiModel,
-      },
-      anthropic: {
-        apiKey: config.anthropicApiKey,
-        baseUrl: config.anthropicBaseUrl,
-        model: config.anthropicModel,
-      },
-    }
-  } catch {
-    return configFromEnv()
-  }
+export function readLlmConfig(override?: LlmProviderId, requestKeys?: LlmRequestKeys) {
+  const source = inferCredentialSource(override, requestKeys)
+  const provider = resolveProvider(override, source)
+  return buildLlmConfig(provider, requestKeys, source)
+}
+
+export function isServerLlmConfigured(): boolean {
+  const locked = readLlmProvider()
+  if (locked === 'openai') return Boolean(openaiApiKey())
+  if (locked === 'gemini') return Boolean(geminiApiKey())
+  if (locked === 'anthropic') return false
+  return Boolean(openaiApiKey() || geminiApiKey())
+}
+
+export function readLlmEnvProvider(): LlmProviderId | null {
+  return readLlmProvider()
+}
+
+export function readDefaultServerProvider(): LlmProviderId | null {
+  const locked = readLlmProvider()
+  if (locked) return locked
+  if (openaiApiKey()) return 'openai'
+  if (geminiApiKey()) return 'gemini'
+  return null
 }
 
 export function isHttpError(err: unknown): err is { statusCode: number } {

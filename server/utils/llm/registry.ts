@@ -1,4 +1,5 @@
-import type { LlmProviderDefinition, LlmProviderId } from './types.ts'
+import type { LlmProviderId } from '../../../shared/types/playlist'
+import type { LlmProviderDefinition } from './types.ts'
 
 const providers = new Map<LlmProviderId, LlmProviderDefinition>()
 

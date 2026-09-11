@@ -3,10 +3,11 @@ const props = defineProps<{
   loading?: boolean
   submitLabel?: string
   compact?: boolean
+  processedImages?: { id: string; dataUrl: string; name: string }[]
 }>()
 
 const emit = defineEmits<{
-  submit: [payload: { text: string; images: string[] }]
+  submit: [payload: { text: string; images: string[]; imageItems: { dataUrl: string; name: string }[] }]
 }>()
 
 const text = ref('')
@@ -16,9 +17,15 @@ const previewDialog = ref<HTMLDialogElement | null>(null)
 const previewId = ref<string | null>(null)
 const { showToast } = useToast()
 
+const processedImages = computed(() => props.processedImages ?? [])
 const previewImage = computed(() =>
-  images.value.find(img => img.id === previewId.value) ?? null,
+  [...processedImages.value, ...images.value].find(img => img.id === previewId.value) ?? null,
 )
+const displayedImages = computed(() => [
+  ...processedImages.value.map(img => ({ ...img, processed: true })),
+  ...images.value.map(img => ({ ...img, processed: false })),
+])
+const imageSlotCount = computed(() => processedImages.value.length + images.value.length)
 
 const MAX_IMAGES = 5
 const MAX_SIZE = 5 * 1024 * 1024
@@ -65,7 +72,7 @@ function addImageFile(file: File, name?: string) {
 
 function addImageFiles(files: File[]) {
   for (const file of files) {
-    if (images.value.length >= MAX_IMAGES) {
+    if (imageSlotCount.value >= MAX_IMAGES) {
       showToast(`You can attach up to ${MAX_IMAGES} images. Remove one before adding more.`, 'error')
       break
     }
@@ -134,6 +141,7 @@ function submit() {
   emit('submit', {
     text: text.value.trim(),
     images: images.value.map(i => i.dataUrl),
+    imageItems: images.value.map(i => ({ dataUrl: i.dataUrl, name: i.name })),
   })
 }
 
@@ -158,21 +166,22 @@ defineExpose({ clear, addImageFiles })
 
     <div box-="round" class="input-panel__images">
       <div
-        v-if="images.length"
+        v-if="displayedImages.length"
         class="input-panel__images-header"
       >
         <span class="micro-label">Images</span>
-        <span class="input-panel__images-count">{{ images.length }}/{{ MAX_IMAGES }}</span>
+        <span class="input-panel__images-count">{{ imageSlotCount }}/{{ MAX_IMAGES }}</span>
       </div>
 
       <div
         class="input-panel__images-grid"
-        :class="{ 'input-panel__images-grid--empty': !images.length }"
+        :class="{ 'input-panel__images-grid--empty': !displayedImages.length }"
       >
         <div
-          v-for="img in images"
+          v-for="img in displayedImages"
           :key="img.id"
           class="input-panel__thumb input-panel__tile"
+          :class="{ 'input-panel__thumb--processed': img.processed }"
         >
           <img :src="img.dataUrl" :alt="img.name">
           <div class="input-panel__thumb-actions">
@@ -188,6 +197,7 @@ defineExpose({ clear, addImageFiles })
               </svg>
             </button>
             <button
+              v-if="!img.processed"
               type="button"
               class="input-panel__thumb-action"
               aria-label="Remove image"
@@ -199,12 +209,12 @@ defineExpose({ clear, addImageFiles })
         </div>
 
         <label
-          v-if="images.length < MAX_IMAGES"
+          v-if="imageSlotCount < MAX_IMAGES"
           class="input-panel__add input-panel__tile"
           :class="{ 'input-panel__add--disabled': loading }"
         >
-          <span class="input-panel__add-icon" aria-hidden="true">+</span>
-          <span class="input-panel__add-label">Add image</span>
+          <span class="input-panel__add-icon" aria-hidden="true" />
+          <span class="input-panel__add-label">add image</span>
           <input
             ref="fileInput"
             type="file"
@@ -220,6 +230,7 @@ defineExpose({ clear, addImageFiles })
 
     <button
       type="button"
+      size-="small"
       box-="round"
       class="button-primary"
       :disabled="loading || (!text.trim() && !images.length)"
@@ -338,8 +349,17 @@ defineExpose({ clear, addImageFiles })
   width: 100%;
   max-width: none;
   flex-direction: row;
-  gap: 0.5ch;
-  border: none;
+  gap: 0.75ch;
+  border-style: dashed;
+}
+
+.input-panel__images-grid--empty .input-panel__add-label {
+  font-size: 1.25rem;
+}
+
+.input-panel__images-grid--empty .input-panel__add-icon {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .input-panel--compact .input-panel__images-grid--empty .input-panel__add {
@@ -361,6 +381,10 @@ defineExpose({ clear, addImageFiles })
   position: relative;
   overflow: hidden;
   border: var(--box-border-width, 2px) solid var(--box-border-color);
+}
+
+.input-panel__thumb--processed {
+  --box-border-color: var(--foreground2);
 }
 
 .input-panel__thumb img {
@@ -398,9 +422,6 @@ defineExpose({ clear, addImageFiles })
   font-size: 0.875rem;
   line-height: 1;
   cursor: pointer;
-  transition-property: background-color, transform;
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 .input-panel__thumb-action + .input-panel__thumb-action {
@@ -500,25 +521,25 @@ defineExpose({ clear, addImageFiles })
   gap: 0.125lh;
   margin: 0;
   border: var(--box-border-width, 2px) dashed var(--foreground2);
-  background-color: transparent;
+  background: color-mix(in srgb, var(--background1) 72%, transparent);
   color: var(--foreground2);
   font-family: var(--font-family);
   font-size: var(--font-size);
   line-height: var(--line-height);
   cursor: pointer;
-  transition-property: color, border-color, transform;
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
 .input-panel__add-icon {
-  font-size: 1.25rem;
-  line-height: 1;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: currentColor;
+  mask: url('/icons/Photography-Photo-Image--Streamline-Pixel.svg') center / contain no-repeat;
 }
 
 .input-panel__add-label {
-  font-size: 0.625rem;
-  text-transform: uppercase;
+  font-family: var(--font-family-heading);
+  font-size: 0.875rem;
   letter-spacing: 0.04em;
 }
 
@@ -526,14 +547,22 @@ defineExpose({ clear, addImageFiles })
   font-size: 0.5625rem;
 }
 
+.input-panel--compact .input-panel__images-grid--empty .input-panel__add-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.input-panel--compact .input-panel__images-grid--empty .input-panel__add-label {
+  font-size: 1rem;
+}
+
 .input-panel--compact > button[box-] {
-  min-height: calc(1lh + var(--box-border-width, 2px) * 2);
   margin-top: auto;
-  padding-block: 0;
   width: 100%;
 }
 
 .input-panel__add:hover:not(.input-panel__add--disabled) {
+  background: color-mix(in srgb, var(--foreground0) 8%, var(--background1));
   color: var(--foreground0);
   border-color: var(--foreground0);
 }
